@@ -1,0 +1,63 @@
+import Link from "next/link";
+
+import {
+    FaGithub,
+    FaLinkedin,
+    FaInstagram,
+    FaFacebook,
+    FaYoutube,
+    FaTwitter,
+} from "react-icons/fa";
+
+const socials = [
+    {
+        name: "Github",
+        href: "https://github.com/lukecoleman",
+        icon: <FaGithub />,
+    },
+    {
+        name: "LinkedIn",
+        href: "https://www.linkedin.com/in/lukecoleman/",
+        icon: <FaLinkedin />,
+    },
+    {
+        name: "Instagram",
+        href: "https://www.instagram.com/lukecoleman/",
+        icon: <FaInstagram />,
+    },
+    {
+        name: "Facebook",
+        href: "https://www.facebook.com/lukecoleman",
+        icon: <FaFacebook />,
+    },
+    {
+        name: "YouTube",
+        href: "https://www.youtube.com/@lukecoleman",
+        icon: <FaYoutube />,
+    },
+    {
+        name: "Twitter",
+        href: "https://twitter.com/lukecoleman",
+        icon: <FaTwitter />,
+    },
+];
+
+const Social = ({ containerStyles, iconStyles }) => {
+    return (
+        <div className={containerStyles}>
+            {socials.map((item, index) => {
+                return (
+                    <Link
+                        href={item.href}
+                        key={item.name}
+                        className={iconStyles}
+                    >
+                        {item.icon}
+                    </Link>
+                );
+            })}
+        </div>
+    );
+};
+
+export default Social;
