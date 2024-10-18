@@ -19,7 +19,7 @@ const Header = () => {
 
                     {/* button */}
                     <Link href="/contact">
-                        <Button>Hire me</Button>
+                        <Button className="">Hire me</Button>
                     </Link>
                 </div>
 
