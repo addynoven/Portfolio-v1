@@ -65,16 +65,23 @@ const Service = () => {
                                     <div className="text-5xl font-extrabold text-outline text-transparent group-hover:text-outline-hover transition-all duration-500">
                                         {service.num}
                                     </div>
-                                    <Link href={`/services/${service.num}`}>
-                                        <BsArrowDownRight />
+                                    <Link
+                                        href={service.href}
+                                        className="w-[70px] h-[70px] rounded-full bg-white group-hover:bg-UserAccent transition-all duration-500 flex items-center justify-center hover:-rotate-45"
+                                    >
+                                        <BsArrowDownRight className="text-primary text-3xl" />
                                     </Link>
                                 </div>
 
                                 {/* {" heading "} */}
-                                <h2>{service.title}</h2>
+                                <h2 className="h2 text-[42px] font-bold leading-none text-white group-hover:text-UserAccent transition-all duration-500">
+                                    {service.title}
+                                </h2>
 
                                 {/* {" description "} */}
-                                <p>{service.Description}</p>
+                                <p className="text-white/60">
+                                    {service.Description}
+                                </p>
                                 {/* {"Border"} */}
                                 <div className="border-b border-white/20 w-full"></div>
                             </div>
