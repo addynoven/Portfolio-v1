@@ -7,9 +7,26 @@ import {
     FaReact,
     FaFigma,
     FaNodeJs,
+    FaGitAlt,
+    FaGithub,
 } from "react-icons/fa";
 
 import { SiTailwindcss, SiNextdotjs } from "react-icons/si";
+
+import { Tabs, TabContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+import { motion } from "framer-motion";
+import { Content } from "next/font/google";
+import { TabsContent } from "@radix-ui/react-tabs";
 
 // about me data
 
@@ -130,8 +147,57 @@ const Education = {
 
 // skills data
 
+const Skills = {
+    title: "My skills",
+    description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut culpa sequi esse, odio ab tempora?",
+    skillList: [
+        { name: "HTML", icon: <FaHtml5 /> },
+        { name: "CSS", icon: <FaCss3 /> },
+        { name: "JavaScript", icon: <FaJs /> },
+        { name: "React", icon: <FaReact /> },
+        { name: "Figma", icon: <FaFigma /> },
+        { name: "Node.js", icon: <FaNodeJs /> },
+        { name: "Next.js", icon: <SiNextdotjs /> },
+        { name: "Tailwind CSS", icon: <SiTailwindcss /> },
+        { name: "Git", icon: <FaGitAlt /> },
+        { name: "GitHub", icon: <FaGithub /> },
+    ],
+};
+
 const Resume = () => {
-    return <div>Resume page</div>;
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{
+                opacity: 1,
+                transition: { delay: 2, duration: 0.5, ease: "easeIn" },
+            }}
+            className="min-h-[80vh] flex items-center justify-center py-12 xl:py-0"
+        >
+            <div className="container mx-auto">
+                <Tabs
+                    defaultValue="experience"
+                    className="Flex flex-col xl:flex-row gap-[60px]"
+                >
+                    <TabsList className="flex flex-col w-full max-w-[380px] mx-auto xl:mx-0 gap-6">
+                        <TabsTrigger value="experience">Experience</TabsTrigger>
+                        <TabsTrigger value="education">Education</TabsTrigger>
+                        <TabsTrigger value="skills">Skills</TabsTrigger>
+                        <TabsTrigger value="about">About Me</TabsTrigger>
+                    </TabsList>
+
+                    {/* {Content} */}
+                    <div className="min-h-[70vh] w-full">
+                        {/* experience */}
+                        <TabsContent value="experience">
+                            <p>Experience</p>
+                        </TabsContent>
+                    </div>
+                </Tabs>
+            </div>
+        </motion.div>
+    );
 };
 
 export default Resume;
