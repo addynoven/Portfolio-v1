@@ -302,12 +302,12 @@ const Resume = () => {
                         >
                             <div className="flex flex-col gap-[30px]">
                                 <h3 className="text-4xl font-bold">
-                                    {About.title}
+                                    {About.title}as
                                 </h3>
                                 <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">
                                     {About.description}
                                 </p>
-                                <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 gap-x-3 max-w-[80vw] ">
+                                <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 gap-x-3 max-w-[100%] ">
                                     {About.info.map((item) => (
                                         <li key={item.fieldName}>
                                             <span className="text-white/60">
