@@ -94,7 +94,7 @@ const projects = [
   },
 ];
 
-const work = () => {
+const Work = () => {
   const [Project, setProject] = useState(projects[0]);
   const handleSlideChange = (swiper) => {
     const currentlyIndex = swiper.realIndex;
@@ -212,4 +212,4 @@ const work = () => {
   );
 };
 
-export default work;
+export default Work;
