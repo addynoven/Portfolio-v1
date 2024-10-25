@@ -52,16 +52,16 @@ const projects = [
     image: "/assets/work/thumb2.png",
     Stack: [
       {
-        name: "HTML 5",
-      },
-      {
-        name: "CSS 3",
-      },
-      {
-        name: "JavaScript",
-      },
-      {
         name: "React",
+      },
+      {
+        name: "Figma",
+      },
+      {
+        name: "Next.js",
+      },
+      {
+        name: "Tailwind CSS",
       },
     ],
     live: "https://github.com/lukecoleman",
