@@ -2,16 +2,58 @@
 
 import {
   FaHtml5,
-  FaCss3,
   FaJs,
   FaReact,
   FaFigma,
-  FaNodeJs,
   FaGitAlt,
   FaGithub,
+  FaJava,
+  FaNode,
+  FaCss3Alt,
+  FaLinux,
+  FaRedhat,
+  FaAws,
 } from "react-icons/fa";
 
-import { SiTailwindcss, SiNextdotjs } from "react-icons/si";
+import {
+  SiTailwindcss,
+  SiNextdotjs,
+  SiPython,
+  SiC,
+  SiCplusplus,
+  SiExpress,
+  SiSpringboot,
+  SiMongodb,
+  SiOracle,
+  SiPostgresql,
+  SiSqlite,
+  SiFirebase,
+  SiAppwrite,
+  SiGnubash,
+  SiSass,
+  SiNumpy,
+  SiPandas,
+  SiScikitlearn,
+  SiTensorflow,
+  SiPytorch,
+  SiKeras,
+  SiOpencv,
+  SiJirasoftware,
+  SiMicrosoftazure,
+  SiGooglecloud,
+  SiDocker,
+  SiSupabase,
+  SiFfmpeg,
+  SiKubernetes,
+  SiGitlab,
+  SiMicrosoftteams,
+  SiZoom,
+  SiTrello,
+  SiSlack,
+  SiNotion,
+  SiJira,
+  SiJenkins,
+} from "react-icons/si";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -21,8 +63,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
+import { TbBrandDjango } from "react-icons/tb";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { GrMysql } from "react-icons/gr";
 
 import { motion } from "framer-motion";
 
@@ -35,7 +78,7 @@ const About = {
   info: [
     {
       fieldName: "Name",
-      fieldValue: "Luke Coleman",
+      fieldValue: "Aditya Sahu",
     },
     {
       fieldName: "Phone",
@@ -57,38 +100,18 @@ const Experience = {
   icon: "/assets/resume/badge.svg",
   title: "My experience",
   description: `
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam dignissimos quod vel praesentium quidem aliquid exercitationem, provident soluta rerum consequuntur!  
+    I've developed user-friendly web applications as a Full Stack Developer, collaborating with teams to deliver responsive solutions that enhance functionality and user experience. 
     `,
   items: [
     {
-      company: "Tech Solutions Inc.",
-      position: "Software Developer",
-      duration: "Jan 2020 - Present",
+      company: "RI BEAUTY (Startup)",
+      position: "Full Stack Developer",
+      duration: "Jun 2024 - Present",
     },
     {
-      company: "Web Designer Studio",
-      position: "Front-End Developer Intern",
-      duration: "Summer 2019",
-    },
-    {
-      company: "E-Commerce Company Ltd. (Startup)",
-      position: "Freelance Web Developer",
-      duration: "2018- early 2019",
-    },
-    {
-      company: "Tech Academy",
-      position: "Teaching Assistant",
-      duration: "2017 - 2018",
-    },
-    {
-      company: "Digital Academy",
-      position: "UI/UX Designer",
-      duration: "2016 - 2017",
-    },
-    {
-      company: "Software Development Firm",
-      position: "Junior Developer",
-      duration: "2015 - 2016",
+      company: "Orcus (Startup)",
+      position: "Full Stack Developer",
+      duration: "Dec 2023 - May 2024",
     },
   ],
 };
@@ -108,9 +131,29 @@ const Education = {
         I have completed the following courses:`,
   items: [
     {
+      institution: "Oriental Group of Institutes",
+      degree: "Master of Computer Applications",
+      duration: "Sep 2024 - Present",
+    },
+    {
+      institution: "sheryians coding school",
+      degree: "Back-End Domination",
+      duration: "Aug 2024 - present",
+    },
+    {
+      institution: "sheryians coding school",
+      degree: "Advanced Data Structures and Algorithms with JAVA",
+      duration: "Apr 2024 - present",
+    },
+    {
       institution: "LNCT Group of Colleges",
       degree: "Bachelor of Computer Applications, AI & Data Analytics",
       duration: " Oct 2021 - May 2024",
+    },
+    {
+      institution: "sheryians coding school",
+      degree: "front-end domination",
+      duration: "jan 2024 - jul 2024",
     },
     {
       institution: "sheryians coding school",
@@ -119,7 +162,7 @@ const Education = {
     },
     {
       institution: "Sharma Computer Academy (ScaLive)",
-      degree: "java and JEE Program",
+      degree: "java and spring boot",
       duration: "jun 2022 - jun 2023",
     },
     {
@@ -160,17 +203,51 @@ const Education = {
 const Skills = {
   title: "My skills",
   description:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut culpa sequi esse, odio ab tempora?",
+    "I specialize in full-stack development, delivering dynamic web solutions using modern technologies and frameworks.",
   skillList: [
+    { name: "Java", icon: <FaJava /> },
+    { name: "Python", icon: <SiPython /> },
+    { name: "C++", icon: <SiCplusplus /> },
+    { name: "C", icon: <SiC /> },
+    { name: "Express.js", icon: <SiExpress /> },
+    // { name: "Spring Boot", icon: <SiSpringboot /> },
+    // { name: "Django", icon: <TbBrandDjango /> },
+    { name: "MongoDB", icon: <SiMongodb /> },
+    // { name: "MySQL", icon: <GrMysql /> },
+    // { name: "Oracle", icon: <SiOracle /> },
+    // { name: "PostgreSQL", icon: <SiPostgresql /> },
+    // { name: "SQLite", icon: <SiSqlite /> },
+    // { name: "Firebase", icon: <SiFirebase /> },
+    // { name: "Appwrite", icon: <SiAppwrite /> },
+    // { name: "Linux", icon: <FaLinux /> },
+    // { name: "Bash", icon: <SiGnubash /> },
+    // { name: "RedHat", icon: <FaRedhat /> },
+    // { name: "SASS", icon: <SiSass /> },
+    // { name: "Numpy", icon: <SiNumpy /> },
+    // { name: "Pandas", icon: <SiPandas /> },
+    // { name: "Scikit-learn", icon: <SiScikitlearn /> },
+    // { name: "TensorFlow", icon: <SiTensorflow /> },
+    // { name: "PyTorch", icon: <SiPytorch /> },
+    // { name: "Keras", icon: <SiKeras /> },
+    // { name: "OpenCV", icon: <SiOpencv /> },
+    // { name: "Docker", icon: <SiDocker /> },
+    // { name: "AWS", icon: <FaAws /> },
+    // { name: "Google Cloud", icon: <SiGooglecloud /> },
+    // { name: "Azure", icon: <SiMicrosoftazure /> },
+    // { name: "Supabase", icon: <SiSupabase /> },
+    // { name: "FFMPEG", icon: <SiFfmpeg /> },
+    // { name: "Kubernetes", icon: <SiKubernetes /> },
+    // { name: "GitLab", icon: <SiGitlab /> },
+    // { name: "Microsoft Teams", icon: <SiMicrosoftteams /> },
     { name: "HTML", icon: <FaHtml5 /> },
-    { name: "CSS", icon: <FaCss3 /> },
+    { name: "CSS", icon: <FaCss3Alt /> },
     { name: "JavaScript", icon: <FaJs /> },
     { name: "React", icon: <FaReact /> },
     { name: "Figma", icon: <FaFigma /> },
-    { name: "Node.js", icon: <FaNodeJs /> },
+    { name: "Node.js", icon: <FaNode /> },
     { name: "Next.js", icon: <SiNextdotjs /> },
     { name: "Tailwind CSS", icon: <SiTailwindcss /> },
-    { name: "Git", icon: <FaGitAlt /> },
+    // { name: "Git", icon: <FaGitAlt /> },
     { name: "GitHub", icon: <FaGithub /> },
   ],
 };
@@ -232,7 +309,6 @@ const Resume = () => {
                 </ScrollArea>
               </div>
             </TabsContent>
-
             {/* education */}
             <TabsContent value="education" className="w-full">
               <div className="flex flex-col gap-[30px] text-center xl:text-left">
@@ -251,7 +327,7 @@ const Resume = () => {
                           <span className="text-UserAccent">
                             {item.duration}
                           </span>
-                          <h3 className="text-xl max-w-auto min-h-[60px] text-center lg:text-left">
+                          <h3 className="text-xl max-w-[460px] min-h-[60px] text-center lg:text-left">
                             {item.degree}
                           </h3>
                           <div className="flex items-center gap-3">

@@ -22,17 +22,18 @@ const info = [
   {
     title: "Phone",
     icon: <FaPhoneAlt />,
-    description: "+1 234 567 89",
+    description: <a href="tel:+91 626 199 5234">+91 626 199 5234</a>,
   },
   {
     title: "Email",
     icon: <FaEnvelope />,
-    description: "3e9bW@example.com",
+    description: <a href="mailto:dmcbaditya@gmail.com">dmcbaditya@gmail.com</a>,
   },
   {
     title: "Address",
     icon: <FaMapMarkerAlt />,
-    description: "123 Street, City, Country",
+    description:
+      "House No. 7, Narmada Kunj, Shaheed Nagar Colony, Bhopal, MP, India",
   },
 ];
 
@@ -53,8 +54,7 @@ const Contact = () => {
             <form className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl">
               <h3 className=" text-4xl text-UserAccent">lets work together</h3>
               <p className="text-white/60">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
-                assumenda
+                “Let's make something amazing together!
               </p>
               {/* inputs */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -89,8 +89,8 @@ const Contact = () => {
             </form>
           </div>
           {/* Contact info */}
-          <div className="flex flex-1 items-center xl:justify-end xl:order-none order-1 mb-8 xl:mb-0">
-            <ul className="flex flex-col gap-10">
+          <div className="flex flex-1 items-center xl:justify-end xl:order-none order-1 mb-8 xl:mb-1">
+            <ul className="flex flex-col gap-10 px-3">
               {info.map((item, index) => (
                 <li key={index} className="flex items-center gap-6">
                   <div className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px]  bg-[#27272c] text-UserAccent rounded-md flex items-center justify-center">
@@ -98,7 +98,9 @@ const Contact = () => {
                   </div>
                   <div className="flex-1">
                     <p className="text-white/60">{item.title}</p>
-                    <h3 className="text-xl">{item.description}</h3>
+                    <h3 className="text-xl xl:max-w-[25vw]">
+                      {item.description}
+                    </h3>
                   </div>
                 </li>
               ))}
