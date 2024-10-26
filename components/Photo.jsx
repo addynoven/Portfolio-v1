@@ -28,10 +28,11 @@ const Photo = () => {
               ease: "easeInOut",
             },
           }}
-          className="w-[298px] h-[298px] xl:w-[498px] xl:h-[498px] mix-blend-lighten absolute"
+          className="w-[290px] h-[290px] xl:w-[490px] xl:h-[490px] top-[50%] left-[50%]
+          translate-x-[-50%] translate-y-[-50%] mix-blend-lighten absolute"
         >
           <Image
-            src="/photo.png"
+            src="/photo.jpg"
             alt="photography"
             fill
             priority
@@ -62,7 +63,8 @@ const Photo = () => {
             transition={{
               duration: 20,
               repeat: Infinity,
-              ease: "easeInOut",
+              repeatType: "reverse",
+              ease: "easeIn",
             }}
           />
         </motion.svg>
