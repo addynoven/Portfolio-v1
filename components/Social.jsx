@@ -4,7 +4,6 @@ import {
   FaGithub,
   FaLinkedin,
   FaInstagram,
-  FaFacebook,
   FaYoutube,
   FaTwitter,
 } from "react-icons/fa";
@@ -20,26 +19,21 @@ const socials = [
     href: "https://www.linkedin.com/in/aditya-sahu-34350b193/",
     icon: <FaLinkedin />,
   },
-  {
-    name: "Instagram",
-    href: "https://www.instagram.com/neon_stain/",
-    icon: <FaInstagram />,
-  },
-  {
-    name: "Facebook",
-    href: "https://www.facebook.com/lukecoleman",
-    icon: <FaFacebook />,
-  },
-  {
-    name: "YouTube",
-    href: "https://www.youtube.com/@neon7874",
-    icon: <FaYoutube />,
-  },
-  {
-    name: "Twitter",
-    href: "https://x.com/addynoven",
-    icon: <FaTwitter />,
-  },
+  // {
+  //   name: "Instagram",
+  //   href: "https://www.instagram.com/neon_stain/",
+  //   icon: <FaInstagram />,
+  // },
+  // {
+  //   name: "YouTube",
+  //   href: "https://www.youtube.com/@neon7874",
+  //   icon: <FaYoutube />,
+  // },
+  // {
+  //   name: "Twitter",
+  //   href: "https://x.com/addynoven",
+  //   icon: <FaTwitter />,
+  // },
 ];
 
 const Social = ({ containerStyles, iconStyles }) => {

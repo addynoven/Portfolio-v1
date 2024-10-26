@@ -34,7 +34,7 @@ const Home = () => {
                 <Social
                   containerStyles={"flex gap-6"}
                   iconStyles={
-                    "w-9 aspect-square border border-UserAccent rounded-full flex items-center justify-center text-UserAccent text-base hover:bg-UserAccent hover:text-primary transition-all duration-500"
+                    "w-12 text-xl aspect-square border border-UserAccent rounded-full flex items-center justify-center text-UserAccent text-base hover:bg-UserAccent hover:text-primary transition-all duration-500"
                   }
                 />
               </div>
