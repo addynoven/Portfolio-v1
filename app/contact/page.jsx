@@ -17,6 +17,9 @@ import {
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 import { motion } from "framer-motion";
+import RetroGrid from "@/components/ui/retro-grid";
+import GridPattern from "@/components/ui/animated-grid-pattern";
+import { cn } from "@/lib/utils";
 
 const info = [
   {
@@ -45,12 +48,12 @@ const Contact = () => {
         opacity: 1,
         transition: { duration: 0.4, ease: "easeIn", delay: 2.4 },
       }}
-      className="py-6"
+      className="py-6 relative"
     >
       <div className="container mx-auto">
-        <div className="flex flex-col xl:flex-row gap-[30px]">
+        <div className="flex flex-col xl:flex-row items-center justify-around ">
           {/* Contact form */}
-          <div className="xl:h-[54%] order-2 xl:order-none">
+          <div className=" xl:h-[54%] order-2 xl:order-none">
             <form className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl">
               <h3 className=" text-4xl text-UserAccent">lets work together</h3>
               <p className="text-white/60">
@@ -89,7 +92,7 @@ const Contact = () => {
             </form>
           </div>
           {/* Contact info */}
-          <div className="flex flex-1 items-center xl:justify-end xl:order-none order-1 mb-8 xl:mb-1">
+          <div className=" flex items-center xl:justify-start xl:order-none order-1 mb-8 xl:mb-1">
             <ul className="flex flex-col gap-10 px-3">
               {info.map((item, index) => (
                 <li key={index} className="flex items-center gap-6">
@@ -106,6 +109,24 @@ const Contact = () => {
               ))}
             </ul>
           </div>
+        </div>
+      </div>
+      {/* background */}
+      <div className="absolute inset-0 -z-10 w-full h-full">
+        <div className="hidden xl:block">
+          <RetroGrid />
+        </div>
+        <div className="block xl:hidden">
+          <GridPattern
+            numSquares={30}
+            maxOpacity={0.2}
+            duration={3}
+            repeatDelay={1}
+            className={cn(
+              "[mask-image:radial-gradient(1000px_circle_at_center,white,transparent_60%)]",
+              "inset-x-0 inset-y-[-30%] h-[100%] skew-y-12"
+            )}
+          />
         </div>
       </div>
     </motion.section>
