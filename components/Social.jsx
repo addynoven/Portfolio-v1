@@ -29,11 +29,11 @@ const socials = [
   //   href: "https://www.youtube.com/@neon7874",
   //   icon: <FaYoutube />,
   // },
-  // {
-  //   name: "Twitter",
-  //   href: "https://x.com/addynoven",
-  //   icon: <FaTwitter />,
-  // },
+  {
+    name: "Twitter",
+    href: "https://x.com/addynoven",
+    icon: <FaTwitter />,
+  },
 ];
 
 const Social = ({ containerStyles, iconStyles }) => {

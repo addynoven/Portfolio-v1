@@ -39,8 +39,8 @@ const projects = [
         name: "React",
       },
     ],
-    live: "https://github.com/lukecoleman",
-    github: "https://github.com/lukecoleman",
+    live: "https://github.com/Addynoven",
+    github: "https://github.com/Addynoven",
   },
   {
     num: "02",
@@ -64,8 +64,8 @@ const projects = [
         name: "Tailwind CSS",
       },
     ],
-    live: "https://github.com/lukecoleman",
-    github: "https://github.com/lukecoleman",
+    live: "https://github.com/addynoven",
+    github: "https://github.com/addynoven",
   },
   {
     num: "03",
@@ -89,8 +89,8 @@ const projects = [
         name: "React",
       },
     ],
-    live: "https://github.com/lukecoleman",
-    github: "https://github.com/lukecoleman",
+    live: "https://github.com/addynoven",
+    github: "https://github.com/addynoven",
   },
 ];
 
