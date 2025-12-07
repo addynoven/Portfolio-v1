@@ -8,41 +8,60 @@ import GridPattern from "@/components/ui/animated-grid-pattern";
 import { FiDownload } from "react-icons/fi";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import Services from "@/components/sections/Services";
+import Resume from "@/components/sections/Resume";
+import Work from "@/components/sections/Work";
+import Contact from "@/components/sections/Contact";
+import Typewriter from "typewriter-effect";
+
 const Home = () => {
   return (
     <section className="h-full relative">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: 1,
-          transition: { delay: 2, duration: 0.5, ease: "easeIn" },
-        }}
-      >
-        <div className="container mx-auto h-full">
-          <div className="flex flex-col xl:flex-row items-center justify-between xl:justify-evenly xl:pt-8 xl:pb-24">
+      <div className="container mx-auto h-full">
+        {/* Hero Section */}
+        <section id="home" className="min-h-screen flex flex-col justify-center py-8 xl:py-12">
+             <div className="flex flex-col xl:flex-row items-center justify-between xl:justify-evenly pb-0">
             {/* text */}
             <div className="text-center xl:text-left order-2 xl:order-none">
-              <span className="text-xl">Software Developer</span>
+              <span className="text-xl flex items-center justify-center xl:justify-start gap-2">
+                <Typewriter
+                  options={{
+                    strings: [
+                      "Full Stack Developer",
+                      "MERN Stack Developer",
+                      "React.js Specialist",
+                      "UI/UX Enthusiast",
+                      "Problem Solver",
+                    ],
+                    autoStart: true,
+                    loop: true,
+                    deleteSpeed: 50,
+                    delay: 80,
+                  }}
+                />
+              </span>
               <h1 className="h1 mb-6">
                 Hello I'm <br />
-                <span className="text-UserAccent">Neon Stain</span>
+                <span className="text-UserAccent">Aditya Sahu</span>
               </h1>
 
-              <p className="max-w-[500px] mb-9 text-white/80">
-                I excel at crafting elegant digital experience and I am
-                proficient in various programming languages,frameworks and
+              <p className="max-w-[500px] mb-9 text-white/80 dark:text-white/80">
+                I excel at crafting elegant digital experiences and I am
+                proficient in various programming languages, frameworks and
                 technologies.
               </p>
               {/* button and Social */}
               <div className="flex flex-col xl:flex-row items-center gap-8">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="uppercase flex items-center gap-2"
-                >
-                  Download Resume &nbsp;
-                  <FiDownload className="text-xl" />
-                </Button>
+                <a href="/resume.pdf" download="Aditya_Sahu_Resume.pdf">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="uppercase flex items-center gap-2"
+                  >
+                    Download Resume &nbsp;
+                    <FiDownload className="text-xl" />
+                  </Button>
+                </a>
                 <div>
                   <Social
                     containerStyles={"flex gap-6"}
@@ -59,9 +78,21 @@ const Home = () => {
             </div>
           </div>
           <Stats />
-        </div>
-        {/* background */}
-        <div className="absolute inset-0 -z-10 w-full h-full">
+        </section>
+
+        {/* Other Sections */}
+        <div className="border-b border-white/10" />
+        <Services />
+        <div className="border-b border-white/10" />
+        <Resume />
+        <div className="border-b border-white/10" />
+        <Work />
+        <div className="border-b border-white/10" />
+        <Contact />
+      </div>
+      
+      {/* background */}
+        <div className="fixed inset-0 -z-10 w-full h-full pointer-events-none">
           <div className="hidden xl:block">
             <RetroGrid />
           </div>
@@ -78,7 +109,6 @@ const Home = () => {
             />
           </div>
         </div>
-      </motion.div>
     </section>
   );
 };
