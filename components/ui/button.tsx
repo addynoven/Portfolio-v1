@@ -4,6 +4,7 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import WaterFillEffect from "@/components/WaterFillEffect";
 
 const buttonVariants = cva(
     "inline-flex items-center justify-center whitespace-nowrap rounded-full text-base font-semibold ring-offset-white transition-all relative overflow-hidden",
@@ -92,33 +93,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             >
                 {/* Wave water fill effect for outline variant */}
                 {isOutline && (
-                    <div 
-                        className={cn(
-                            "absolute inset-x-0 bottom-0 transition-all duration-700 ease-out",
-                            isHovered ? "h-full" : "h-0"
-                        )}
-                        style={{
-                            // Tilt affects water level
-                            transform: `skewY(${tilt.y * 0.3}deg)`,
-                        }}
-                    >
-                        {/* Wave SVG pattern */}
-                        <svg 
-                            className="absolute top-0 left-0 w-[200%] h-8 -translate-y-[95%]"
-                            viewBox="0 0 1200 120" 
-                            preserveAspectRatio="none"
-                            style={{
-                                animation: 'wave 2s linear infinite',
-                            }}
-                        >
-                            <path 
-                                d="M0,60 C150,120 350,0 600,60 C850,120 1050,0 1200,60 L1200,120 L0,120 Z"
-                                className="fill-UserAccent"
-                            />
-                        </svg>
-                        {/* Solid fill below the wave */}
-                        <div className="absolute inset-0 top-4 bg-UserAccent" />
-                    </div>
+                    <WaterFillEffect 
+                        isActive={isHovered}
+                        tiltY={tilt.y}
+                    />
                 )}
                 
                 {/* Content wrapper */}

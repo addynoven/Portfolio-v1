@@ -4,7 +4,8 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { useSectionTransition } from "./SectionTransitionContext";
-import { motion, AnimatePresence } from "framer-motion";
+import WaterDripCanvas from "./WaterDripCanvas";
+import WaterFillEffect from "./WaterFillEffect";
 
 const links = [
     { name: "Home", path: "#home", targetId: "home" },
@@ -14,12 +15,7 @@ const links = [
     { name: "Contact", path: "#contact", targetId: "contact" },
 ];
 
-interface WaterDrop {
-    id: number;
-    x: number;
-    delay: number;
-    size: number;
-}
+
 
 interface NavLinkProps {
     link: { name: string; path: string; targetId: string };
@@ -31,7 +27,6 @@ const NavLink = ({ link, isActive, onClick }: NavLinkProps) => {
     const ref = useRef<HTMLAnchorElement>(null);
     const [isHovered, setIsHovered] = useState(false);
     const [tilt, setTilt] = useState({ x: 0, y: 0 });
-    const [waterDrops, setWaterDrops] = useState<WaterDrop[]>([]);
     const [showDrops, setShowDrops] = useState(false);
     const [fillLevel, setFillLevel] = useState(0); // 0 to 100
     const hoverStartTime = useRef<number>(0);
@@ -54,7 +49,6 @@ const NavLink = ({ link, isActive, onClick }: NavLinkProps) => {
     const handleMouseEnter = () => {
         setIsHovered(true);
         setShowDrops(false);
-        setWaterDrops([]);
         hoverStartTime.current = Date.now();
         
         // Gradually fill up
@@ -72,23 +66,14 @@ const NavLink = ({ link, isActive, onClick }: NavLinkProps) => {
             clearInterval(fillIntervalRef.current);
         }
         
-        // Calculate drops based on fill level
+        // Trigger water drip effect
         if (!isActive && fillLevel > 0) {
-            const dropCount = Math.max(2, Math.floor(fillLevel / 15)); // 2-7 drops based on fill
-            const drops: WaterDrop[] = Array.from({ length: dropCount }, (_, i) => ({
-                id: Date.now() + i,
-                x: 15 + Math.random() * 70, // Random x position (15-85%)
-                delay: i * 0.04,
-                size: 0.5 + (fillLevel / 100) * 0.5, // Bigger drops if more filled
-            }));
-            setWaterDrops(drops);
             setShowDrops(true);
             
-            // Clean up drops after animation
+            // Reset after animation
             setTimeout(() => {
                 setShowDrops(false);
-                setWaterDrops([]);
-            }, 1500);
+            }, 2000);
         }
         
         // Drain the water
@@ -128,43 +113,31 @@ const NavLink = ({ link, isActive, onClick }: NavLinkProps) => {
             >
                 {/* Water fill with wave effect */}
                 <div
-                    className="absolute inset-x-0 bottom-0 overflow-visible"
+                    className="absolute inset-x-0 bottom-0 overflow-hidden"
                     style={{
                         height: isActive ? '100%' : `${fillLevel}%`,
                         transform: `skewY(${tilt.y * 0.3}deg)`,
                         transition: isHovered ? 'height 0.05s ease-out' : 'height 0.3s ease-out',
                     }}
                 >
-                    {/* Multiple animated waves at top for more visible wave pattern */}
-                    <svg
-                        className="absolute top-0 left-0 w-[200%] h-6 -translate-y-[85%]"
-                        viewBox="0 0 1200 120"
-                        preserveAspectRatio="none"
-                        style={{
-                            animation: 'wave 1.2s linear infinite',
-                        }}
-                    >
-                        <path
-                            d="M0,60 C100,90 200,30 300,60 C400,90 500,30 600,60 C700,90 800,30 900,60 C1000,90 1100,30 1200,60 L1200,120 L0,120 Z"
-                            className="fill-UserAccent"
-                        />
-                    </svg>
-                    {/* Second wave layer for depth */}
-                    <svg
-                        className="absolute top-0 left-0 w-[200%] h-5 -translate-y-[70%] opacity-60"
-                        viewBox="0 0 1200 120"
-                        preserveAspectRatio="none"
-                        style={{
-                            animation: 'wave 1.8s linear infinite reverse',
-                        }}
-                    >
-                        <path
-                            d="M0,50 C150,80 250,20 400,50 C550,80 650,20 800,50 C950,80 1050,20 1200,50 L1200,120 L0,120 Z"
-                            className="fill-UserAccent"
-                        />
-                    </svg>
-                    {/* Solid water fill body */}
-                    <div className="absolute inset-0 top-2 bg-UserAccent" />
+                    {(isActive || fillLevel > 0) && (
+                        <>
+                            {/* Primary wave at top - more visible */}
+                            <svg
+                                className="absolute top-0 left-0 w-[200%] h-8 -translate-y-[90%]"
+                                viewBox="0 0 1200 120"
+                                preserveAspectRatio="none"
+                                style={{ animation: 'wave 1.2s linear infinite' }}
+                            >
+                                <path
+                                    d="M0,40 C100,100 200,0 300,40 C400,100 500,0 600,40 C700,100 800,0 900,40 C1000,100 1100,0 1200,40 L1200,120 L0,120 Z"
+                                    className="fill-UserAccent"
+                                />
+                            </svg>
+                            {/* Solid fill */}
+                            <div className="absolute inset-0 top-2 bg-UserAccent" />
+                        </>
+                    )}
                 </div>
 
                 {/* Text */}
@@ -180,37 +153,14 @@ const NavLink = ({ link, isActive, onClick }: NavLinkProps) => {
                 </span>
             </div>
 
-            {/* Falling water drops with gravity! */}
-            <AnimatePresence>
-                {showDrops && waterDrops.map((drop) => (
-                    <motion.div
-                        key={drop.id}
-                        className="absolute bg-UserAccent rounded-full pointer-events-none"
-                        style={{ 
-                            left: `${drop.x}%`,
-                            width: `${8 * drop.size}px`,
-                            height: `${12 * drop.size}px`,
-                        }}
-                        initial={{ 
-                            top: "100%", 
-                            opacity: 1, 
-                            scaleY: 1.5,
-                            scaleX: 0.8 
-                        }}
-                        animate={{ 
-                            top: "500%", // Fall down past the navbar
-                            opacity: [1, 1, 0.8, 0],
-                            scaleY: [1.5, 2, 2.5, 1],
-                            scaleX: [0.8, 0.6, 0.5, 0.3],
-                        }}
-                        transition={{ 
-                            duration: 1 + Math.random() * 0.5,
-                            delay: drop.delay,
-                            ease: [0.55, 0.085, 0.68, 0.53], // Gravity-like easing
-                        }}
-                    />
-                ))}
-            </AnimatePresence>
+            {/* Canvas-based water physics drip */}
+            <WaterDripCanvas
+                isActive={showDrops}
+                width={120}
+                height={200}
+                originX={60}
+                fillLevel={fillLevel}
+            />
         </Link>
     );
 };
