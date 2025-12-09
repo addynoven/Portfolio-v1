@@ -14,13 +14,20 @@ import Work from "@/components/sections/Work";
 import Contact from "@/components/sections/Contact";
 import Typewriter from "typewriter-effect";
 import { staggerContainer, staggerItem, fadeInLeft, fadeInRight, scaleIn } from "@/hooks/useScrollAnimation";
+import ParticleBackground from "@/components/ParticleBackground";
+import FloatingCodeSymbols from "@/components/FloatingCodeSymbols";
+import HeroTiltCard from "@/components/HeroTiltCard";
 
 const Home = () => {
   return (
     <section className="h-full relative">
       <div className="container mx-auto h-full">
         {/* Hero Section */}
-        <section id="home" className="min-h-screen flex flex-col justify-center py-8 xl:py-12">
+        <section id="home" className="min-h-[calc(100vh-80px)] flex flex-col justify-center pt-4 pb-2 xl:pt-6 xl:pb-4 relative">
+          {/* Three.js Particle Background */}
+          <ParticleBackground />
+          {/* Floating Code Symbols */}
+          <FloatingCodeSymbols />
           <motion.div 
             className="flex flex-col xl:flex-row items-center justify-between xl:justify-evenly pb-0"
             variants={staggerContainer}
@@ -28,8 +35,8 @@ const Home = () => {
             animate="visible"
           >
             {/* text */}
+            <HeroTiltCard className="text-center xl:text-left order-2 xl:order-none">
             <motion.div 
-              className="text-center xl:text-left order-2 xl:order-none"
               variants={staggerItem}
             >
               {/* Typewriter role */}
@@ -57,7 +64,7 @@ const Home = () => {
               
               {/* Main heading with staggered reveal */}
               <motion.h1 
-                className="h1 mb-6"
+                className="h1 mb-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
@@ -72,17 +79,28 @@ const Home = () => {
                 </motion.span>
                 <br />
                 <motion.span 
-                  className="text-UserAccent inline-block"
+                  className="text-UserAccent inline-block relative"
                   initial={{ opacity: 0, x: 50, filter: "blur(10px)" }}
-                  animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                  animate={{ 
+                    opacity: 1, 
+                    x: 0, 
+                    filter: "blur(0px)",
+                  }}
                   transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+                  style={{
+                    textShadow: "0 0 40px rgba(34, 197, 94, 0.5), 0 0 80px rgba(34, 197, 94, 0.3)",
+                  }}
+                  whileHover={{ 
+                    scale: 1.02,
+                    textShadow: "0 0 60px rgba(34, 197, 94, 0.8), 0 0 120px rgba(34, 197, 94, 0.5)",
+                  }}
                 >
-                  Aditya Sahu
+                  Neon Stain
                 </motion.span>
               </motion.h1>
 
               <motion.p 
-                className="max-w-[500px] mb-9 text-slate-600 dark:text-white/80"
+                className="max-w-[500px] mb-6 text-slate-600 dark:text-white/80"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
@@ -132,7 +150,7 @@ const Home = () => {
                 </motion.div>
               </motion.div>
             </motion.div>
-            
+            </HeroTiltCard>
             {/* photo with floating effect */}
             <motion.div 
               className="order-1 xl:order-none mb-8 xl:mb-0"
