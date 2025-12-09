@@ -53,7 +53,10 @@ const LoadingScreen = () => {
 			// After 1s fade, either play the dissolve (if enabled) or finish the loader
 			setTimeout(() => {
 				if (ENABLE_DISSOLVE) setPhase("dissolving");
-				else setPhase("done");
+				else {
+					// 200ms breathing room - blank screen before site reveals
+					setTimeout(() => setPhase("done"), 200);
+				}
 			}, 1000);
 		}, 600);
 	};
