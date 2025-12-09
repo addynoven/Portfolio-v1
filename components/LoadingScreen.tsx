@@ -31,6 +31,8 @@ type Phase =
 	| "done";
 
 const LoadingScreen = () => {
+	// Toggle this to true to re-enable the dissolve effect for testing
+	const ENABLE_DISSOLVE = false;
 	const { theme } = useTheme();
 	const [phase, setPhase] = useState<Phase>("chaos");
 	const [displayText, setDisplayText] = useState("");
@@ -48,8 +50,11 @@ const LoadingScreen = () => {
 		// After 0.6s centering animation, start fading
 		setTimeout(() => {
 			setPhase("logoFading");
-			// After 1s fade, start dissolving
-			setTimeout(() => setPhase("dissolving"), 1000);
+			// After 1s fade, either play the dissolve (if enabled) or finish the loader
+			setTimeout(() => {
+				if (ENABLE_DISSOLVE) setPhase("dissolving");
+				else setPhase("done");
+			}, 1000);
 		}, 600);
 	};
 
@@ -100,7 +105,7 @@ const LoadingScreen = () => {
 	const showGreeting = phase === "greeting";
 	const showCentering = phase === "centering";
 	const showLogoFading = phase === "logoFading";
-	const showDissolve = phase === "dissolving";
+	const showDissolve = ENABLE_DISSOLVE && phase === "dissolving";
 
 	return (
 		<>
