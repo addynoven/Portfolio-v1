@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import React, { useState, useEffect } from "react";
 
 interface MultilingualGreetingProps {
@@ -54,12 +54,19 @@ export const MultilingualGreeting: React.FC<MultilingualGreetingProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(false);
 
   const currentWord = words[currentIndex];
 
+  // Delay showing greeting to allow smooth layout animation
+  useEffect(() => {
+    const timer = setTimeout(() => setShowGreeting(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Cycle through words, then land on "Hello"
   useEffect(() => {
-    if (isComplete) return;
+    if (isComplete || !showGreeting) return;
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => {
@@ -81,7 +88,7 @@ export const MultilingualGreeting: React.FC<MultilingualGreetingProps> = ({
     }, WORD_DURATION);
 
     return () => clearInterval(timer);
-  }, [isComplete, onComplete]);
+  }, [isComplete, onComplete, showGreeting]);
 
   return (
     <>
@@ -105,53 +112,76 @@ export const MultilingualGreeting: React.FC<MultilingualGreetingProps> = ({
         }
       `}</style>
       
-      <div
+      <motion.div
         className="fixed inset-0 z-[101] flex items-center justify-center pointer-events-none"
         style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
       >
-        <div className="flex items-baseline text-5xl md:text-7xl xl:text-8xl font-black tracking-tighter">
-          {/* Part 1: The Greeting (animated with auto-width) */}
-          <div className="relative h-[1.2em] overflow-hidden mr-4">
+        <LayoutGroup>
+          <div className="flex items-baseline text-5xl md:text-7xl xl:text-8xl font-black tracking-tighter">
+            {/* Part 1: The Greeting (animated with auto-width) */}
             <AnimatePresence mode="popLayout">
-              <motion.span
-                key={currentIndex}
-                initial={{ y: "100%", opacity: 0, width: "auto" }}
-                animate={{ y: "0%", opacity: 1, width: "auto" }}
-                exit={{ y: "-100%", opacity: 0 }}
-                transition={{ duration: 0.12, ease: "easeOut" }}
-                className="flex items-center text-white whitespace-nowrap"
-              >
-                {currentWord.text}
-              </motion.span>
+              {showGreeting && (
+                <motion.div 
+                  key="greeting-container"
+                  className="relative h-[1.2em] overflow-hidden mr-4"
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: "auto", opacity: 1 }}
+                  transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                >
+                  <AnimatePresence mode="popLayout">
+                    <motion.span
+                      key={currentIndex}
+                      initial={{ y: "100%", opacity: 0 }}
+                      animate={{ y: "0%", opacity: 1 }}
+                      exit={{ y: "-100%", opacity: 0 }}
+                      transition={{ duration: 0.12, ease: "easeOut" }}
+                      className="flex items-center text-slate-900 dark:text-white whitespace-nowrap"
+                    >
+                      {currentWord.text}
+                    </motion.span>
+                  </AnimatePresence>
+                </motion.div>
+              )}
             </AnimatePresence>
+
+            {/* Part 2: "Neo" + shape-shifting n + dot (uses layoutId for smooth animation) */}
+            <motion.div
+              layoutId="neon-brand"
+              layout
+              className="flex items-baseline text-slate-900 dark:text-white"
+              transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              <span>Neo</span>
+              
+              {/* Shape-shifting 'n' */}
+              <motion.span 
+                key={currentWord.n}
+                initial={{ opacity: 0.5 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.1 }}
+                className="inline-block min-w-[0.5em]"
+              >
+                {currentWord.n}
+              </motion.span>
+
+              {/* The Dot (strong red pulsing -> green on complete) */}
+              <span
+                className={`inline-block ${
+                  isComplete
+                    ? "text-[#22c55e] transition-colors duration-300" // Neon green when complete
+                    : "red-pulse-dot" // Strong red pulsing during cycle
+                }`}
+              >
+                .
+              </span>
+            </motion.div>
           </div>
-
-          {/* Part 2: The Stem (static) */}
-          <span className="text-white">Neo</span>
-
-          {/* Part 3: The Suffix (shape-shifting 'n') */}
-          <motion.span 
-            key={currentWord.n}
-            initial={{ opacity: 0.5 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.1 }}
-            className="text-white inline-block min-w-[0.6em] text-center"
-          >
-            {currentWord.n}
-          </motion.span>
-
-          {/* Part 4: The Dot (strong red pulsing -> green on complete) */}
-          <span
-            className={`inline-block ${
-              isComplete
-                ? "text-[#22c55e] transition-colors duration-300" // Neon green when complete
-                : "red-pulse-dot" // Strong red pulsing during cycle
-            }`}
-          >
-            .
-          </span>
-        </div>
-      </div>
+        </LayoutGroup>
+      </motion.div>
     </>
   );
 };
