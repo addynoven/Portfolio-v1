@@ -1,11 +1,31 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Stair from "./Stair";
 
 const StairTransition = () => {
   const pathname = usePathname();
+  const isFirstMount = useRef(true);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  useEffect(() => {
+    // Skip the first mount - LoadingScreen handles the initial animation
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+    // Trigger animation on subsequent navigations
+    setShouldAnimate(true);
+    const timer = setTimeout(() => setShouldAnimate(false), 1500); // Reset after animation completes
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
+  // Don't render stair animation on initial load
+  if (!shouldAnimate) {
+    return null;
+  }
+
   return (
     <AnimatePresence mode="wait">
       <div key={pathname}>

@@ -45,7 +45,7 @@ const Home = () => {
                 <span className="text-UserAccent">Aditya Sahu</span>
               </h1>
 
-              <p className="max-w-[500px] mb-9 text-white/80 dark:text-white/80">
+              <p className="max-w-[500px] mb-9 text-slate-600 dark:text-white/80">
                 I excel at crafting elegant digital experiences and I am
                 proficient in various programming languages, frameworks and
                 technologies.
@@ -81,13 +81,13 @@ const Home = () => {
         </section>
 
         {/* Other Sections */}
-        <div className="border-b border-white/10" />
+        <div className="border-b border-slate-200 dark:border-white/10" />
         <Services />
-        <div className="border-b border-white/10" />
+        <div className="border-b border-slate-200 dark:border-white/10" />
         <Resume />
-        <div className="border-b border-white/10" />
+        <div className="border-b border-slate-200 dark:border-white/10" />
         <Work />
-        <div className="border-b border-white/10" />
+        <div className="border-b border-slate-200 dark:border-white/10" />
         <Contact />
       </div>
       

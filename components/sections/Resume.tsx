@@ -41,7 +41,7 @@ const Resume = () => {
             <TabsContent value="experience" className="w-full">
               <div className="flex flex-col gap-[30px] text-center xl:text-left">
                 <h3 className="text-4xl font-bold">{Experience.title}</h3>
-                <p className="max-w-[600px] text-slate-600 dark:text-white/60 mx-auto xl:mx-0">
+                <p className="text-slate-600 dark:text-white/60 mx-auto xl:mx-0">
                   {Experience.description}
                 </p>
                 <ScrollArea className="h-[400px]">
@@ -74,7 +74,7 @@ const Resume = () => {
             <TabsContent value="education" className="w-full">
               <div className="flex flex-col gap-[30px] text-center xl:text-left">
                 <h3 className="text-4xl font-bold">{Education.title}</h3>
-                <p className="max-w-[600px] text-slate-600 dark:text-white/60 mx-auto xl:mx-0">
+                <p className="text-slate-600 dark:text-white/60 mx-auto xl:mx-0">
                   {Education.description}
                 </p>
                 <ScrollArea className="h-[400px]">
@@ -111,7 +111,7 @@ const Resume = () => {
                   <h3 className="text-4xl font-bold text-center xl:text-left">
                     {Skills.title}
                   </h3>
-                  <p className="max-w-[600px] text-slate-600 dark:text-white/60 mx-auto xl:mx-0">
+                  <p className="text-slate-600 dark:text-white/60 mx-auto xl:mx-0">
                     {Skills.description}
                   </p>
                 </div>
@@ -147,7 +147,7 @@ const Resume = () => {
             >
               <div className="flex flex-col gap-[30px]">
                 <h3 className="text-4xl font-bold">{About.title}</h3>
-                <p className="max-w-[600px] xl:max-w-[65%] text-slate-600 dark:text-white/60 mx-auto xl:mx-0">
+                <p className="text-slate-600 dark:text-white/60 mx-auto xl:mx-0">
                   {About.description}
                 </p>
                 <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 gap-x-3 max-w-[100%] ">

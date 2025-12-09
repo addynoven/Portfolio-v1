@@ -21,11 +21,11 @@ export default function RetroGrid({ className, angle = 60 }: RetroGridProps) {
           className={cn(
             "animate-grid",
             "[background-repeat:repeat] [background-size:60px_60px] lg:[background-size:120px_120px] [height:300vh] [width:600vw] [transform-origin:100%_0_0]",
-            "[background-image:linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_0),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_0)]"
+            "[background-image:linear-gradient(to_right,rgba(0,0,0,0.2)_1px,transparent_0),linear-gradient(to_bottom,rgba(0,0,0,0.2)_1px,transparent_0)] dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_0),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_0)]"
           )}
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t to-transparent to-90% from-black" />
+      <div className="absolute inset-0 bg-gradient-to-t to-transparent to-90% from-white dark:from-black" />
     </div>
   );
 }

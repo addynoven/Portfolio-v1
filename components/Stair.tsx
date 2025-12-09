@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
+import { useState, useEffect } from "react";
 
 //variants
 
@@ -12,7 +14,7 @@ const StairAnimation = {
         top: "100%",
     },
     exit: {
-        top: ["100%", "0%"],
+        top: "100%", 
     },
 };
 
@@ -21,15 +23,12 @@ const reverseIndex = (index: number) => {
     return totalStairs - index - 1;
 };
 
+
 const Stair = () => {
+    const { theme } = useTheme();
+
     return (
         <>
-            {/* render 6 motion div's, each representing a step of the stairs.
-                Each div will have the same animation defined by the stairsAnimation object.
-                The delay for each div is calculated dynamically based on it's reversed index,
-                creating a staggered effect with decreasing delay for each subsequent step.
-              */}
-
             {[...Array(6)].map((_, index) => {
                 return (
                     <motion.div
@@ -43,7 +42,12 @@ const Stair = () => {
                             ease: "easeInOut",
                             delay: reverseIndex(index) * 0.1,
                         }}
-                        className="h-full w-full bg-white relative"
+                        className="h-full w-full relative"
+                        style={{
+                            backgroundColor: theme === "light" 
+                                ? `hsl(0, 0%, ${100 - index * 5}%)`  // Light: 100% -> 75%
+                                : `hsl(240, 10%, ${4 + index * 4}%)` // Dark: 4% -> 24%
+                        }}
                     />
                 );
             })}
