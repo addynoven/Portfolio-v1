@@ -116,3 +116,15 @@
         background-color: hsl(var(--card-bg));
     }
 }
+
+/* Wave animation for water fill effect */
+@keyframes wave {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes socialWave {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+

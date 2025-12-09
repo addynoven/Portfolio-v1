@@ -150,7 +150,7 @@ ${formData.message}
           >
             <motion.form
               onSubmit={handleSubmit}
-              className="flex flex-col gap-6 p-10 bg-white dark:bg-[#27272c] rounded-xl shadow-md dark:shadow-none"
+              className="flex flex-col gap-6 p-10 bg-white/80 dark:bg-white/5 backdrop-blur-sm rounded-xl border border-slate-200/50 dark:border-white/10"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

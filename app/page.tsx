@@ -112,15 +112,10 @@ const Home = () => {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="uppercase flex items-center gap-2 group"
+                    className="uppercase"
                   >
+                    <FiDownload className="text-xl" />
                     <span>Download Resume</span>
-                    <motion.span
-                      animate={{ y: [0, 3, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <FiDownload className="text-xl group-hover:text-UserAccent transition-colors" />
-                    </motion.span>
                   </Button>
                 </motion.a>
                 <motion.div

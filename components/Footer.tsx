@@ -1,76 +1,101 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import Social from "./Social";
+import FooterAnimationShowcase from "./FooterAnimationShowcase";
+import { useSectionTransition } from "./SectionTransitionContext";
+import { cn } from "@/lib/utils";
+
+const footerLinks = [
+  { name: "Home", targetId: "home" },
+  { name: "Services", targetId: "services" },
+  { name: "Resume", targetId: "resume" },
+  { name: "Work", targetId: "work" },
+  { name: "Contact", targetId: "contact" },
+];
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { navigateToSection } = useSectionTransition();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    navigateToSection(targetId);
+  };
 
   return (
-    <footer className="py-12 border-t border-black/10 dark:border-white/10 bg-slate-100 dark:bg-primary/50">
-      <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Logo & Copyright */}
-          <div className="text-center md:text-left">
-            <Link href="/">
-              <h2 className="text-2xl font-semibold mb-2 text-slate-900 dark:text-white">
-                Neon<span className="text-UserAccent">.</span>
-              </h2>
-            </Link>
-            <p className="text-slate-500 dark:text-white/60 text-sm">
-              © {currentYear} Aditya Sahu. All rights reserved.
+    <footer className="relative py-16 border-t border-black/10 dark:border-white/10 overflow-hidden">
+      {/* Glassmorphism background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-100/80 to-slate-200/50 dark:from-primary/50 dark:to-primary/80 backdrop-blur-sm" />
+      
+      {/* Subtle animated gradient orb */}
+      <motion.div
+        className="absolute -bottom-32 -right-32 w-64 h-64 rounded-full bg-UserAccent/10 blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      
+      <div className="container mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+          
+          {/* Left Column - Animated Logo */}
+          <div className="flex flex-col items-center md:items-start gap-4">
+            {/* Animation Showcase AS the logo */}
+            <div className="text-3xl font-black">
+              <FooterAnimationShowcase />
+            </div>
+            
+            <p className="text-slate-500 dark:text-white/60 text-sm mt-2">
+              © {currentYear} All rights reserved.
             </p>
           </div>
 
-          {/* Quick Links */}
-          <nav className="flex flex-wrap justify-center gap-6">
-            <Link
-              href="#home"
-              className="text-slate-600 dark:text-white/60 hover:text-UserAccent transition-colors"
-            >
-              Home
-            </Link>
-            <Link
-              href="#services"
-              className="text-slate-600 dark:text-white/60 hover:text-UserAccent transition-colors"
-            >
-              Services
-            </Link>
-            <Link
-              href="#resume"
-              className="text-slate-600 dark:text-white/60 hover:text-UserAccent transition-colors"
-            >
-              Resume
-            </Link>
-            <Link
-              href="#work"
-              className="text-slate-600 dark:text-white/60 hover:text-UserAccent transition-colors"
-            >
-              Work
-            </Link>
-            <Link
-              href="#contact"
-              className="text-slate-600 dark:text-white/60 hover:text-UserAccent transition-colors"
-            >
-              Contact
-            </Link>
-          </nav>
+          {/* Center Column - Quick Links with Stair Transition */}
+          <div className="flex flex-col items-center gap-4">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider">
+              Quick Links
+            </h3>
+            <nav className="flex flex-wrap justify-center gap-x-6 gap-y-3">
+              {footerLinks.map((link, index) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Link
+                    href={`#${link.targetId}`}
+                    onClick={(e) => handleNavClick(e, link.targetId)}
+                    className="group relative text-slate-600 dark:text-white/60 hover:text-UserAccent transition-colors duration-300"
+                  >
+                    <span className="relative z-10">{link.name}</span>
+                    {/* Underline animation */}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-UserAccent group-hover:w-full transition-all duration-300" />
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+          </div>
 
-          {/* Social Links */}
-          <div>
+          {/* Right Column - Social Links */}
+          <div className="flex flex-col items-center md:items-end gap-4">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider">
+              Connect
+            </h3>
             <Social
               containerStyles="flex gap-4"
-              iconStyles="w-10 h-10 border border-UserAccent/50 rounded-full flex items-center justify-center text-UserAccent text-sm hover:bg-UserAccent hover:text-primary transition-all duration-300"
+              iconStyles=""
             />
           </div>
-        </div>
-
-        {/* Bottom text */}
-        <div className="mt-8 pt-8 border-t border-black/10 dark:border-white/10 text-center">
-          <p className="text-slate-500 dark:text-white/40 text-sm">
-            Built with{" "}
-            <span className="text-UserAccent">Next.js</span>,{" "}
-            <span className="text-UserAccent">Tailwind CSS</span>, and{" "}
-            <span className="text-UserAccent">Framer Motion</span>
-          </p>
         </div>
       </div>
     </footer>
@@ -78,3 +103,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
