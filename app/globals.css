@@ -62,6 +62,14 @@
     html {
         scroll-behavior: smooth;
         overflow-x: hidden;
+        /* Hide scrollbar but keep scroll functionality */
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+    
+    /* Hide scrollbar for Chrome, Safari, Opera */
+    html::-webkit-scrollbar {
+        display: none;
     }
     
     /* Base body styles for light mode */

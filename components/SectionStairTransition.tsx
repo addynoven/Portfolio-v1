@@ -12,7 +12,7 @@ const SectionStairTransition = () => {
 
   useEffect(() => {
     if (isTransitioning && phase === "idle") {
-      // Start closing animation (stairs slide down)
+      // Start closing animation (stairs slide down to cover screen)
       setPhase("closing");
     }
   }, [isTransitioning, phase]);
@@ -34,19 +34,19 @@ const SectionStairTransition = () => {
   const reverseIndex = (index: number) => totalStairs - index - 1;
 
   return (
-    <div className="fixed inset-0 z-40 flex pointer-events-none">
+    <div className="fixed inset-0 z-[60] flex pointer-events-none">
       {[...Array(totalStairs)].map((_, index) => (
         <motion.div
           key={index}
-          className="h-full w-full relative"
+          className="h-screen w-full absolute left-0 right-0"
           style={{
             backgroundColor:
               theme === "light"
                 ? `hsl(0, 0%, ${100 - index * 5}%)`
                 : `hsl(240, 10%, ${4 + index * 4}%)`,
           }}
-          initial={{ y: phase === "closing" ? "-100%" : "0%" }}
-          animate={{ y: phase === "closing" ? "0%" : "-100%" }}
+          initial={{ top: phase === "closing" ? "-100%" : "0%" }}
+          animate={{ top: phase === "closing" ? "0%" : "-100%" }}
           transition={{
             duration: 0.4,
             ease: "easeInOut",

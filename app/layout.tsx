@@ -80,7 +80,7 @@ export default function RootLayout({
 						<SectionStairTransition />
 						<PageTransition>{children}</PageTransition>
 						<Footer />
-						<ScrollToTop />
+							<ScrollToTop />
 					</SectionTransitionProvider>
 				</ThemeProvider>
 			</body>
