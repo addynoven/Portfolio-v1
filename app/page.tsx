@@ -17,6 +17,8 @@ import { staggerContainer, staggerItem, fadeInLeft, fadeInRight, scaleIn } from 
 import ParticleBackground from "@/components/ParticleBackground";
 import FloatingCodeSymbols from "@/components/FloatingCodeSymbols";
 import HeroTiltCard from "@/components/HeroTiltCard";
+import ShinyText from "@/components/reactbits/ShinyText";
+import ClickSpark from "@/components/reactbits/ClickSpark";
 
 const Home = () => {
   return (
@@ -121,21 +123,23 @@ const Home = () => {
                   ease: [0.34, 1.56, 0.64, 1] // Spring bounce
                 }}
               >
-                <motion.a 
-                  href="/resume.pdf" 
-                  download="Aditya_Sahu_Resume.pdf"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="uppercase"
+                <ClickSpark sparkColor="#00ff99" sparks={15} sparkSize={8}>
+                  <motion.a 
+                    href="/resume.pdf" 
+                    download="Aditya_Sahu_Resume.pdf"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <FiDownload className="text-xl" />
-                    <span>Download Resume</span>
-                  </Button>
-                </motion.a>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="uppercase"
+                    >
+                      <FiDownload className="text-xl" />
+                      <ShinyText shimmerWidth={80} speed={3}>Download Resume</ShinyText>
+                    </Button>
+                  </motion.a>
+                </ClickSpark>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}

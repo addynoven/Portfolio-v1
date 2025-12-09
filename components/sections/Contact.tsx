@@ -22,6 +22,8 @@ import { cn } from "@/lib/utils";
 import { FiSend, FiCheck, FiAlertCircle } from "react-icons/fi";
 
 import { contactInfo } from "@/lib/data";
+import SplitText from "@/components/reactbits/SplitText";
+import ClickSpark from "@/components/reactbits/ClickSpark";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -66,24 +68,30 @@ const Contact = () => {
     }));
   };
 
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
+    setErrorMessage("");
 
     try {
-      const subject = `Portfolio Contact: ${formData.service || "General Inquiry"}`;
-      const body = `
-Name: ${formData.firstName} ${formData.lastName}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Service: ${formData.service}
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-Message:
-${formData.message}
-      `.trim();
+      const result = await response.json();
 
-      const mailtoLink = `mailto:dmcbaditya@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.open(mailtoLink, "_blank");
+      if (!response.ok) {
+        setErrorMessage(result.error || "Something went wrong");
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 5000);
+        return;
+      }
 
       setStatus("success");
       setFormData({
@@ -97,8 +105,9 @@ ${formData.message}
 
       setTimeout(() => setStatus("idle"), 3000);
     } catch (error) {
+      setErrorMessage("Network error. Please try again.");
       setStatus("error");
-      setTimeout(() => setStatus("idle"), 3000);
+      setTimeout(() => setStatus("idle"), 5000);
     }
   };
 
@@ -120,15 +129,9 @@ ${formData.message}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <motion.h2 
-            className="text-4xl xl:text-5xl font-bold mb-4"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Contact Me
-          </motion.h2>
+          <h2 className="text-4xl xl:text-5xl font-bold mb-4">
+            <SplitText text="Contact Me" stagger={0.08} delay={0.2} />
+          </h2>
           <motion.div
             className="h-1 bg-gradient-to-r from-UserAccent to-transparent rounded-full"
             initial={{ scaleX: 0, originX: 0 }}
@@ -293,38 +296,50 @@ ${formData.message}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
-                <Button
-                  type="submit"
-                  size="md"
-                  className="max-w-44 flex items-center gap-2"
-                  disabled={status === "loading"}
-                >
-                  {status === "loading" && (
-                    <>
-                      <span className="animate-spin">⏳</span>
-                      Sending...
-                    </>
-                  )}
-                  {status === "success" && (
-                    <>
-                      <FiCheck className="text-lg" />
-                      Sent!
-                    </>
-                  )}
-                  {status === "error" && (
-                    <>
-                      <FiAlertCircle className="text-lg" />
-                      Error
-                    </>
-                  )}
-                  {status === "idle" && (
-                    <>
-                      Send Message
-                      <FiSend className="text-lg" />
-                    </>
-                  )}
-                </Button>
+                <ClickSpark sparkColor="#00ff99" sparks={12} sparkSize={6}>
+                  <Button
+                    type="submit"
+                    size="md"
+                    className="max-w-44 flex items-center gap-2"
+                    disabled={status === "loading"}
+                  >
+                    {status === "loading" && (
+                      <>
+                        <span className="animate-spin">⏳</span>
+                        Sending...
+                      </>
+                    )}
+                    {status === "success" && (
+                      <>
+                        <FiCheck className="text-lg" />
+                        Sent!
+                      </>
+                    )}
+                    {status === "error" && (
+                      <>
+                        <FiAlertCircle className="text-lg" />
+                        Error
+                      </>
+                    )}
+                    {status === "idle" && (
+                      <>
+                        Send Message
+                        <FiSend className="text-lg" />
+                      </>
+                    )}
+                  </Button>
+                </ClickSpark>
               </motion.div>
+              {/* Error message display */}
+              {status === "error" && errorMessage && (
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-sm mt-2"
+                >
+                  {errorMessage}
+                </motion.p>
+              )}
             </motion.form>
           </motion.div>
           {/* Contact info */}

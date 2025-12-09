@@ -15,6 +15,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import WorkSliderBtns from "@/components/WorkSliderBtns";
 import RGBDistortionImage from "@/components/RGBDistortionImage";
+import SplitText from "@/components/reactbits/SplitText";
+import Aurora from "@/components/reactbits/Aurora";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
 import { projects } from "@/lib/data";
 
@@ -46,15 +49,9 @@ const Work = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <motion.h2 
-            className="text-4xl xl:text-5xl font-bold mb-4"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            My Work
-          </motion.h2>
+          <h2 className="text-4xl xl:text-5xl font-bold mb-4">
+            <SplitText text="My Work" stagger={0.08} delay={0.2} />
+          </h2>
           <motion.div
             className="h-1 bg-gradient-to-r from-UserAccent to-transparent rounded-full"
             initial={{ scaleX: 0, originX: 0 }}

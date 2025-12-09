@@ -10,6 +10,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
 import { About, Experience, Education, Skills } from "@/lib/data";
+import SplitText from "@/components/reactbits/SplitText";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
@@ -57,15 +59,9 @@ const Resume = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <motion.h2 
-            className="text-4xl xl:text-5xl font-bold mb-4"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            My Resume
-          </motion.h2>
+          <h2 className="text-4xl xl:text-5xl font-bold mb-4">
+            <SplitText text="My Resume" stagger={0.08} delay={0.2} />
+          </h2>
           <motion.div
             className="h-1 bg-gradient-to-r from-UserAccent to-transparent rounded-full"
             initial={{ scaleX: 0, originX: 0 }}
