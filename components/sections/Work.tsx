@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/tooltip";
 
 import Link from "next/link";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import WorkSliderBtns from "@/components/WorkSliderBtns";
+import RGBDistortionImage from "@/components/RGBDistortionImage";
 
 import { projects } from "@/lib/data";
 
@@ -226,14 +226,14 @@ const Work = () => {
                     >
                       {/* overlay */}
                       <div className="absolute top-0 bottom-0 w-full h-full bg-black/10 z-10"></div>
-                      {/* image */}
+                      {/* image with RGB distortion effect */}
                       <div className="w-full h-full relative">
-                        <Image
+                        <RGBDistortionImage
                           src={project.image}
                           alt={project.title}
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
-                          fill
-                          sizes="100%"
+                          intensity={0.8}
+                          waveFrequency={12.0}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
                     </motion.div>

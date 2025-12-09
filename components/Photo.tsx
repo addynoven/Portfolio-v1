@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Tilt from "react-parallax-tilt";
+import RGBDistortionImage from "@/components/RGBDistortionImage";
 
 const Photo = () => {
   return (
@@ -25,7 +25,7 @@ const Photo = () => {
           transitionSpeed={1000}
           className="relative flex justify-center items-center"
         >
-          {/* image */}
+          {/* image with RGB distortion effect */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{
@@ -36,18 +36,15 @@ const Photo = () => {
                 ease: "easeInOut",
               },
             }}
-            className="w-[290px] h-[290px] xl:w-[420px] xl:h-[420px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] mix-blend-lighten z-10"
+            className="w-[290px] h-[290px] xl:w-[420px] xl:h-[420px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] mix-blend-lighten z-10 overflow-hidden rounded-full"
           >
-            <div className="relative w-full h-full">
-               <Image
-                src="/photo.jpg"
-                alt="photography"
-                fill
-                priority
-                quality={100}
-                className="object-contain rounded-full"
-              />
-            </div>
+            <RGBDistortionImage
+              src="/photo.jpg"
+              alt="Aditya Sahu - Profile Photo"
+              intensity={1.2}
+              waveFrequency={8.0}
+              className="w-full h-full"
+            />
           </motion.div>
 
           {/* circle */}
