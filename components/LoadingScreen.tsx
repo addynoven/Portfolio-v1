@@ -12,11 +12,12 @@ import { MultilingualGreeting } from "./MultilingualGreeting";
 // 1. chaos: Full screen scrambled text
 // 2. concentrate: "NEONVERSE" forms in center
 // 3. brand: "NEONVERSE" -> "NEON" 
-// 4. greeting: Multilingual greeting cycle "Hello Neo[n]." with shape-shifting n
-// 5. logoFading: Logo fades out (solid bg still visible)
-// 6. dissolving: Dissolve effect plays ON TOP of solid bg
-// 7. done: Loader completely removed
-type Phase = "chaos" | "concentrate" | "brand" | "greeting" | "logoFading" | "dissolving" | "done";
+// 4. neonDot: "NEON" -> "Neon." (proper casing transition)
+// 5. greeting: Multilingual greeting cycle "Hello Neon." with shape-shifting n
+// 6. logoFading: "Neon." fades out (solid bg still visible)
+// 7. dissolving: Dissolve effect plays ON TOP of solid bg
+// 8. done: Loader completely removed
+type Phase = "chaos" | "concentrate" | "brand" | "neonDot" | "greeting" | "logoFading" | "dissolving" | "done";
 
 const LoadingScreen = () => {
   const { theme } = useTheme();
@@ -50,10 +51,15 @@ const LoadingScreen = () => {
       scramblerRef.current?.setText("NEON", 60);
     }, 4000);
 
-    // 5.0s: Start multilingual greeting cycle
+    // 5.0s: Transition to "Neon." (proper casing)
     const timer3 = setTimeout(() => {
-      setPhase("greeting");
+      setPhase("neonDot");
     }, 5000);
+
+    // 6.0s: Start multilingual greeting cycle (Neon. moves to make space)
+    const timer4 = setTimeout(() => {
+      setPhase("greeting");
+    }, 6000);
 
     // Note: logoFading and dissolving are triggered by callbacks, not fixed timers
 
@@ -61,6 +67,7 @@ const LoadingScreen = () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
+      clearTimeout(timer4);
     };
   }, []);
 
@@ -71,8 +78,9 @@ const LoadingScreen = () => {
   // Don't render anything after done
   if (phase === "done") return null;
 
-  const showSolidBg = true; // Always true here since we return early when phase === "done"
-  const showLogo = phase === "concentrate" || phase === "brand";
+  const showSolidBg = true;
+  const showScrambledLogo = phase === "concentrate" || phase === "brand";
+  const showNeonDot = phase === "neonDot";
   const showGreeting = phase === "greeting";
   const showLogoFading = phase === "logoFading";
   const showDissolve = phase === "dissolving";
@@ -89,16 +97,15 @@ const LoadingScreen = () => {
         </div>
       )}
 
-      {/* Central Text - Logo */}
+      {/* Central Text - Scrambled Logo (NEONVERSE -> NEON) */}
       <AnimatePresence>
-        {showLogo && (
+        {showScrambledLogo && (
           <motion.div
-            key="central-text"
-            exit={{ opacity: 0, transition: { duration: 0.8, ease: "easeOut" } }}
+            key="scrambled-logo"
+            exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeOut" } }}
             className="fixed inset-0 z-[101] flex items-center justify-center pointer-events-none"
           >
             <motion.div
-              layoutId="brand-logo"
               initial={{ scale: 0.5, opacity: 0, filter: "blur(10px)" }}
               animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -111,24 +118,45 @@ const LoadingScreen = () => {
         )}
       </AnimatePresence>
 
-      {/* Multilingual Greeting Phase */}
+      {/* Neon. Phase - Shows "Neon." centered, then animates position for greeting */}
+      <AnimatePresence>
+        {showNeonDot && (
+          <motion.div
+            key="neon-dot-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.3 } }}
+            className="fixed inset-0 z-[101] flex items-center justify-center pointer-events-none"
+            style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+          >
+            <motion.div
+              layoutId="neon-brand"
+              className="text-5xl md:text-7xl xl:text-8xl font-black tracking-tighter text-slate-900 dark:text-white"
+            >
+              Neon<span className="text-UserAccent">.</span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Multilingual Greeting Phase - Neon. slides right to make space */}
       <AnimatePresence>
         {showGreeting && (
           <MultilingualGreeting onComplete={handleGreetingComplete} />
         )}
       </AnimatePresence>
 
-      {/* Logo Fading Phase - shows logo fading on solid bg */}
+      {/* Logo Fading Phase - shows "Neon." fading on solid bg */}
       {showLogoFading && (
         <motion.div
           className="fixed inset-0 z-[101] flex items-center justify-center pointer-events-none"
+          style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
           initial={{ opacity: 1 }}
           animate={{ opacity: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
           <div className="text-5xl md:text-7xl xl:text-8xl font-black tracking-tighter text-slate-900 dark:text-white">
-            {displayText}
-            <span className="text-UserAccent">.</span>
+            Neon<span className="text-[#22c55e]">.</span>
           </div>
         </motion.div>
       )}
