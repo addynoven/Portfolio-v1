@@ -32,7 +32,7 @@ export const LetterTransition: React.FC<LetterTransitionProps> = ({
 		{ upper: "N", lower: "N", changed: step >= 1 },
 		{ upper: "E", lower: "e", changed: step >= 2 },
 		{ upper: "O", lower: "o", changed: step >= 3 },
-		{ upper: "N", lower: "?", changed: false, isLastN: true }, // Last N never fully changes
+		{ upper: "N", lower: "N", changed: false, isLastN: true }, // Last N never fully changes
 	];
 
 	// Progress through letter changes
