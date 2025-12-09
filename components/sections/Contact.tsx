@@ -150,7 +150,7 @@ ${formData.message}
           >
             <motion.form
               onSubmit={handleSubmit}
-              className="flex flex-col gap-6 p-10 bg-white/80 dark:bg-white/5 backdrop-blur-sm rounded-xl border border-slate-200/50 dark:border-white/10"
+              className="flex flex-col gap-6 p-10"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -368,7 +368,7 @@ ${formData.message}
           </motion.div>
         </div>
       </div>
-      {/* background */}
+      {/* background - COMMENTED OUT FOR TESTING
       <div className="absolute inset-0 -z-10 w-full h-full">
         <div className="hidden xl:block">
           <RetroGrid />
@@ -386,6 +386,7 @@ ${formData.message}
           />
         </div>
       </div>
+      */}
     </motion.section>
   );
 };
