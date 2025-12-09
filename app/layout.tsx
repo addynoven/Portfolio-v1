@@ -7,6 +7,8 @@ import LoadingScreen from "@/components/LoadingScreen";
 import PageTransition from "@/components/PageTransition";
 import StairTransition from "@/components/StairTransition";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { SectionTransitionProvider } from "@/components/SectionTransitionContext";
+import SectionStairTransition from "@/components/SectionStairTransition";
 
 import type { Metadata } from "next";
 
@@ -65,18 +67,21 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={jetbrainsMono.variable}>
-				<ThemeProvider
+					<ThemeProvider
 					attribute="class"
 					defaultTheme="dark"
 					enableSystem
 					disableTransitionOnChange
 				>
-					<LoadingScreen />
-					<Header />
-					<StairTransition />
-					<PageTransition>{children}</PageTransition>
-					<Footer />
-					<ScrollToTop />
+					<SectionTransitionProvider>
+						<LoadingScreen />
+						<Header />
+						<StairTransition />
+						<SectionStairTransition />
+						<PageTransition>{children}</PageTransition>
+						<Footer />
+						<ScrollToTop />
+					</SectionTransitionProvider>
 				</ThemeProvider>
 			</body>
 		</html>

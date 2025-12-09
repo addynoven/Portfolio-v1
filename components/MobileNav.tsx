@@ -1,11 +1,10 @@
 "use client";
 
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { CiMenuFries } from "react-icons/ci";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useSectionTransition } from "./SectionTransitionContext";
 
 const links = [
   { name: "Home", path: "#home", targetId: "home" },
@@ -16,17 +15,13 @@ const links = [
 ];
 
 const MobileNav = () => {
-  const pathname = usePathname();
-  const [activeSection, setActiveSection] = useState("home"); // You might want to share this state or duplicate the scroll spy logic if needed on mobile
+  const { activeSection, navigateToSection } = useSectionTransition();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-     // Default anchor behavior might work fine, but smooth scroll is better
      e.preventDefault();
-     const element = document.getElementById(targetId);
-     if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-     }
+     navigateToSection(targetId);
   };
+
 
   return (
     <Sheet>
