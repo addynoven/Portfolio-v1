@@ -18,12 +18,18 @@ const TRACKER_PATH = path.join(__dirname, '..', 'docs', 'REACTBITS_TRACKER.md');
 
 const CATEGORIES = ['TextAnimations', 'Animations', 'Components', 'Backgrounds'];
 
-// Components we already have (skip these)
-const EXISTING_COMPONENTS = new Set([
-  'Aurora', 'ClickSpark', 'DecryptedText', 'GlareHover', 
-  'GlitchText', 'GridPulse', 'Magnet', 'ShinyText', 
-  'SplitText', 'SpotlightCard', 'Squares', 'TiltCard', 'Waves'
-]);
+// Auto-detect existing components from filesystem
+function getExistingComponents() {
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    return new Set();
+  }
+  const files = fs.readdirSync(OUTPUT_DIR);
+  const components = files
+    .filter(f => f.endsWith('.tsx'))
+    .map(f => f.replace('.tsx', ''));
+  console.log(`📂 Found ${components.length} existing components locally`);
+  return new Set(components);
+}
 
 // Track results
 const results = {
@@ -78,8 +84,8 @@ function convertToTypeScript(code, componentName) {
   return converted;
 }
 
-async function downloadComponent(category, componentName) {
-  if (EXISTING_COMPONENTS.has(componentName)) {
+async function downloadComponent(category, componentName, existingComponents) {
+  if (existingComponents.has(componentName)) {
     console.log(`  ⏭️  Skipping ${componentName} (already exists)`);
     results.skipped.push(componentName);
     return;
@@ -118,7 +124,7 @@ async function downloadComponent(category, componentName) {
   }
 }
 
-async function downloadCategory(category) {
+async function downloadCategory(category, existingComponents) {
   console.log(`\n📁 ${category}`);
   console.log('─'.repeat(40));
   
@@ -127,7 +133,7 @@ async function downloadCategory(category) {
     
     for (const component of components) {
       if (component.type === 'dir') {
-        await downloadComponent(category, component.name);
+        await downloadComponent(category, component.name, existingComponents);
         // Add delay to avoid rate limiting
         await new Promise(r => setTimeout(r, 200));
       }
@@ -180,9 +186,12 @@ async function main() {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
   
+  // Auto-detect what we already have
+  const existingComponents = getExistingComponents();
+  
   // Download all categories
   for (const category of CATEGORIES) {
-    await downloadCategory(category);
+    await downloadCategory(category, existingComponents);
   }
   
   // Update tracker
