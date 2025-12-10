@@ -60,7 +60,7 @@ export const metadata: Metadata = {
 };
 
 // Toggle loading screen on/off for development - set to false to skip
-const SHOW_LOADING_SCREEN = false;
+const SHOW_LOADING_SCREEN = true;
 
 export default function RootLayout({
 	children,

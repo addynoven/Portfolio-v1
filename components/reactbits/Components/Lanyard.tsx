@@ -190,9 +190,10 @@ function Band({
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
+  const segmentLength = stringLength / 3;
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], segmentLength]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], segmentLength]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], segmentLength]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
     [0, 1.45, 0]

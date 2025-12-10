@@ -131,22 +131,22 @@ const Skills = () => {
       {/* Particles Background */}
       <div className="absolute inset-0 z-0">
         <Particles
-          particleCount={150}
-          particleSpread={15}
-          speed={0.08}
-          particleColors={["#00ff99", "#00d4aa", "#ffffff"]}
-          alphaParticles={true}
-          particleBaseSize={80}
-          sizeRandomness={0.8}
-          cameraDistance={25}
+          particleCount={400}
+          particleSpread={12}
+          speed={0.12}
+          particleColors={["#00ff99", "#00d4aa", "#10b981", "#34d399", "#ffffff"]}
+          alphaParticles={false}
+          particleBaseSize={180}
+          sizeRandomness={1.2}
+          cameraDistance={18}
           moveParticlesOnHover={true}
-          particleHoverFactor={0.5}
+          particleHoverFactor={0.8}
           className=""
         />
       </div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
+      {/* Gradient Overlay - reduced opacity for better particle visibility */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-background/20 to-background/80 pointer-events-none" />
 
       <div className="container mx-auto relative z-10">
         {/* Section Header */}
