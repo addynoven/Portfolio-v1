@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
-import Magnet from "@/components/reactbits/Magnet";
+import Magnet from "@/components/reactbits/Animations/Magnet";
 
 import {
   FaGithub,

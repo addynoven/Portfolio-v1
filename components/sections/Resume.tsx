@@ -10,8 +10,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
 import { About, Experience, Education, Skills } from "@/lib/data";
-import SplitText from "@/components/reactbits/SplitText";
-import SpotlightCard from "@/components/reactbits/SpotlightCard";
+import SplitText from "@/components/reactbits/TextAnimations/SplitText";
+import SpotlightCard from "@/components/reactbits/Components/SpotlightCard";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },

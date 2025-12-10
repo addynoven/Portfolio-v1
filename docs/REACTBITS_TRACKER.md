@@ -8,7 +8,7 @@ This document tracks the [ReactBits](https://reactbits.dev) components integrate
 
 | Category | Count |
 |----------|-------|
-| **Currently In Use** | 10 |
+| **Currently In Use** | 14 |
 | **Available to Use** | 110+ |
 
 ---
@@ -17,7 +17,7 @@ This document tracks the [ReactBits](https://reactbits.dev) components integrate
 
 | Component | Used In | Purpose |
 |-----------|---------|---------|
-| `SplitText` | Work, Resume, Services, Contact | Section headers animation |
+| `SplitText` | Work, Resume, Services, Contact, Skills | Section headers animation |
 | `Aurora` | Section backgrounds | Fluid gradient background |
 | `Squares` | Work (Project 1) | Geometric background effect |
 | `Waves` | Work (Project 2) | Flowing wave background |
@@ -27,6 +27,11 @@ This document tracks the [ReactBits](https://reactbits.dev) components integrate
 | `Magnet` | Social Icons | Magnetic hover effect |
 | `GlareHover` | Services | 3D glare effect on hover |
 | `SpotlightCard` | Resume | Spotlight reveal on hover |
+| `TiltCard` | Skills | 3D tilt effect on skill cards |
+| `DecryptedText` | Skills | Matrix-style category name reveal |
+| `Particles` | Skills | WebGL particle background |
+| `GradientText` | Skills | Animated gradient category headers |
+| `Lanyard` | Home (end) | 3D interactive physics ID card |
 
 ---
 

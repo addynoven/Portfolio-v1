@@ -18,6 +18,7 @@ const scrollStackCardStyle = {
   willChange: 'transform, filter',
   backfaceVisibility: 'hidden' as const,
   transformStyle: 'preserve-3d' as const,
+  overflow: 'hidden' as const,
 };
 
 export const ScrollStackItem = ({ children, itemClassName = '' }) => (

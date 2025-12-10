@@ -10,14 +10,14 @@ import {
 } from "@/components/ui/tooltip";
 import Link from "next/link";
 import Image from "next/image";
-import SplitText from "@/components/reactbits/SplitText";
-import Aurora from "@/components/reactbits/Aurora";
-import Squares from "@/components/reactbits/Squares";
-import Waves from "@/components/reactbits/Waves";
-import Threads from "@/components/reactbits/Threads";
-import GridPulse from "@/components/reactbits/GridPulse";
-import { GridScan } from "@/components/reactbits/GridScan";
-import ScrollStack, { ScrollStackItem } from "@/components/reactbits/ScrollStack";
+import SplitText from "@/components/reactbits/TextAnimations/SplitText";
+import Aurora from "@/components/reactbits/Backgrounds/Aurora";
+import Squares from "@/components/reactbits/Backgrounds/Squares";
+import Waves from "@/components/reactbits/Backgrounds/Waves";
+import Threads from "@/components/reactbits/Backgrounds/Threads";
+import GridPulse from "@/components/reactbits/Backgrounds/GridPulse";
+import { GridScan } from "@/components/reactbits/Backgrounds/GridScan";
+import ScrollStack, { ScrollStackItem } from "@/components/reactbits/Components/ScrollStack";
 import { projects } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 

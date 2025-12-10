@@ -5,8 +5,8 @@ import { BsArrowDownRight } from "react-icons/bs";
 import { servicesData } from "@/lib/data";
 import { motion } from "framer-motion";
 import React from "react";
-import SplitText from "@/components/reactbits/SplitText";
-import GlareHover from "@/components/reactbits/GlareHover";
+import SplitText from "@/components/reactbits/TextAnimations/SplitText";
+import GlareHover from "@/components/reactbits/Animations/GlareHover";
 
 const cardVariants = {
   hidden: (index: number) => ({

@@ -22,8 +22,8 @@ import { cn } from "@/lib/utils";
 import { FiSend, FiCheck, FiAlertCircle } from "react-icons/fi";
 
 import { contactInfo } from "@/lib/data";
-import SplitText from "@/components/reactbits/SplitText";
-import ClickSpark from "@/components/reactbits/ClickSpark";
+import SplitText from "@/components/reactbits/TextAnimations/SplitText";
+import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 

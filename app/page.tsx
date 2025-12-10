@@ -11,15 +11,17 @@ import { motion } from "framer-motion";
 import Services from "@/components/sections/Services";
 import Resume from "@/components/sections/Resume";
 import Work from "@/components/sections/Work";
+import Skills from "@/components/sections/Skills";
 import Contact from "@/components/sections/Contact";
 import Typewriter from "typewriter-effect";
 import { staggerContainer, staggerItem, fadeInLeft, fadeInRight, scaleIn } from "@/hooks/useScrollAnimation";
 import ParticleBackground from "@/components/ParticleBackground";
 import FloatingCodeSymbols from "@/components/FloatingCodeSymbols";
 import HeroTiltCard from "@/components/HeroTiltCard";
-import ShinyText from "@/components/reactbits/ShinyText";
-import ClickSpark from "@/components/reactbits/ClickSpark";
-import Hyperspeed from "@/components/reactbits/Hyperspeed";
+import ShinyText from "@/components/reactbits/TextAnimations/ShinyText";
+import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
+import Lanyard from "@/components/reactbits/Components/Lanyard";
+import ProfileCard from "@/components/reactbits/Components/ProfileCard";
 
 const Home = () => {
   return (
@@ -190,11 +192,48 @@ const Home = () => {
         <div className="border-b border-slate-200 dark:border-white/10" />
         <Work limit={5} />
         <div className="border-b border-slate-200 dark:border-white/10" />
+        <Skills />
+        <div className="border-b border-slate-200 dark:border-white/10" />
         <Resume />
         <div className="border-b border-slate-200 dark:border-white/10" />
         <Services />
         <div className="border-b border-slate-200 dark:border-white/10" />
         <Contact />
+        <div className="border-b border-slate-200 dark:border-white/10" />
+        <section className="h-screen w-full relative overflow-hidden flex flex-col items-center justify-center bg-black">
+          <div className="absolute top-10 z-10 text-center">
+             <h2 className="text-3xl font-bold text-white mb-2">Interactive Badge</h2>
+             <p className="text-white/60">Drag to play with physics</p>
+          </div>
+          <Lanyard 
+            position={[0, 5, 20]} 
+            gravity={[0, -20, 0]}
+            cardScale={2.25}
+            cardWidth={1.6}
+            cardHeight={2.25}
+            cardDepth={0.05}
+            htmlScale={0.175}
+            htmlWidth={380}
+            htmlHeight={540}
+            cardContent={
+              <ProfileCard
+                name="Aditya Sahu"
+                title="Full Stack Developer"
+                handle="neonstain"
+                status="Available"
+                contactText="Contact Me"
+                avatarUrl="/photo.png"
+                showUserInfo={true}
+                enableTilt={true}
+                enableMobileTilt={true}
+                onContactClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  contactSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              />
+            }
+          />
+        </section>
       </div>
       
       {/* background */}
