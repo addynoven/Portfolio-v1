@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion } from "framer-motion";
 import { BsArrowUpRight, BsGithub } from "react-icons/bs";
 import {
   Tooltip,
@@ -9,28 +8,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
 import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import WorkSliderBtns from "@/components/WorkSliderBtns";
-import RGBDistortionImage from "@/components/RGBDistortionImage";
+import Image from "next/image";
 import SplitText from "@/components/reactbits/SplitText";
 import Aurora from "@/components/reactbits/Aurora";
-import SpotlightCard from "@/components/reactbits/SpotlightCard";
-
+import Squares from "@/components/reactbits/Squares";
+import Waves from "@/components/reactbits/Waves";
 import { projects } from "@/lib/data";
 
 const Work = () => {
-  const [Project, setProject] = useState(projects[0]);
-  const [slideKey, setSlideKey] = useState(0);
-  
-  const handleSlideChange = (swiper: any) => {
-    const currentlyIndex = swiper.realIndex;
-    setProject(projects[currentlyIndex]);
-    setSlideKey(prev => prev + 1);
-  };
-  
   return (
     <motion.section
       id="work"
@@ -38,12 +24,21 @@ const Work = () => {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="flex items-center justify-center py-16 xl:py-24"
+      className="relative py-16 xl:py-24 overflow-hidden"
     >
-      <div className="container mx-auto">
+      {/* Aurora Background for entire section */}
+      <div className="absolute inset-0 z-0">
+        <Aurora 
+          colorStops={["#00ff99", "#0a2a1a", "#00d4aa", "#1a1a2e"]}
+          speed={2}
+          blur={120}
+        />
+      </div>
+
+      <div className="container mx-auto relative z-10">
         {/* Section Header */}
         <motion.div
-          className="mb-12"
+          className="mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -62,188 +57,199 @@ const Work = () => {
           />
         </motion.div>
 
-        <div className="flex flex-col xl:flex-row xl:gap-[30px]">
-          <motion.div 
-            className="w-full xl:w-[50%] xl:h-[460px] flex fex-col xl:justify-between order-2 xl:order-none"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <div className="flex flex-col gap-[30px] h-[50%]">
-              {/* Animated project number */}
-              <AnimatePresence mode="wait">
-                <motion.div 
-                  key={`num-${slideKey}`}
-                  className="text-8xl leading-none text-transparent text-outline"
-                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                  transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
-                >
-                  {Project.num}
-                </motion.div>
-              </AnimatePresence>
-              
-              {/* Animated project category */}
-              <AnimatePresence mode="wait">
-                <motion.h2 
-                  key={`cat-${slideKey}`}
-                  className="text-[42px] font-bold leading-none text-slate-900 dark:text-white capitalize"
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 30 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                >
-                  {Project.category} project
-                </motion.h2>
-              </AnimatePresence>
-              
-              {/* Animated description */}
-              <AnimatePresence mode="wait">
-                <motion.p 
-                  key={`desc-${slideKey}`}
-                  className="text-slate-600 dark:text-white/60 text-lg"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                >
-                  {Project.description}
-                </motion.p>
-              </AnimatePresence>
-              
-              {/* Animated stack */}
-              <motion.ul 
-                className="flex gap-4 flex-wrap"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-              >
-                {Project.Stack.map((stack, index) => {
-                  return (
-                    <motion.li 
-                      key={stack.name} 
-                      className="text-xl text-UserAccent"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: 0.1 * index }}
-                    >
-                      {stack.name}
-                      {index !== Project.Stack.length - 1 && ","}
-                    </motion.li>
-                  );
-                })}
-              </motion.ul>
-              
-              {/* Border line */}
-              <motion.div 
-                className="border-b border-slate-200 dark:border-white/20"
-                initial={{ scaleX: 0, originX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-              />
-              
-              {/* Action buttons */}
-              <motion.div 
-                className="flex items-center gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                {/* live project link */}
-                <Link href={Project.live}>
-                  <TooltipProvider delayDuration={100}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <motion.div 
-                          className="w-[70px] h-[70px] rounded-full bg-slate-100 dark:bg-white/5 flex justify-center items-center group cursor-pointer"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <BsArrowUpRight className="text-slate-700 dark:text-white text-3xl group-hover:text-UserAccent transition-all duration-500" />
-                        </motion.div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="text-white/80 text-sm bg-black/80 p-2">
-                          Live project
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </Link>
+        {/* Timeline Container */}
+        <div className="relative">
+          {/* Timeline Line (visible on xl screens) */}
+          <div className="hidden xl:block absolute left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-UserAccent/50 via-UserAccent/20 to-transparent -translate-x-1/2 z-10" />
 
-                {/* github project link */}
-                <Link href={Project.github}>
-                  <TooltipProvider delayDuration={100}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <motion.div 
-                          className="w-[70px] h-[70px] rounded-full bg-slate-100 dark:bg-white/5 flex justify-center items-center group cursor-pointer"
-                          whileHover={{ scale: 1.1, rotate: -5 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <BsGithub className="text-slate-700 dark:text-white text-3xl group-hover:text-UserAccent transition-all duration-500" />
-                        </motion.div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="text-white/80 text-sm bg-black/80 p-2">
-                          Github project
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
-          
-          <motion.div 
-            className="w-full xl:w-[50%]"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <Swiper
-              spaceBetween={30}
-              slidesPerGroup={1}
-              className="h-[350px] sm:h-[450px] xl:h-[520px] mb-12"
-              onSlideChange={handleSlideChange}
-            >
-              {projects.map((project, index) => {
-                return (
-                  <SwiperSlide key={index} className="w-full">
-                    <motion.div 
-                      className="h-[300px] sm:h-[400px] xl:h-[460px] relative group flex justify-center items-center bg-pink-50/20 rounded-lg overflow-hidden"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {/* overlay */}
-                      <div className="absolute top-0 bottom-0 w-full h-full bg-black/10 z-10"></div>
-                      {/* image with RGB distortion effect */}
-                      <div className="w-full h-full relative">
-                        <RGBDistortionImage
-                          src={project.image}
-                          alt={project.title}
-                          intensity={0.8}
-                          waveFrequency={12.0}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          {/* Projects */}
+          <div className="space-y-20 xl:space-y-32">
+            {projects.map((project, index) => {
+              const isEven = index % 2 === 0;
+              
+              return (
+                <motion.div
+                  key={project.num}
+                  className="relative"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.7, delay: 0.1 }}
+                >
+                  {/* Full-width project card with glass effect */}
+                  <div className="relative rounded-2xl bg-white/5 dark:bg-black/20 backdrop-blur-sm border border-white/10 p-6 xl:p-10 overflow-hidden">
+                    {/* Dynamic Background Effect based on project index */}
+                    <div className="absolute inset-0 z-0">
+                      {index === 0 && (
+                        <Squares 
+                          direction="diagonal"
+                          speed={0.3}
+                          borderColor="rgba(0, 255, 153, 0.15)"
+                          squareSize={50}
+                          hoverFillColor="rgba(0, 255, 153, 0.1)"
                         />
-                      </div>
-                    </motion.div>
-                  </SwiperSlide>
-                );
-              })}
-              {/* slider button */}
-              <WorkSliderBtns
-                containerStyle="flex gap-2 absolute right-0 bottom-[calc(50%_-_22px)] xl:bottom-0 z-20 w-full justify-between xl:w-max xl:justify-none"
-                btnStyles="bg-UserAccent hover:bg-UserAccent-hover text-primary w-[44px] h-[44px] flex justify-center items-center transition-all"
-              />
-            </Swiper>
-          </motion.div>
+                      )}
+                      {index === 1 && (
+                        <Waves 
+                          lineColor="rgba(0, 255, 153, 0.3)"
+                          backgroundColor="transparent"
+                          waveSpeedX={0.02}
+                          waveSpeedY={0.01}
+                          waveAmpX={40}
+                          waveAmpY={20}
+                          friction={0.9}
+                          tension={0.01}
+                          maxCursorMove={120}
+                          xGap={12}
+                          yGap={36}
+                        />
+                      )}
+                      {index === 2 && (
+                        <Squares 
+                          direction="right"
+                          speed={0.2}
+                          borderColor="rgba(0, 255, 153, 0.12)"
+                          squareSize={40}
+                          hoverFillColor="rgba(0, 255, 153, 0.08)"
+                        />
+                      )}
+                    </div>
+                    
+                    <div className={`flex flex-col xl:flex-row items-center gap-8 xl:gap-20 ${
+                      isEven ? "" : "xl:flex-row-reverse"
+                    }`}>
+                      
+                      {/* Image Container */}
+                      <motion.div 
+                        className="w-full xl:w-[45%] relative"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="relative h-[280px] sm:h-[350px] xl:h-[400px] rounded-xl overflow-hidden group shadow-2xl">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                          {/* Overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                          {/* Project Number Badge */}
+                          <motion.div 
+                            className="absolute top-4 left-4 z-20 w-14 h-14 rounded-full bg-UserAccent/90 backdrop-blur-sm flex items-center justify-center"
+                            whileHover={{ scale: 1.1, rotate: 10 }}
+                          >
+                            <span className="text-xl font-bold text-primary">{project.num}</span>
+                          </motion.div>
+                        </div>
+                      </motion.div>
+
+                      {/* Timeline Dot (visible on xl screens) - positioned in the gap */}
+                      <div className="hidden xl:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-UserAccent border-4 border-slate-100 dark:border-[#1c1c22] z-20 shadow-lg shadow-UserAccent/30" />
+
+                      {/* Project Info */}
+                      <motion.div 
+                        className={`w-full xl:w-[45%] relative z-10 ${isEven ? "xl:text-left xl:pl-4" : "xl:text-right xl:pr-4"}`}
+                        initial={{ opacity: 0, x: isEven ? 30 : -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                      >
+                        {/* Category Badge */}
+                        <motion.span 
+                          className="inline-block px-4 py-2 rounded-full bg-UserAccent/10 text-UserAccent text-sm font-medium mb-4"
+                          whileHover={{ scale: 1.05 }}
+                        >
+                          {project.category} Project
+                        </motion.span>
+
+                        {/* Title */}
+                        <h3 className="text-3xl xl:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                          {project.title}
+                        </h3>
+
+                        {/* Description */}
+                        <p className={`text-slate-600 dark:text-white/60 text-lg mb-6 ${isEven ? "" : "xl:ml-auto"}`} style={{ maxWidth: "400px" }}>
+                          {project.description}
+                        </p>
+
+                        {/* Tech Stack */}
+                        <div className={`flex flex-wrap gap-3 mb-8 ${isEven ? "" : "xl:justify-end"}`}>
+                          {project.Stack.map((stack, stackIndex) => (
+                            <motion.span
+                              key={stack.name}
+                              className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white/80 text-sm font-medium border border-slate-200/50 dark:border-white/10"
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 0.3, delay: 0.4 + stackIndex * 0.05 }}
+                              whileHover={{ 
+                                scale: 1.05, 
+                                backgroundColor: "rgba(0, 255, 153, 0.1)",
+                                borderColor: "rgba(0, 255, 153, 0.3)"
+                              }}
+                            >
+                              {stack.name}
+                            </motion.span>
+                          ))}
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className={`flex gap-4 ${isEven ? "" : "xl:justify-end"}`}>
+                          <Link href={project.live}>
+                            <TooltipProvider delayDuration={100}>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <motion.div 
+                                    className="w-14 h-14 rounded-full bg-slate-100 dark:bg-white/10 flex justify-center items-center group cursor-pointer border border-slate-200/50 dark:border-white/10"
+                                    whileHover={{ 
+                                      scale: 1.1, 
+                                      rotate: 5,
+                                      borderColor: "rgba(0, 255, 153, 0.5)"
+                                    }}
+                                    whileTap={{ scale: 0.95 }}
+                                  >
+                                    <BsArrowUpRight className="text-slate-700 dark:text-white text-xl group-hover:text-UserAccent transition-colors duration-300" />
+                                  </motion.div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p className="text-sm">Live Project</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </Link>
+
+                          <Link href={project.github}>
+                            <TooltipProvider delayDuration={100}>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <motion.div 
+                                    className="w-14 h-14 rounded-full bg-slate-100 dark:bg-white/10 flex justify-center items-center group cursor-pointer border border-slate-200/50 dark:border-white/10"
+                                    whileHover={{ 
+                                      scale: 1.1, 
+                                      rotate: -5,
+                                      borderColor: "rgba(0, 255, 153, 0.5)"
+                                    }}
+                                    whileTap={{ scale: 0.95 }}
+                                  >
+                                    <BsGithub className="text-slate-700 dark:text-white text-xl group-hover:text-UserAccent transition-colors duration-300" />
+                                  </motion.div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p className="text-sm">GitHub Repo</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </Link>
+                        </div>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </motion.section>

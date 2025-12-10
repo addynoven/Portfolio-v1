@@ -185,11 +185,11 @@ const Home = () => {
 
         {/* Other Sections */}
         <div className="border-b border-slate-200 dark:border-white/10" />
-        <Services />
+        <Work />
         <div className="border-b border-slate-200 dark:border-white/10" />
         <Resume />
         <div className="border-b border-slate-200 dark:border-white/10" />
-        <Work />
+        <Services />
         <div className="border-b border-slate-200 dark:border-white/10" />
         <Contact />
       </div>

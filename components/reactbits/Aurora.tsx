@@ -28,8 +28,13 @@ const Aurora = ({
     let time = 0;
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      // Get the parent container dimensions
+      const parent = canvas.parentElement;
+      if (parent) {
+        const rect = parent.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+      }
     };
 
     resize();
@@ -69,8 +74,15 @@ const Aurora = ({
   return (
     <canvas
       ref={canvasRef}
-      className={`fixed inset-0 -z-10 ${className}`}
-      style={{ filter: `blur(${blur}px)`, opacity: 0.6 }}
+      className={className}
+      style={{ 
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        filter: `blur(${blur}px)`, 
+        opacity: 0.6 
+      }}
     />
   );
 };
