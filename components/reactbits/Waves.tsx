@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, CSSProperties } from 'react';
+import { useInView } from 'framer-motion';
 
 class Grad {
   x: number;
@@ -161,6 +162,8 @@ const Waves: React.FC<WavesProps> = ({
       lineColor, waveSpeedX, waveSpeedY, waveAmpX, waveAmpY, friction, tension, maxCursorMove, xGap, yGap
     };
   }, [lineColor, waveSpeedX, waveSpeedY, waveAmpX, waveAmpY, friction, tension, maxCursorMove, xGap, yGap]);
+  
+  const isInView = useInView(containerRef);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -260,6 +263,8 @@ const Waves: React.FC<WavesProps> = ({
     }
 
     function tick(t: number) {
+      if (!isInView) return;
+
       const mouse = mouseRef.current;
       mouse.sx += (mouse.x - mouse.sx) * 0.1;
       mouse.sy += (mouse.y - mouse.sy) * 0.1;
@@ -307,7 +312,14 @@ const Waves: React.FC<WavesProps> = ({
 
     setSize();
     setLines();
-    frameIdRef.current = requestAnimationFrame(tick);
+    
+    if (isInView) {
+        frameIdRef.current = requestAnimationFrame(tick);
+    } else {
+        // Initial draw
+        drawLines();
+    }
+
     window.addEventListener('resize', onResize);
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('touchmove', onTouchMove, { passive: false });
@@ -320,7 +332,7 @@ const Waves: React.FC<WavesProps> = ({
         cancelAnimationFrame(frameIdRef.current);
       }
     };
-  }, []);
+  }, [isInView]);
 
   return (
     <div

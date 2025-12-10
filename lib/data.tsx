@@ -208,6 +208,40 @@ export const projects: ProjectItem[] = [
         live: "https://github.com/addynoven",
         github: "https://github.com/addynoven",
     },
+    {
+        num: "04",
+        category: "3D Web",
+        title: "Immersive 3D Experience",
+        description:
+            "A high-performance 3D web experience using WebGL and advanced post-processing effects. Features an infinite hyperspeed tunnel with dynamic lighting.",
+        href: "",
+        image: "/assets/work/thumb1.png",
+        Stack: [
+            { name: "Three.js" },
+            { name: "React Three Fiber" },
+            { name: "GLSL" },
+            { name: "Next.js" },
+        ],
+        live: "https://github.com/addynoven",
+        github: "https://github.com/addynoven",
+    },
+    {
+        num: "05",
+        category: "Interactive",
+        title: "Distorted Reality",
+        description:
+            "An interactive grid distortion effect that reacts to mouse movement. Creates a liquid-like organic feel using custom shaders and kinetic physics.",
+        href: "",
+        image: "/assets/work/thumb2.png",
+        Stack: [
+            { name: "WebGL" },
+            { name: "React" },
+            { name: "Shaders" },
+            { name: "GSAP" },
+        ],
+        live: "https://github.com/addynoven",
+        github: "https://github.com/addynoven",
+    },
 ];
 
 // services data

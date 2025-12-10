@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useInView } from "framer-motion";
 
 interface AuroraProps {
   colorStops?: string[];
@@ -16,6 +17,7 @@ const Aurora = ({
   className = "",
 }: AuroraProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isInView = useInView(canvasRef);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -41,6 +43,12 @@ const Aurora = ({
     window.addEventListener("resize", resize);
 
     const animate = () => {
+      if (!isInView) {
+          // If not in view, just verify we're cleaning up properly, 
+          // but we actually stop the loop below
+          return;
+      }
+
       time += 0.01 * speed;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -63,13 +71,15 @@ const Aurora = ({
       animationId = requestAnimationFrame(animate);
     };
 
-    animate();
+    if (isInView) {
+      animate();
+    }
 
     return () => {
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(animationId);
     };
-  }, [colorStops, speed]);
+  }, [colorStops, speed, isInView]);
 
   return (
     <canvas

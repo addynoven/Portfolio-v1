@@ -18,6 +18,8 @@ interface SquaresProps {
   className?: string;
 }
 
+import { useInView } from 'framer-motion';
+
 const Squares: React.FC<SquaresProps> = ({
   direction = 'right',
   speed = 1,
@@ -32,6 +34,8 @@ const Squares: React.FC<SquaresProps> = ({
   const numSquaresY = useRef<number>(0);
   const gridOffset = useRef<GridOffset>({ x: 0, y: 0 });
   const hoveredSquareRef = useRef<GridOffset | null>(null);
+  
+  const isInView = useInView(canvasRef);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -90,6 +94,8 @@ const Squares: React.FC<SquaresProps> = ({
     };
 
     const updateAnimation = () => {
+      if (!isInView) return; // Stop update if not in view
+
       const effectiveSpeed = Math.max(speed, 0.1);
       switch (direction) {
         case 'right':
@@ -142,7 +148,15 @@ const Squares: React.FC<SquaresProps> = ({
 
     canvas.addEventListener('mousemove', handleMouseMove);
     canvas.addEventListener('mouseleave', handleMouseLeave);
-    requestRef.current = requestAnimationFrame(updateAnimation);
+    
+    // Only start if in view
+    if (isInView) {
+      requestRef.current = requestAnimationFrame(updateAnimation);
+    } else {
+        // Draw once if not animating so it's not blank when scrolling fast? 
+        // Actually, better to just let it start when in view.
+        drawGrid(); 
+    }
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
@@ -150,7 +164,7 @@ const Squares: React.FC<SquaresProps> = ({
       canvas.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [direction, speed, borderColor, hoverFillColor, squareSize]);
+  }, [direction, speed, borderColor, hoverFillColor, squareSize, isInView]);
 
   return (
     <canvas 

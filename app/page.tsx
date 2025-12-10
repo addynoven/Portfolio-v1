@@ -19,6 +19,7 @@ import FloatingCodeSymbols from "@/components/FloatingCodeSymbols";
 import HeroTiltCard from "@/components/HeroTiltCard";
 import ShinyText from "@/components/reactbits/ShinyText";
 import ClickSpark from "@/components/reactbits/ClickSpark";
+import Hyperspeed from "@/components/reactbits/Hyperspeed";
 
 const Home = () => {
   return (
@@ -31,7 +32,7 @@ const Home = () => {
           {/* Floating Code Symbols */}
           <FloatingCodeSymbols />
           <motion.div 
-            className="flex flex-col xl:flex-row items-center justify-between xl:justify-evenly pb-0"
+            className="flex flex-col xl:flex-row items-center justify-between xl:justify-evenly pb-0 relative z-10"
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
@@ -180,12 +181,14 @@ const Home = () => {
               </motion.div>
             </motion.div>
           </motion.div>
-          <Stats />
+          <div className="relative z-20">
+            <Stats />
+          </div>
         </section>
 
         {/* Other Sections */}
         <div className="border-b border-slate-200 dark:border-white/10" />
-        <Work />
+        <Work limit={5} />
         <div className="border-b border-slate-200 dark:border-white/10" />
         <Resume />
         <div className="border-b border-slate-200 dark:border-white/10" />

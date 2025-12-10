@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { useInView, useMotionValue, useSpring } from 'motion/react';

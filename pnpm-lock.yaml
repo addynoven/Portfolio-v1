@@ -50,6 +50,9 @@ importers:
       gsap:
         specifier: ^3.14.1
         version: 3.14.1
+      lenis:
+        specifier: ^1.3.15
+        version: 1.3.15(react@19.3.0-canary-561ee24d-20251101)
       lucide-react:
         specifier: ^0.453.0
         version: 0.453.0(react@19.3.0-canary-561ee24d-20251101)
@@ -59,6 +62,12 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.3.0-canary-561ee24d-20251101(react@19.3.0-canary-561ee24d-20251101))(react@19.3.0-canary-561ee24d-20251101)
+      ogl:
+        specifier: ^1.0.11
+        version: 1.0.11
+      postprocessing:
+        specifier: ^6.38.0
+        version: 6.38.0(three@0.179.1)
       react:
         specifier: 19.3.0-canary-561ee24d-20251101
         version: 19.3.0-canary-561ee24d-20251101
@@ -71,6 +80,9 @@ importers:
       react-icons:
         specifier: ^5.3.0
         version: 5.5.0(react@19.3.0-canary-561ee24d-20251101)
+      react-ogl:
+        specifier: ^0.15.1
+        version: 0.15.1(@types/react@19.1.12)(ogl@1.0.11)(react-dom@19.3.0-canary-561ee24d-20251101(react@19.3.0-canary-561ee24d-20251101))(react@19.3.0-canary-561ee24d-20251101)
       react-parallax-tilt:
         specifier: ^1.7.315
         version: 1.7.315(react-dom@19.3.0-canary-561ee24d-20251101(react@19.3.0-canary-561ee24d-20251101))(react@19.3.0-canary-561ee24d-20251101)
@@ -1787,6 +1799,20 @@ packages:
     resolution: {integrity: sha512-MbjN408fEndfiQXbFQ1vnd+1NoLDsnQW41410oQBXiyXDMYH5z505juWa4KUE1LqxRC7DgOgZDbKLxHIwm27hA==}
     engines: {node: '>=0.10'}
 
+  lenis@1.3.15:
+    resolution: {integrity: sha512-zSYOFs0ydafX70uygFoipaHHQouPeE4DpZZhdOUyLJxVf2ZVvBCBBaolDDaQztTRsa6+stBlxq2GmFGJPAVryQ==}
+    peerDependencies:
+      '@nuxt/kit': '>=3.0.0'
+      react: '>=17.0.0'
+      vue: '>=3.0.0'
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      react:
+        optional: true
+      vue:
+        optional: true
+
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -1938,6 +1964,9 @@ packages:
     resolution: {integrity: sha512-gXah6aZrcUxjWg2zR2MwouP2eHlCBzdV4pygudehaKXSGW4v2AsRQUK+lwwXhii6KFZcunEnmSUoYp5CXibxtA==}
     engines: {node: '>= 0.4'}
 
+  ogl@1.0.11:
+    resolution: {integrity: sha512-kUpC154AFfxi16pmZUK4jk3J+8zxwTWGPo03EoYA8QPbzikHoaC82n6pNTbd+oEaJonaE8aPWBlX7ad9zrqLsA==}
+
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
 
@@ -2054,6 +2083,11 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
+  postprocessing@6.38.0:
+    resolution: {integrity: sha512-tisx8XN/PWTL3uXz2mt8bjlMS1wiOUSCK3ixi4zjwUCFmP8XW8hNhXwrxwd2zf2VmCyCQ3GUaLm7GLnkkBbDsQ==}
+    peerDependencies:
+      three: '>= 0.157.0 < 0.182.0'
+
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -2091,6 +2125,22 @@ packages:
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  react-ogl@0.15.1:
+    resolution: {integrity: sha512-0G8igvSGwWSjmFRnuk9sg/WThI5qlkjp2tlSbNkWOLUqwYtgZhXjwdCJzlO1RrerCKsDO9jpU42JG571vG2gWQ==}
+    peerDependencies:
+      expo-gl: '>=11.4'
+      ogl: '>=1'
+      react: ^19.0
+      react-dom: ^19.0
+      react-native: '>=0.78'
+    peerDependenciesMeta:
+      expo-gl:
+        optional: true
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
 
   react-parallax-tilt@1.7.315:
     resolution: {integrity: sha512-m0I2yPEmzEC+qGelF+8P+L60lH/S50OJE+pz1bVmurnkKNMyd2Q4qhtAi8zRibNkwFd6oOGvA8qEqAySBbAOJg==}
@@ -4352,6 +4402,10 @@ snapshots:
     dependencies:
       language-subtag-registry: 0.3.23
 
+  lenis@1.3.15(react@19.3.0-canary-561ee24d-20251101):
+    optionalDependencies:
+      react: 19.3.0-canary-561ee24d-20251101
+
   levn@0.4.1:
     dependencies:
       prelude-ls: 1.2.1
@@ -4495,6 +4549,8 @@ snapshots:
       define-properties: 1.2.1
       es-object-atoms: 1.1.1
 
+  ogl@1.0.11: {}
+
   once@1.4.0:
     dependencies:
       wrappy: 1.0.2
@@ -4598,6 +4654,10 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
+  postprocessing@6.38.0(three@0.179.1):
+    dependencies:
+      three: 0.179.1
+
   prelude-ls@1.2.1: {}
 
   prop-types@15.8.1:
@@ -4631,6 +4691,25 @@ snapshots:
       react: 19.3.0-canary-561ee24d-20251101
 
   react-is@16.13.1: {}
+
+  react-ogl@0.15.1(@types/react@19.1.12)(ogl@1.0.11)(react-dom@19.3.0-canary-561ee24d-20251101(react@19.3.0-canary-561ee24d-20251101))(react@19.3.0-canary-561ee24d-20251101):
+    dependencies:
+      '@types/react-reconciler': 0.28.9(@types/react@19.1.12)
+      '@types/webxr': 0.5.23
+      its-fine: 2.0.0(@types/react@19.1.12)(react@19.3.0-canary-561ee24d-20251101)
+      ogl: 1.0.11
+      react: 19.3.0-canary-561ee24d-20251101
+      react-reconciler: 0.31.0(react@19.3.0-canary-561ee24d-20251101)
+      react-use-measure: 2.1.7(react-dom@19.3.0-canary-561ee24d-20251101(react@19.3.0-canary-561ee24d-20251101))(react@19.3.0-canary-561ee24d-20251101)
+      scheduler: 0.25.0
+      suspend-react: 0.1.3(react@19.3.0-canary-561ee24d-20251101)
+      use-sync-external-store: 1.5.0(react@19.3.0-canary-561ee24d-20251101)
+      zustand: 5.0.8(@types/react@19.1.12)(react@19.3.0-canary-561ee24d-20251101)(use-sync-external-store@1.5.0(react@19.3.0-canary-561ee24d-20251101))
+    optionalDependencies:
+      react-dom: 19.3.0-canary-561ee24d-20251101(react@19.3.0-canary-561ee24d-20251101)
+    transitivePeerDependencies:
+      - '@types/react'
+      - immer
 
   react-parallax-tilt@1.7.315(react-dom@19.3.0-canary-561ee24d-20251101(react@19.3.0-canary-561ee24d-20251101))(react@19.3.0-canary-561ee24d-20251101):
     dependencies:

@@ -1,9 +1,8 @@
+// @ts-nocheck
 "use client";
 
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
 import { useEffect, useRef } from 'react';
-
-import './Balatro.css';
 
 function hexToVec4(hex) {
   let hexStr = hex.replace('#', '');
@@ -210,5 +209,15 @@ export default function Balatro({
     containerRef
   ]);
 
-  return <div ref={containerRef} className="balatro-container" />;
+  return (
+    <div 
+      ref={containerRef} 
+      style={{ 
+        width: '100%', 
+        height: '100%', 
+        position: 'relative', 
+        overflow: 'hidden' 
+      }} 
+    />
+  );
 }

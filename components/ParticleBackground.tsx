@@ -167,7 +167,6 @@ const ParticleBackground = () => {
     let animationId: number;
     
     const animate = () => {
-      animationId = requestAnimationFrame(animate);
       time += 0.016;
 
       // Smooth mouse follow
@@ -188,6 +187,7 @@ const ParticleBackground = () => {
       ring2.rotation.y = -mouseRef.current.x * 0.1;
 
       renderer.render(scene, camera);
+      animationId = requestAnimationFrame(animate);
     };
 
     animate();

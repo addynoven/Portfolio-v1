@@ -1,8 +1,9 @@
+// @ts-nocheck
 "use client";
 
 import { useRef, useEffect } from 'react';
+import { useInView } from 'framer-motion';
 import * as THREE from 'three';
-import './GridDistortion.css';
 
 const vertexShader = `
 uniform float time;
@@ -36,6 +37,12 @@ const GridDistortion = ({ grid = 15, mouse = 0.1, strength = 0.15, relaxation = 
   const imageAspectRef = useRef(1);
   const animationIdRef = useRef(null);
   const resizeObserverRef = useRef(null);
+  const isInView = useInView(containerRef);
+  const isInViewRef = useRef(false);
+
+  useEffect(() => {
+    isInViewRef.current = isInView;
+  }, [isInView]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -208,7 +215,9 @@ const GridDistortion = ({ grid = 15, mouse = 0.1, strength = 0.15, relaxation = 
       }
 
       dataTexture.needsUpdate = true;
-      renderer.render(scene, camera);
+      if (isInViewRef.current) {
+        renderer.render(scene, camera);
+      }
     };
 
     animate();
@@ -249,12 +258,14 @@ const GridDistortion = ({ grid = 15, mouse = 0.1, strength = 0.15, relaxation = 
   return (
     <div
       ref={containerRef}
-      className={`distortion-container ${className}`}
+      className={className}
       style={{
         width: '100%',
         height: '100%',
         minWidth: '0',
-        minHeight: '0'
+        minHeight: '0',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     />
   );

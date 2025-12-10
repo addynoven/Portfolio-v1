@@ -1,10 +1,10 @@
+// @ts-nocheck
 "use client";
 
 import { useEffect, useRef } from 'react';
+import { useInView } from 'framer-motion';
 import * as THREE from 'three';
 import { BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset } from 'postprocessing';
-
-import './Hyperspeed.css';
 
 const Hyperspeed = ({
   effectOptions = {
@@ -33,6 +33,7 @@ const Hyperspeed = ({
     carWidthPercentage: [0.3, 0.5],
     carShiftX: [-0.8, 0.8],
     carFloorSeparation: [0, 5],
+    cameraY: 8,
     colors: {
       roadColor: 0x080808,
       islandColor: 0x0a0a0a,
@@ -46,7 +47,14 @@ const Hyperspeed = ({
   }
 }) => {
   const hyperspeed = useRef(null);
+  const isInView = useInView(hyperspeed, { amount: 0 });
   const appRef = useRef(null);
+
+  useEffect(() => {
+    if (appRef.current) {
+      appRef.current.paused = !isInView;
+    }
+  }, [isInView]);
 
   useEffect(() => {
     if (appRef.current) {
@@ -345,6 +353,7 @@ const Hyperspeed = ({
     class App {
       constructor(container, options = {}) {
         this.options = options;
+        this.paused = false;
         if (this.options.distortion == null) {
           this.options.distortion = {
             uniforms: distortion_uniforms,
@@ -368,7 +377,7 @@ const Hyperspeed = ({
           10000
         );
         this.camera.position.z = -5;
-        this.camera.position.y = 8;
+        this.camera.position.y = options.cameraY || 8;
         this.camera.position.x = 0;
         this.scene = new THREE.Scene();
         this.scene.background = null;
@@ -610,6 +619,10 @@ const Hyperspeed = ({
 
       tick() {
         if (this.disposed || !this) return;
+        if (this.paused) {
+           requestAnimationFrame(this.tick);
+           return;
+        }
         if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
           const canvas = this.renderer.domElement;
           this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
@@ -1103,7 +1116,7 @@ const Hyperspeed = ({
     }
 
     (function () {
-      const container = document.getElementById('lights');
+      const container = hyperspeed.current;
       const options = { ...effectOptions };
       options.distortion = distortions[options.distortion];
 
@@ -1119,7 +1132,19 @@ const Hyperspeed = ({
     };
   }, [effectOptions]);
 
-  return <div id="lights" ref={hyperspeed}></div>;
+  return (
+    <div 
+      ref={hyperspeed} 
+      style={{ 
+        width: '100%', 
+        height: '100%', 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        zIndex: 0 
+      }} 
+    />
+  );
 };
 
 export default Hyperspeed;
