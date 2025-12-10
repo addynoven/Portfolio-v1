@@ -39,6 +39,8 @@ interface LanyardProps {
   htmlHeight?: number;
   // Band color
   bandColor?: string;
+  // String/rope length
+  stringLength?: number;
 }
 
 export default function Lanyard({
@@ -54,7 +56,8 @@ export default function Lanyard({
   htmlScale = 0.1,
   htmlWidth = 320,
   htmlHeight = 450,
-  bandColor = 'white'
+  bandColor = 'white',
+  stringLength = 3
 }: LanyardProps) {
   const [isMobile, setIsMobile] = useState<boolean>(() => typeof window !== 'undefined' && window.innerWidth < 768);
 
@@ -85,6 +88,7 @@ export default function Lanyard({
             htmlWidth={htmlWidth}
             htmlHeight={htmlHeight}
             bandColor={bandColor}
+            stringLength={stringLength}
           />
         </Physics>
         <Environment blur={0.75}>
@@ -135,6 +139,7 @@ interface BandProps {
   htmlWidth?: number;
   htmlHeight?: number;
   bandColor?: string;
+  stringLength?: number;
 }
 
 function Band({ 
@@ -149,7 +154,8 @@ function Band({
   htmlScale = 0.1,
   htmlWidth = 320,
   htmlHeight = 450,
-  bandColor = 'white'
+  bandColor = 'white',
+  stringLength = 3
 }: BandProps) {
   // Using "any" for refs since the exact types depend on Rapier's internals
   const band = useRef<any>(null);
@@ -240,13 +246,13 @@ function Band({
     <>
       <group position={[0, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type={'fixed' as RigidBodyProps['type']} />
-        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps} type={'dynamic' as RigidBodyProps['type']}>
+        <RigidBody position={[stringLength * 0.17, 0, 0]} ref={j1} {...segmentProps} type={'dynamic' as RigidBodyProps['type']}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps} type={'dynamic' as RigidBodyProps['type']}>
+        <RigidBody position={[stringLength * 0.33, 0, 0]} ref={j2} {...segmentProps} type={'dynamic' as RigidBodyProps['type']}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps} type={'dynamic' as RigidBodyProps['type']}>
+        <RigidBody position={[stringLength * 0.5, 0, 0]} ref={j3} {...segmentProps} type={'dynamic' as RigidBodyProps['type']}>
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
@@ -285,17 +291,28 @@ function Band({
             {cardContent && (
               <Html
                 transform
+                center
                 pointerEvents="none"
                 wrapperClass="html-3d-content"
-                position={[0, 0, cardDepth / 2 + 0.01]}
+                position={[-0.1, 0, cardDepth / 2 + 0.01]}
                 scale={htmlScale}
                 style={{
                   width: `${htmlWidth}px`,
                   height: `${htmlHeight}px`,
-                  pointerEvents: 'none'
+                  pointerEvents: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
               >
-                <div style={{ width: '100%', height: '100%', pointerEvents: 'none' }}>
+                <div style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  pointerEvents: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
                     {cardContent}
                 </div>
               </Html>

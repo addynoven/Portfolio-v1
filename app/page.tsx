@@ -200,20 +200,21 @@ const Home = () => {
         <div className="border-b border-slate-200 dark:border-white/10" />
         <Contact />
         <div className="border-b border-slate-200 dark:border-white/10" />
-        <section className="h-screen w-full relative overflow-hidden flex flex-col items-center justify-center bg-black">
+        <section className="h-screen w-full relative overflow-hidden flex flex-col items-center justify-center bg-black/80">
           <div className="absolute top-10 z-10 text-center">
              <h2 className="text-3xl font-bold text-white mb-2">Interactive Badge</h2>
              <p className="text-white/60">Drag to play with physics</p>
           </div>
           <Lanyard 
-            position={[0, 5, 20]} 
+            position={[0, 0, 20]} 
             gravity={[0, -20, 0]}
             cardScale={2.25}
             cardWidth={1.6}
             cardHeight={2.25}
             cardDepth={0.05}
-            htmlScale={0.175}
+            htmlScale={0.16}
             htmlWidth={380}
+            stringLength={2}
             htmlHeight={540}
             cardContent={
               <ProfileCard
@@ -222,7 +223,7 @@ const Home = () => {
                 handle="neonstain"
                 status="Available"
                 contactText="Contact Me"
-                avatarUrl="/photo.png"
+                avatarUrl="photo.jpg"
                 showUserInfo={true}
                 enableTilt={true}
                 enableMobileTilt={true}
