@@ -278,20 +278,26 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
           })}
         </ScrollStack>
           
-          {/* View All Projects Button */}
+          {/* View All Projects Card */}
           {!isPage && (
              <motion.div 
-               className="flex justify-center mt-16 pb-16"
+               className="w-full px-5 mt-8 pb-16 relative z-50"
                initial={{ opacity: 0, y: 20 }}
                whileInView={{ opacity: 1, y: 0 }}
                viewport={{ once: true }}
              >
-               <Link href="/work">
-                 <Button variant="outline" size="lg" className="group text-lg px-8 border-UserAccent text-UserAccent hover:bg-UserAccent hover:text-primary">
-                    View All Projects
-                    <BsArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                 </Button>
-               </Link>
+               <div className="backdrop-blur-xl bg-black/60 border border-white/20 rounded-[40px] p-12 shadow-2xl w-full min-h-[20rem] flex items-center justify-center">
+                 <div className="text-center">
+                   <h3 className="text-3xl xl:text-4xl font-bold text-white mb-4">Want to see more?</h3>
+                   <p className="text-white/60 text-lg mb-8">Explore all my projects and creative work</p>
+                   <Link href="/work">
+                     <Button variant="outline" size="lg" className="group text-lg px-10 py-6 border-UserAccent text-UserAccent hover:bg-UserAccent hover:text-primary">
+                        View All Projects
+                        <BsArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                     </Button>
+                   </Link>
+                 </div>
+               </div>
              </motion.div>
           )}
 

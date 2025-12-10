@@ -362,7 +362,7 @@ const ScrollStack = ({
     paddingTop: '20vh',
     paddingLeft: '1.25rem',
     paddingRight: '1.25rem',
-    paddingBottom: '50rem',
+    paddingBottom: '10rem',
     minHeight: '100vh',
   };
 
