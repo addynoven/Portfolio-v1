@@ -19,6 +19,7 @@ const Oneko: React.FC = () => {
   const [hearts, setHearts] = useState<HeartParticle[]>([]);
   const [isNightTime, setIsNightTime] = useState(false);
   const [isPeeking, setIsPeeking] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(true);
   
   // Get cat context
   const {
@@ -36,6 +37,21 @@ const Oneko: React.FC = () => {
     setIsPetting,
     isScrollingFast,
   } = useCat();
+
+  // Load enabled state from localStorage and listen for toggle events
+  useEffect(() => {
+    const stored = localStorage.getItem("oneko-enabled");
+    if (stored !== null) {
+      setIsEnabled(stored === "true");
+    }
+
+    const handleToggle = (event: CustomEvent) => {
+      setIsEnabled(event.detail);
+    };
+
+    window.addEventListener("oneko-toggle", handleToggle as EventListener);
+    return () => window.removeEventListener("oneko-toggle", handleToggle as EventListener);
+  }, []);
 
   // Check reduced motion preference
   useEffect(() => {
@@ -378,7 +394,8 @@ const Oneko: React.FC = () => {
     };
   }, [isReducedMotion, isNightTime, isPeeking, isTerminalOpen, targetPosition]);
 
-  if (isReducedMotion) return null;
+  // Don't render if disabled or reduced motion
+  if (isReducedMotion || !isEnabled) return null;
 
   return (
     <>

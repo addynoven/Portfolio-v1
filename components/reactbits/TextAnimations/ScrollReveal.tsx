@@ -17,6 +17,7 @@ interface ScrollRevealProps {
   textClassName?: string;
   rotationEnd?: string;
   wordAnimationEnd?: string;
+  fontSize?: string; // CSS font-size value, e.g., "1.25rem", "18px", "clamp(1rem, 2vw, 1.5rem)"
 }
 
 const ScrollReveal: React.FC<ScrollRevealProps> = ({
@@ -29,7 +30,8 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   containerClassName = '',
   textClassName = '',
   rotationEnd = 'bottom bottom',
-  wordAnimationEnd = 'bottom bottom'
+  wordAnimationEnd = 'bottom bottom',
+  fontSize = 'clamp(1.6rem, 4vw, 3rem)' // CSS font-size value
 }) => {
   const containerRef = useRef<HTMLHeadingElement>(null);
 
@@ -117,7 +119,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
 
   return (
     <h2 ref={containerRef} className={`my-5 ${containerClassName}`}>
-      <p className={`text-[clamp(1.6rem,4vw,3rem)] leading-[1.5] font-semibold ${textClassName}`}>{splitText}</p>
+      <p className={`leading-[1.5] font-semibold ${textClassName}`} style={{ fontSize }}>{splitText}</p>
     </h2>
   );
 };
