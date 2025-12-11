@@ -22,7 +22,7 @@ import { FiSend, FiCheck, FiAlertCircle, FiMail, FiMapPin, FiPhone, FiArrowRight
 import { contactInfo } from "@/lib/data";
 
 // Minimal, focused ReactBits imports
-import BlurText from "@/components/reactbits/TextAnimations/BlurText";
+
 import SpotlightCard from "@/components/reactbits/Components/SpotlightCard";
 import Magnet from "@/components/reactbits/Animations/Magnet";
 import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
@@ -154,18 +154,15 @@ const Contact = () => {
               Contact
             </motion.span>
             
-            <BlurText
-              text="Let's Work Together"
-              className="text-4xl md:text-5xl xl:text-6xl font-bold text-slate-900 dark:text-white mb-6"
-              delay={100}
-              animateBy="words"
-              animationFrom={{ filter: 'blur(10px)', opacity: 0, y: -50 }}
-              animationTo={[
-                { filter: 'blur(5px)', opacity: 0.5, y: 5 },
-                { filter: 'blur(0px)', opacity: 1, y: 0 }
-              ]}
-              onAnimationComplete={() => {}}
-            />
+              <motion.h2
+                 className="text-4xl text-center md:text-5xl xl:text-6xl font-bold text-UserAccent mb-6"
+                 initial={{ opacity: 0, y: 20 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 transition={{ delay: 0.3, duration: 0.5 }}
+              >
+                Let's Work Together
+              </motion.h2>
             
             <motion.p
               className="text-lg text-slate-600 dark:text-white/60 max-w-lg"

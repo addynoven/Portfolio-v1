@@ -25,12 +25,13 @@ interface CatContextType {
   
   // Speech bubble
   speechMessage: string | null;
-  setSpeechMessage: (msg: string | null) => void;
+  setSpeechMessage: React.Dispatch<React.SetStateAction<string | null>>;
   
   // Cat state
   isPetting: boolean;
   setIsPetting: (petting: boolean) => void;
   isScrollingFast: boolean;
+  startTour: () => void;
 }
 
 const CatContext = createContext<CatContextType | undefined>(undefined);
@@ -119,6 +120,14 @@ export const CatProvider = ({ children }: CatProviderProps) => {
     localStorage.setItem("neko-tour-seen", "true");
   }, []);
 
+  const startTour = useCallback(() => {
+    setIsTourActive(true);
+    setTourStep(0);
+    setHasSeenTour(false);
+    setSpeechMessage("Let's go on a tour! 🚀");
+    // Don't clear localStorage so it doesn't auto-start on reload, just this session
+  }, []);
+
   const value: CatContextType = {
     isTerminalOpen,
     setIsTerminalOpen,
@@ -137,6 +146,7 @@ export const CatProvider = ({ children }: CatProviderProps) => {
     isPetting,
     setIsPetting,
     isScrollingFast,
+    startTour,
   };
 
   return <CatContext.Provider value={value}>{children}</CatContext.Provider>;

@@ -26,7 +26,8 @@ const BlurText = ({
   animationTo,
   easing = t => t,
   onAnimationComplete,
-  stepDuration = 0.35
+  stepDuration = 0.35,
+  style = {}
 }) => {
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
@@ -74,7 +75,7 @@ const BlurText = ({
   const times = Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1)));
 
   return (
-    <p ref={ref} className={className} style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <p ref={ref} className={className} style={{ display: 'flex', flexWrap: 'wrap', ...style }}>
       {elements.map((segment, index) => {
         const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
 

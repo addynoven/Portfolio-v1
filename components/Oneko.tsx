@@ -104,8 +104,14 @@ const Oneko: React.FC = () => {
       { message: "Let's go say hello! 💬", target: "contact" },
       { message: "You can reach out anytime!", target: null },
       { message: "Press ~ or F2 for terminal! 💻", target: null },
+      { message: "Try 'neofetch' command! 🖥️", target: null },
+      { message: "Or 'color #ff6b6b' for fun! 🎨", target: null },
       { message: "Click me for pets! 💕", target: null },
+      { message: "I'll follow your cursor! 🐾", target: null },
+      { message: "Scroll down for more! 📜", target: null },
+      { message: "Built with 💚 by Neon", target: null },
       { message: "Have fun exploring! 🎉", target: null },
+      { message: "Meow! See you around! 😸", target: null },
     ];
 
     if (tourStep >= tourSteps.length) {
@@ -141,6 +147,45 @@ const Oneko: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, [isTourActive, tourStep, setTourStep, completeTour, setSpeechMessage, setTargetPosition]);
+
+  // Random idle speech (after tour)
+  useEffect(() => {
+    if (isTourActive) return;
+
+    const idleMessages = [
+      "Meow! 🐱",
+      "Don't work too hard! 💤",
+      "I spot a bug! Just kidding 🐞",
+      "Nice cursor you got there! 🖱️",
+      "Press ~ for terminal fun! 💻",
+      "Feed me clicks! 💕",
+      "*purr* *purr*",
+      "zzz...",
+      "Did you check the projects? 🚀",
+      "I'm watching you code... 👀",
+      "Need a break? ☕",
+      "Linux is purr-fect! 🐧",
+      "Try 'color random' in terminal! 🎨",
+      "Have you found the Easter eggs? 🥚",
+      "I like this spot! 📍"
+    ];
+
+    // Check periodically if we should say something
+    const interval = setInterval(() => {
+      // 20% chance every 8 seconds if not currently speaking
+      if (Math.random() < 0.2 && !speechMessage) {
+        const msg = idleMessages[Math.floor(Math.random() * idleMessages.length)];
+        setSpeechMessage(msg);
+        
+        // Clear message after 4 seconds
+        setTimeout(() => {
+          setSpeechMessage(prev => prev === msg ? null : prev);
+        }, 4000);
+      }
+    }, 8000);
+
+    return () => clearInterval(interval);
+  }, [isTourActive, speechMessage, setSpeechMessage]);
 
   // Main animation effect
   useEffect(() => {

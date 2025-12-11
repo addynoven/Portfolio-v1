@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { useAccentColor } from "@/lib/accentColor";
 
 const ParticleBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
   const [isClient, setIsClient] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const accentColorHex = useAccentColor();
 
   useEffect(() => {
     setIsClient(true);
@@ -49,9 +51,10 @@ const ParticleBackground = () => {
     const sizes = new Float32Array(particleCount);
     const colors = new Float32Array(particleCount * 3);
 
-    // Accent color (green)
-    const accentColor = new THREE.Color(0x22c55e);
-    const secondaryColor = new THREE.Color(0x16a34a);
+    // Accent color
+    const accentColor = new THREE.Color(accentColorHex);
+    // Create a secondary color by shifting the hue or lightness slightly
+    const secondaryColor = accentColor.clone().offsetHSL(0.1, 0, -0.1);
 
     // Initialize particles in interesting patterns
     for (let i = 0; i < particleCount; i++) {
@@ -237,7 +240,7 @@ const ParticleBackground = () => {
       if (ringMaterial) ringMaterial.dispose();
       renderer.dispose();
     };
-  }, [isClient, isMobile]); // Re-run when mobile state changes
+  }, [isClient, isMobile, accentColorHex]); // Re-run when mobile state changes or color changes
 
   if (!isClient) return null;
 

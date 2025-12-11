@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { useAccentColor } from "@/lib/accentColor";
 
 const codeSymbols = [
   "</>", "{}", "()", "[]", "=>", "&&",
@@ -21,13 +22,26 @@ interface FloatingSymbol {
   drift: number;
 }
 
-// Generate symbols on client only to avoid hydration mismatch
+// Helper to convert hex to rgb
+const hexToRgb = (hex: string) => {
+  // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+  const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  hex = hex.replace(shorthandRegex, (m, r, g, b) => {
+    return r + r + g + g + b + b;
+  });
 
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+    : "34, 197, 94"; // default green
+};
 
 const FloatingCodeSymbols = () => {
   const [symbols, setSymbols] = useState<FloatingSymbol[]>([]);
   const [isClient, setIsClient] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const accentColor = useAccentColor();
+  const accentRgb = hexToRgb(accentColor);
 
   // Only generate random symbols on client to avoid hydration mismatch
   useEffect(() => {
@@ -66,7 +80,7 @@ const FloatingCodeSymbols = () => {
               style={{
                 left: `${sym.x}%`,
                 fontSize: `${sym.size}rem`,
-                textShadow: "0 0 20px rgba(34, 197, 94, 0.5)",
+                textShadow: `0 0 20px rgba(${accentRgb}, 0.5)`,
               }}
               initial={{
                 top: `${sym.startY}%`,
@@ -97,7 +111,7 @@ const FloatingCodeSymbols = () => {
           <motion.div
             className="absolute w-64 h-64 rounded-full blur-3xl"
             style={{
-              background: "radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%)",
+              background: `radial-gradient(circle, rgba(${accentRgb}, 0.15) 0%, transparent 70%)`,
               left: "10%",
               top: "20%",
             }}
@@ -116,7 +130,7 @@ const FloatingCodeSymbols = () => {
           <motion.div
             className="absolute w-48 h-48 rounded-full blur-3xl"
             style={{
-              background: "radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%)",
+              background: `radial-gradient(circle, rgba(${accentRgb}, 0.1) 0%, transparent 70%)`,
               right: "15%",
               bottom: "30%",
             }}

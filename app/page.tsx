@@ -7,7 +7,7 @@ import GridPattern from "@/components/ui/animated-grid-pattern";
 
 // Section Components
 import Hero from "@/components/sections/Hero";
-import SimpleText from "@/components/sections/SimpleText";
+import AboutMe from "@/components/sections/AboutMe";
 import Work from "@/components/sections/Work";
 import Skills from "@/components/sections/Skills";
 import Contact from "@/components/sections/Contact";
@@ -22,7 +22,7 @@ const Home = () => {
 
         {/* Other Sections */}
         <div className="border-b border-slate-200 dark:border-white/10" />
-        <SimpleText />
+        <AboutMe />
         <div className="border-b border-slate-200 dark:border-white/10" />
         <Work limit={5} />
          <div className="border-b border-slate-200 dark:border-white/10" />

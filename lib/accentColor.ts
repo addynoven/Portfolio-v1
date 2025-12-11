@@ -4,12 +4,23 @@ import { useState, useEffect } from "react";
 export const DEFAULT_ACCENT = "#00ff99";
 export const DEFAULT_ACCENT_HOVER = "#00e187";
 
-// Helper to get the current accent color from CSS variable
+// Helper to get the current accent color from CSS variable or localStorage
 export const getAccentColor = (): string => {
   if (typeof window === "undefined") return DEFAULT_ACCENT;
+
+  // Try CSS variable first
   const computed = getComputedStyle(document.documentElement).getPropertyValue("--user-accent").trim();
-  // Ensure we always return a valid hex color
-  return computed && computed.startsWith("#") && computed.length >= 4 ? computed : DEFAULT_ACCENT;
+  if (computed && computed.startsWith("#") && computed.length >= 4) {
+    return computed;
+  }
+
+  // Fallback to localStorage if CSS variable isn't set/valid (e.g. during initial load before styles applied)
+  const stored = localStorage.getItem("portfolio-accent-color");
+  if (stored && stored.startsWith("#") && stored.length >= 4) {
+    return stored;
+  }
+
+  return DEFAULT_ACCENT;
 };
 
 // React hook that updates when accent color changes

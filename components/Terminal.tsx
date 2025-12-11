@@ -12,12 +12,15 @@ interface TerminalLine {
 const COMMANDS = [
   "help", "about", "neofetch", "skills", "projects", "contact", "social", "kitty", "clear",
   "reload", "exit", "color", "reset", "theme", "goto", "ls", "open", "whoami", "date",
-  "sudo", "matrix", "devtools"
+  "sudo", "matrix", "devtools", "tour"
 ];
+
+import { useCat } from "./CatContext";
 
 export default function Terminal() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const { startTour } = useCat();
 
   const rotateX = useTransform(y, [-100, 100], [8, -8]);
   const rotateY = useTransform(x, [-100, 100], [-8, 8]);
@@ -95,7 +98,8 @@ export default function Terminal() {
         { type: "output", color: "green", text: "  ⚙️  System:" },
         { type: "output", color: "cyan", text: "    reload, exit, clear, date, whoami" },
         { type: "output", color: "green", text: "  🎮  Fun:" },
-        { type: "output", color: "cyan", text: "    kitty, sudo, matrix" },
+        { type: "output", color: "cyan", text: "    kitty, sudo, matrix, tour" },
+        { type: "output", color: "cyan", text: "    tour           - restart the guided tour" },
       ];
 
     // About
@@ -201,6 +205,15 @@ export default function Terminal() {
       ];
     }
 
+    // Tour command
+    if (command === "tour") {
+      startTour();
+      return [
+        { type: "output", color: "green", text: "🐱 Starting tour..." },
+        { type: "output", color: "cyan", text: "Look who's here to guide you!" },
+      ];
+    }
+    
     // Color command
     if (command === "color") {
       const colorArg = args[1];
