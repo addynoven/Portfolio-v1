@@ -60,7 +60,7 @@ const Resume = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-4xl xl:text-5xl font-bold mb-4">
-            <SplitText text="My Resume" stagger={0.08} delay={0.2} />
+            <SplitText text="My Resume" delay={80} />
           </h2>
           <motion.div
             className="h-1 bg-gradient-to-r from-UserAccent to-transparent rounded-full"
