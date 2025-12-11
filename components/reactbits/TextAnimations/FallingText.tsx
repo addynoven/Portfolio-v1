@@ -1,15 +1,22 @@
-// @ts-nocheck
 "use client";
 
 import { useRef, useState, useEffect } from 'react';
 import Matter from 'matter-js';
-import './FallingText.css';
 
-const FallingText = ({
-  className = '',
+interface FallingTextProps {
+  text?: string;
+  highlightWords?: string[];
+  trigger?: 'auto' | 'scroll' | 'click' | 'hover';
+  backgroundColor?: string;
+  wireframes?: boolean;
+  gravity?: number;
+  mouseConstraintStiffness?: number;
+  fontSize?: string;
+}
+
+const FallingText: React.FC<FallingTextProps> = ({
   text = '',
   highlightWords = [],
-  highlightClass = 'highlighted',
   trigger = 'auto',
   backgroundColor = 'transparent',
   wireframes = false,
@@ -17,23 +24,30 @@ const FallingText = ({
   mouseConstraintStiffness = 0.2,
   fontSize = '1rem'
 }) => {
-  const containerRef = useRef(null);
-  const textRef = useRef(null);
-  const canvasContainerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const canvasContainerRef = useRef<HTMLDivElement | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   const [effectStarted, setEffectStarted] = useState(false);
 
   useEffect(() => {
     if (!textRef.current) return;
     const words = text.split(' ');
+
     const newHTML = words
       .map(word => {
         const isHighlighted = highlightWords.some(hw => word.startsWith(hw));
-        return `<span class="word ${isHighlighted ? highlightClass : ''}">${word}</span>`;
+        return `<span
+          class="inline-block mx-[2px] select-none ${isHighlighted ? 'text-cyan-500 font-bold' : ''}"
+        >
+          ${word}
+        </span>`;
       })
       .join(' ');
+
     textRef.current.innerHTML = newHTML;
-  }, [text, highlightWords, highlightClass]);
+  }, [text, highlightWords]);
 
   useEffect(() => {
     if (trigger === 'auto') {
@@ -60,13 +74,13 @@ const FallingText = ({
 
     const { Engine, Render, World, Bodies, Runner, Mouse, MouseConstraint } = Matter;
 
+    if (!containerRef.current || !canvasContainerRef.current) return;
+
     const containerRect = containerRef.current.getBoundingClientRect();
     const width = containerRect.width;
     const height = containerRect.height;
 
-    if (width <= 0 || height <= 0) {
-      return;
-    }
+    if (width <= 0 || height <= 0) return;
 
     const engine = Engine.create();
     engine.world.gravity.y = gravity;
@@ -91,7 +105,8 @@ const FallingText = ({
     const rightWall = Bodies.rectangle(width + 25, height / 2, 50, height, boundaryOptions);
     const ceiling = Bodies.rectangle(width / 2, -25, width, 50, boundaryOptions);
 
-    const wordSpans = textRef.current.querySelectorAll('.word');
+    if (!textRef.current) return;
+    const wordSpans = textRef.current.querySelectorAll('span');
     const wordBodies = [...wordSpans].map(elem => {
       const rect = elem.getBoundingClientRect();
 
@@ -104,12 +119,12 @@ const FallingText = ({
         frictionAir: 0.01,
         friction: 0.2
       });
-
       Matter.Body.setVelocity(body, {
         x: (Math.random() - 0.5) * 5,
         y: 0
       });
       Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.05);
+
       return { elem, body };
     });
 
@@ -136,6 +151,7 @@ const FallingText = ({
     Runner.run(runner, engine);
     Render.run(render);
 
+    // Store animation frame ID for proper cleanup
     const updateLoop = () => {
       wordBodies.forEach(({ body, elem }) => {
         const { x, y } = body.position;
@@ -144,18 +160,22 @@ const FallingText = ({
         elem.style.transform = `translate(-50%, -50%) rotate(${body.angle}rad)`;
       });
       Matter.Engine.update(engine);
-      requestAnimationFrame(updateLoop);
+      animationFrameRef.current = requestAnimationFrame(updateLoop);
     };
-    updateLoop();
+    animationFrameRef.current = requestAnimationFrame(updateLoop);
 
     return () => {
+      // Cancel animation frame to prevent memory leaks and interference
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
       Render.stop(render);
       Runner.stop(runner);
       if (render.canvas && canvasContainerRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         canvasContainerRef.current.removeChild(render.canvas);
       }
-      World.clear(engine.world);
+      World.clear(engine.world, false);
       Engine.clear(engine);
     };
   }, [effectStarted, gravity, wireframes, backgroundColor, mouseConstraintStiffness]);
@@ -169,23 +189,20 @@ const FallingText = ({
   return (
     <div
       ref={containerRef}
-      className={`falling-text-container ${className}`}
+      className="relative z-[1] w-full h-full cursor-pointer text-center pt-8 overflow-hidden"
       onClick={trigger === 'click' ? handleTrigger : undefined}
       onMouseEnter={trigger === 'hover' ? handleTrigger : undefined}
-      style={{
-        position: 'relative',
-        overflow: 'hidden'
-      }}
     >
       <div
         ref={textRef}
-        className="falling-text-target"
+        className="inline-block"
         style={{
-          fontSize: fontSize,
+          fontSize,
           lineHeight: 1.4
         }}
       />
-      <div ref={canvasContainerRef} className="falling-text-canvas" />
+
+      <div className="absolute top-0 left-0 z-0" ref={canvasContainerRef} />
     </div>
   );
 };

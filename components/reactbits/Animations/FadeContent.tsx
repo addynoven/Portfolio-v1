@@ -36,54 +36,53 @@ const FadeContent = ({
       scrollerTarget = document.querySelector(scrollerTarget);
     }
 
-    const startPct = (1 - threshold) * 100;
+    // Use gsap.context() for proper cleanup isolation
+    const ctx = gsap.context(() => {
+      const startPct = (1 - threshold) * 100;
 
-    const getSeconds = val => (typeof val === 'number' && val > 10 ? val / 1000 : val);
+      const getSeconds = val => (typeof val === 'number' && val > 10 ? val / 1000 : val);
 
-    gsap.set(el, {
-      autoAlpha: initialOpacity,
-      filter: blur ? 'blur(10px)' : 'blur(0px)',
-      willChange: 'opacity, filter, transform'
-    });
+      gsap.set(el, {
+        autoAlpha: initialOpacity,
+        filter: blur ? 'blur(10px)' : 'blur(0px)',
+        willChange: 'opacity, filter, transform'
+      });
 
-    const tl = gsap.timeline({
-      paused: true,
-      delay: getSeconds(delay),
-      onComplete: () => {
-        if (onComplete) onComplete();
-        if (disappearAfter > 0) {
-          gsap.to(el, {
-            autoAlpha: initialOpacity,
-            filter: blur ? 'blur(10px)' : 'blur(0px)',
-            delay: getSeconds(disappearAfter),
-            duration: getSeconds(disappearDuration),
-            ease: disappearEase,
-            onComplete: () => onDisappearanceComplete?.()
-          });
+      const tl = gsap.timeline({
+        paused: true,
+        delay: getSeconds(delay),
+        onComplete: () => {
+          if (onComplete) onComplete();
+          if (disappearAfter > 0) {
+            gsap.to(el, {
+              autoAlpha: initialOpacity,
+              filter: blur ? 'blur(10px)' : 'blur(0px)',
+              delay: getSeconds(disappearAfter),
+              duration: getSeconds(disappearDuration),
+              ease: disappearEase,
+              onComplete: () => onDisappearanceComplete?.()
+            });
+          }
         }
-      }
-    });
+      });
 
-    tl.to(el, {
-      autoAlpha: 1,
-      filter: 'blur(0px)',
-      duration: getSeconds(duration),
-      ease: ease
-    });
+      tl.to(el, {
+        autoAlpha: 1,
+        filter: 'blur(0px)',
+        duration: getSeconds(duration),
+        ease: ease
+      });
 
-    const st = ScrollTrigger.create({
-      trigger: el,
-      scroller: scrollerTarget || window,
-      start: `top ${startPct}%`,
-      once: true,
-      onEnter: () => tl.play()
-    });
+      ScrollTrigger.create({
+        trigger: el,
+        scroller: scrollerTarget || window,
+        start: `top ${startPct}%`,
+        once: true,
+        onEnter: () => tl.play()
+      });
+    }, ref); // Scope to this component
 
-    return () => {
-      st.kill();
-      tl.kill();
-      gsap.killTweensOf(el);
-    };
+    return () => ctx.revert(); // Clean up only this component's animations
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

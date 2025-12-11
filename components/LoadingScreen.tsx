@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
 import { FullScreenScramble } from "./FullScreenScramble";
 import { Scrambler } from "@/lib/scramble-utils";
 import { DissolveTransition } from "./DissolveTransition";
@@ -31,6 +32,7 @@ type Phase =
 	| "done";
 
 const LoadingScreen = () => {
+	const pathname = usePathname();
 	// Toggle this to true to re-enable the dissolve effect for testing
 	const ENABLE_DISSOLVE = false;
 	const { theme } = useTheme();
@@ -99,8 +101,8 @@ const LoadingScreen = () => {
 		setPhase("done");
 	};
 
-	// Don't render anything after done
-	if (phase === "done") return null;
+	// Don't render anything after done or if not on home page
+	if (phase === "done" || pathname !== "/") return null;
 
 	const showSolidBg = true;
 	const showScrambledLogo = phase === "concentrate" || phase === "brand";
