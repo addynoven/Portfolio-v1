@@ -7,14 +7,23 @@ const ParticleBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
   const [isClient, setIsClient] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
+    const checkMobile = () => {
+        setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   useEffect(() => {
     if (!isClient || !containerRef.current) return;
 
+    // Skip heavy initialization on mobile if you want, or just reduce count
+    // For now we will drastically reduce count
     const container = containerRef.current;
     const width = container.clientWidth;
     const height = container.clientHeight;
@@ -26,17 +35,17 @@ const ParticleBackground = () => {
 
     const renderer = new THREE.WebGLRenderer({ 
       alpha: true, 
-      antialias: true,
+      antialias: !isMobile, // Disable antialias on mobile for perf
+      powerPreference: "high-performance"
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2));
     container.appendChild(renderer.domElement);
 
-    // Particle settings - MORE particles, MORE visible
-    const particleCount = 250;
+    // Particle settings - Drastically reduced on mobile
+    const particleCount = isMobile ? 40 : 250; 
     const positions = new Float32Array(particleCount * 3);
     const velocities: { x: number; y: number; z: number }[] = [];
-    const originalPositions = new Float32Array(particleCount * 3);
     const sizes = new Float32Array(particleCount);
     const colors = new Float32Array(particleCount * 3);
 
@@ -57,10 +66,6 @@ const ParticleBackground = () => {
       positions[i * 3] = x;
       positions[i * 3 + 1] = y;
       positions[i * 3 + 2] = z;
-      
-      originalPositions[i * 3] = x;
-      originalPositions[i * 3 + 1] = y;
-      originalPositions[i * 3 + 2] = z;
 
       velocities.push({
         x: (Math.random() - 0.5) * 0.3,
@@ -102,6 +107,7 @@ const ParticleBackground = () => {
           vSize = size;
           
           vec3 pos = position;
+          // Simplify movement on mobile?
           pos.x += sin(time * 0.5 + position.y * 0.05) * 2.0;
           pos.y += cos(time * 0.3 + position.x * 0.05) * 2.0;
           pos.z += sin(time * 0.4 + position.x * 0.03) * 1.0;
@@ -136,23 +142,31 @@ const ParticleBackground = () => {
     scene.add(particleSystem);
 
     // Floating rings
-    const ringGeometry = new THREE.TorusGeometry(60, 0.3, 8, 100);
-    const ringMaterial = new THREE.MeshBasicMaterial({ 
-      color: accentColor, 
-      transparent: true, 
-      opacity: 0.15 
-    });
-    const ring1 = new THREE.Mesh(ringGeometry, ringMaterial);
-    ring1.rotation.x = Math.PI / 3;
-    scene.add(ring1);
+    // Only add rings on desktop to save perf
+    let ring1: THREE.Mesh | undefined;
+    let ring2: THREE.Mesh | undefined;
+    let ringGeometry: THREE.TorusGeometry | undefined;
+    let ringMaterial: THREE.MeshBasicMaterial | undefined;
 
-    const ring2 = new THREE.Mesh(
-      new THREE.TorusGeometry(80, 0.2, 8, 100), 
-      ringMaterial.clone()
-    );
-    ring2.rotation.x = -Math.PI / 4;
-    ring2.rotation.z = Math.PI / 6;
-    scene.add(ring2);
+    if (!isMobile) {
+        ringGeometry = new THREE.TorusGeometry(60, 0.3, 8, 100);
+        ringMaterial = new THREE.MeshBasicMaterial({ 
+          color: accentColor, 
+          transparent: true, 
+          opacity: 0.15 
+        });
+        ring1 = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring1.rotation.x = Math.PI / 3;
+        scene.add(ring1);
+
+        ring2 = new THREE.Mesh(
+          new THREE.TorusGeometry(80, 0.2, 8, 100), 
+          ringMaterial.clone()
+        );
+        ring2.rotation.x = -Math.PI / 4;
+        ring2.rotation.z = Math.PI / 6;
+        scene.add(ring2);
+    }
 
     // Mouse tracking with smooth follow
     const handleMouseMove = (e: MouseEvent) => {
@@ -166,6 +180,7 @@ const ParticleBackground = () => {
     let time = 0;
     let animationId: number;
     
+    // Throttle animation on mobile?? No, just reduce complexity.
     const animate = () => {
       time += 0.016;
 
@@ -181,10 +196,14 @@ const ParticleBackground = () => {
       particleSystem.rotation.x = mouseRef.current.y * 0.2;
 
       // Slowly rotate rings
-      ring1.rotation.z += 0.002;
-      ring2.rotation.z -= 0.001;
-      ring1.rotation.y = mouseRef.current.x * 0.1;
-      ring2.rotation.y = -mouseRef.current.x * 0.1;
+      if (ring1) {
+          ring1.rotation.z += 0.002;
+          ring1.rotation.y = mouseRef.current.x * 0.1;
+      }
+      if (ring2) {
+          ring2.rotation.z -= 0.001;
+          ring2.rotation.y = -mouseRef.current.x * 0.1;
+      }
 
       renderer.render(scene, camera);
       animationId = requestAnimationFrame(animate);
@@ -194,8 +213,9 @@ const ParticleBackground = () => {
 
     // Handle resize
     const handleResize = () => {
-      const newWidth = container.clientWidth;
-      const newHeight = container.clientHeight;
+      if (!containerRef.current) return;
+      const newWidth = containerRef.current.clientWidth;
+      const newHeight = containerRef.current.clientHeight;
       camera.aspect = newWidth / newHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(newWidth, newHeight);
@@ -213,11 +233,11 @@ const ParticleBackground = () => {
       }
       geometry.dispose();
       material.dispose();
-      ringGeometry.dispose();
-      ringMaterial.dispose();
+      if (ringGeometry) ringGeometry.dispose();
+      if (ringMaterial) ringMaterial.dispose();
       renderer.dispose();
     };
-  }, [isClient]);
+  }, [isClient, isMobile]); // Re-run when mobile state changes
 
   if (!isClient) return null;
 

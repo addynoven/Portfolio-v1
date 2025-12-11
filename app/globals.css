@@ -27,6 +27,9 @@
         --radius: 0.5rem;
         /* Custom color for cards in light mode */
         --card-bg: 0 0% 100%;
+        /* User accent color - can be changed via terminal */
+        --user-accent: #00ff99;
+        --user-accent-hover: #00e187;
     }
 
     /* Dark mode - the original portfolio dark theme */
@@ -52,6 +55,9 @@
         --ring: 240 4.9% 83.9%;
         /* Custom color for cards in dark mode */
         --card-bg: 240 6% 17%;
+        /* User accent color - can be changed via terminal */
+        --user-accent: #00ff99;
+        --user-accent-hover: #00e187;
     }
 }
 

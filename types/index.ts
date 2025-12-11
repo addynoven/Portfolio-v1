@@ -75,4 +75,5 @@ export interface ContactInfoItem {
     title: string;
     icon: ReactNode;
     description: ReactNode;
+    value: string; // Plain text version for clipboard copy
 }

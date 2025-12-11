@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import {
   Select,
@@ -15,33 +15,30 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { motion } from "framer-motion";
-import RetroGrid from "@/components/ui/retro-grid";
-import GridPattern from "@/components/ui/animated-grid-pattern";
+import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { FiSend, FiCheck, FiAlertCircle } from "react-icons/fi";
+import { FiSend, FiCheck, FiAlertCircle, FiMail, FiMapPin, FiPhone, FiArrowRight, FiCopy } from "react-icons/fi";
 
 import { contactInfo } from "@/lib/data";
-import SplitText from "@/components/reactbits/TextAnimations/SplitText";
+
+// Minimal, focused ReactBits imports
+import BlurText from "@/components/reactbits/TextAnimations/BlurText";
+import SpotlightCard from "@/components/reactbits/Components/SpotlightCard";
+import Magnet from "@/components/reactbits/Animations/Magnet";
 import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
+import { useAccentColor } from "@/lib/accentColor";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
-const inputVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.95 },
-  visible: (index: number) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.4,
-      delay: index * 0.1,
-      ease: [0.25, 0.4, 0.25, 1],
-    },
-  }),
+// Icon mapping for contact info
+const iconMap: Record<string, React.ReactNode> = {
+  "Phone": <FiPhone className="text-lg" />,
+  "Email": <FiMail className="text-lg" />,
+  "Address": <FiMapPin className="text-lg" />,
 };
 
 const Contact = () => {
+  const accentColor = useAccentColor();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -51,6 +48,11 @@ const Contact = () => {
     message: "",
   });
   const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -68,7 +70,11 @@ const Contact = () => {
     }));
   };
 
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const handleCopy = (text: string, index: number) => {
+    navigator.clipboard.writeText(text);
+    setCopiedIndex(index);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,295 +119,362 @@ const Contact = () => {
 
   return (
     <motion.section
+      ref={sectionRef}
       id="contact"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="py-16 xl:py-24 relative"
+      transition={{ duration: 0.8 }}
+      className="py-24 xl:py-32 relative overflow-hidden"
     >
-      <div className="container mx-auto">
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-UserAccent/5 via-transparent to-cyan-500/5" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-UserAccent/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
-          className="mb-12"
+          className="mb-16 xl:mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl xl:text-5xl font-bold mb-4">
-            <SplitText text="Contact Me" stagger={0.08} delay={0.2} />
-          </h2>
-          <motion.div
-            className="h-1 bg-gradient-to-r from-UserAccent to-transparent rounded-full"
-            initial={{ scaleX: 0, originX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
-            style={{ maxWidth: "200px" }}
-          />
+          <div className="flex flex-col items-center text-center max-w-2xl mx-auto">
+            <motion.span
+              className="text-sm font-medium tracking-widest text-UserAccent uppercase mb-4"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              Contact
+            </motion.span>
+            
+            <BlurText
+              text="Let's Work Together"
+              className="text-4xl md:text-5xl xl:text-6xl font-bold text-slate-900 dark:text-white mb-6"
+              delay={100}
+              animateBy="words"
+              animationFrom={{ filter: 'blur(10px)', opacity: 0, y: -50 }}
+              animationTo={[
+                { filter: 'blur(5px)', opacity: 0.5, y: 5 },
+                { filter: 'blur(0px)', opacity: 1, y: 0 }
+              ]}
+              onAnimationComplete={() => {}}
+            />
+            
+            <motion.p
+              className="text-lg text-slate-600 dark:text-white/60 max-w-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              Have a project in mind? I'd love to hear about it. Drop me a message and let's create something amazing.
+            </motion.p>
+          </div>
         </motion.div>
 
-        <div className="flex flex-col xl:flex-row items-center justify-around ">
-          {/* Contact form */}
+        <div className="grid lg:grid-cols-5 gap-8 xl:gap-16 items-start max-w-6xl mx-auto">
+          {/* Contact Form */}
           <motion.div 
-            className="xl:h-[54%] order-2 xl:order-none"
-            initial={{ opacity: 0, x: -50 }}
+            className="lg:col-span-3"
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <SpotlightCard 
+              spotlightColor="rgba(0, 255, 153, 0.08)"
+              className="rounded-2xl"
+            >
+              <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl p-8 xl:p-10 border border-slate-200/50 dark:border-white/10">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Name Row */}
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700 dark:text-white/70">
+                        First Name
+                      </label>
+                      <Input
+                        type="text"
+                        name="firstName"
+                        placeholder="John"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        required
+                        className="h-12 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 focus:border-UserAccent focus:ring-UserAccent/20 rounded-xl transition-colors"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700 dark:text-white/70">
+                        Last Name
+                      </label>
+                      <Input
+                        type="text"
+                        name="lastName"
+                        placeholder="Doe"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required
+                        className="h-12 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 focus:border-UserAccent focus:ring-UserAccent/20 rounded-xl transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Email & Phone Row */}
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700 dark:text-white/70">
+                        Email
+                      </label>
+                      <Input
+                        type="email"
+                        name="email"
+                        placeholder="john@example.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="h-12 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 focus:border-UserAccent focus:ring-UserAccent/20 rounded-xl transition-colors"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700 dark:text-white/70">
+                        Phone <span className="text-slate-400">(optional)</span>
+                      </label>
+                      <Input
+                        type="text"
+                        name="phone"
+                        placeholder="+1 234 567 890"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="h-12 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 focus:border-UserAccent focus:ring-UserAccent/20 rounded-xl transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Service Select */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 dark:text-white/70">
+                      What can I help you with?
+                    </label>
+                    <Select
+                      value={formData.service}
+                      onValueChange={handleServiceChange}
+                    >
+                      <SelectTrigger className="w-full h-12 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 focus:border-UserAccent rounded-xl">
+                        <SelectValue placeholder="Select a service" />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-xl border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900">
+                        <SelectGroup>
+                          <SelectLabel className="text-UserAccent">Services</SelectLabel>
+                          <SelectItem value="web">Web Development</SelectItem>
+                          <SelectItem value="uiux">UI/UX Design</SelectItem>
+                          <SelectItem value="mobile">Mobile Development</SelectItem>
+                          <SelectItem value="fullstack">Full Stack Development</SelectItem>
+                          <SelectItem value="consulting">Consulting</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Message */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 dark:text-white/70">
+                      Your Message
+                    </label>
+                    <Textarea
+                      name="message"
+                      placeholder="Tell me about your project, goals, and timeline..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      className="min-h-[140px] bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 focus:border-UserAccent focus:ring-UserAccent/20 rounded-xl resize-none transition-colors"
+                    />
+                  </div>
+
+                  {/* Submit Button */}
+                  <Magnet strength={0.1}>
+                    <ClickSpark sparkColor={accentColor} sparks={12} sparkSize={6}>
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className={cn(
+                          "w-full sm:w-auto min-w-[180px] h-12 text-base font-medium rounded-xl",
+                          "bg-UserAccent hover:bg-UserAccent/90 text-black",
+                          "shadow-lg shadow-UserAccent/25 hover:shadow-xl hover:shadow-UserAccent/30",
+                          "transition-all duration-300",
+                          "disabled:opacity-70 disabled:cursor-not-allowed"
+                        )}
+                        disabled={status === "loading"}
+                      >
+                        {status === "loading" && (
+                          <span className="flex items-center gap-2">
+                            <motion.span
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            >
+                              ⏳
+                            </motion.span>
+                            Sending...
+                          </span>
+                        )}
+                        {status === "success" && (
+                          <span className="flex items-center gap-2">
+                            <FiCheck className="text-lg" />
+                            Sent!
+                          </span>
+                        )}
+                        {status === "error" && (
+                          <span className="flex items-center gap-2">
+                            <FiAlertCircle className="text-lg" />
+                            Try Again
+                          </span>
+                        )}
+                        {status === "idle" && (
+                          <span className="flex items-center gap-2">
+                            Send Message
+                            <FiSend className="text-lg" />
+                          </span>
+                        )}
+                      </Button>
+                    </ClickSpark>
+                  </Magnet>
+
+                  {/* Error Message */}
+                  {status === "error" && errorMessage && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-sm text-red-500 flex items-center gap-2"
+                    >
+                      <FiAlertCircle />
+                      {errorMessage}
+                    </motion.p>
+                  )}
+                </form>
+              </div>
+            </SpotlightCard>
+          </motion.div>
+
+          {/* Contact Info Sidebar */}
+          <motion.div 
+            className="lg:col-span-2 space-y-6"
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <motion.form
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-6 p-10"
-              initial={{ opacity: 0, y: 30 }}
+            {/* Contact Cards */}
+            <div className="space-y-4">
+              {contactInfo.map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + index * 0.1 }}
+                >
+                  <div 
+                    className={cn(
+                      "group relative p-5 rounded-xl",
+                      "bg-white/60 dark:bg-white/5 backdrop-blur-sm",
+                      "border border-slate-200/50 dark:border-white/10",
+                      "hover:border-UserAccent/30 dark:hover:border-UserAccent/30",
+                      "transition-all duration-300 cursor-pointer"
+                    )}
+                    onClick={() => handleCopy(item.value, index)}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={cn(
+                        "w-12 h-12 rounded-xl flex items-center justify-center",
+                        "bg-UserAccent/10 text-UserAccent",
+                        "group-hover:bg-UserAccent group-hover:text-black",
+                        "transition-colors duration-300"
+                      )}>
+                        {iconMap[item.title] || item.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs uppercase tracking-wider text-slate-500 dark:text-white/40 mb-1">
+                          {item.title}
+                        </p>
+                        <p className="text-sm font-medium text-slate-800 dark:text-white truncate">
+                          {item.description}
+                        </p>
+                      </div>
+                      <div className={cn(
+                        "opacity-0 group-hover:opacity-100 transition-opacity",
+                        copiedIndex === index && "opacity-100"
+                      )}>
+                        {copiedIndex === index ? (
+                          <FiCheck className="text-UserAccent" />
+                        ) : (
+                          <FiCopy className="text-slate-400 dark:text-white/40" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Availability Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              transition={{ delay: 0.7 }}
+              className="p-6 rounded-xl bg-gradient-to-br from-UserAccent/10 to-cyan-500/10 border border-UserAccent/20"
             >
-              <motion.h3 
-                className="text-4xl text-UserAccent capitalize"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-              >
-                Let's work together
-              </motion.h3>
-              <motion.p 
-                className="text-slate-600 dark:text-white/60"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                Let's make something amazing together!
-              </motion.p>
-              {/* inputs with staggered animation */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <motion.div
-                  variants={inputVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  custom={0}
-                >
-                  <Input
-                    type="text"
-                    name="firstName"
-                    placeholder="First Name"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                  />
-                </motion.div>
-                <motion.div
-                  variants={inputVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  custom={1}
-                >
-                  <Input
-                    type="text"
-                    name="lastName"
-                    placeholder="Last Name"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                  />
-                </motion.div>
-                <motion.div
-                  variants={inputVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  custom={2}
-                >
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="Email address"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </motion.div>
-                <motion.div
-                  variants={inputVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  custom={3}
-                >
-                  <Input
-                    type="text"
-                    name="phone"
-                    placeholder="Phone number"
-                    value={formData.phone}
-                    onChange={handleChange}
-                  />
-                </motion.div>
+              <div className="flex items-start gap-4">
+                <div className="w-3 h-3 rounded-full bg-UserAccent animate-pulse mt-1.5" />
+                <div>
+                  <h4 className="font-medium text-slate-800 dark:text-white mb-1">
+                    Currently Available
+                  </h4>
+                  <p className="text-sm text-slate-600 dark:text-white/60">
+                    Open for freelance projects and collaboration. Average response time is under 24 hours.
+                  </p>
+                </div>
               </div>
-              {/* select */}
-              <motion.div
-                variants={inputVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                custom={4}
-              >
-                <Select
-                  value={formData.service}
-                  onValueChange={handleServiceChange}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a service" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Select a service</SelectLabel>
-                    <SelectItem value="web">Web Development</SelectItem>
-                    <SelectItem value="uiux">UI/UX Design</SelectItem>
-                    <SelectItem value="mobile">Mobile Development</SelectItem>
-                    <SelectItem value="fullstack">
-                      Full Stack Development
-                    </SelectItem>
-                    <SelectItem value="consulting">Consulting</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              </motion.div>
-              {/* textarea */}
-              <motion.div
-                variants={inputVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                custom={5}
-              >
-                <Textarea
-                  name="message"
-                  className="h-[200px]"
-                  placeholder="Type your message here..."
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                />
-              </motion.div>
-              {/* btn */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-              >
-                <ClickSpark sparkColor="#00ff99" sparks={12} sparkSize={6}>
-                  <Button
-                    type="submit"
-                    size="md"
-                    className="max-w-44 flex items-center gap-2"
-                    disabled={status === "loading"}
+            </motion.div>
+
+            {/* Quick Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8 }}
+              className="pt-4"
+            >
+              <p className="text-xs uppercase tracking-wider text-slate-500 dark:text-white/40 mb-3">
+                Prefer social?
+              </p>
+              <div className="flex gap-3">
+                {["LinkedIn", "GitHub", "Twitter"].map((platform) => (
+                  <motion.a
+                    key={platform}
+                    href="#"
+                    whileHover={{ y: -2 }}
+                    className={cn(
+                      "px-4 py-2 text-sm font-medium rounded-lg",
+                      "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-white/70",
+                      "hover:bg-UserAccent/10 hover:text-UserAccent",
+                      "transition-colors duration-200"
+                    )}
                   >
-                    {status === "loading" && (
-                      <>
-                        <span className="animate-spin">⏳</span>
-                        Sending...
-                      </>
-                    )}
-                    {status === "success" && (
-                      <>
-                        <FiCheck className="text-lg" />
-                        Sent!
-                      </>
-                    )}
-                    {status === "error" && (
-                      <>
-                        <FiAlertCircle className="text-lg" />
-                        Error
-                      </>
-                    )}
-                    {status === "idle" && (
-                      <>
-                        Send Message
-                        <FiSend className="text-lg" />
-                      </>
-                    )}
-                  </Button>
-                </ClickSpark>
-              </motion.div>
-              {/* Error message display */}
-              {status === "error" && errorMessage && (
-                <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-red-500 text-sm mt-2"
-                >
-                  {errorMessage}
-                </motion.p>
-              )}
-            </motion.form>
-          </motion.div>
-          {/* Contact info */}
-          <motion.div 
-            className="flex items-center xl:justify-start xl:order-none order-1 mb-8 xl:mb-1"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <ul className="flex flex-col gap-10 px-3">
-              {contactInfo.map((item, index) => (
-                <motion.li 
-                  key={index} 
-                  className="flex items-center gap-6"
-                  initial={{ opacity: 0, x: 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                >
-                  <motion.div 
-                    className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-white dark:bg-[#27272c] text-UserAccent rounded-md flex items-center justify-center shadow-sm dark:shadow-none"
-                    whileHover={{ 
-                      scale: 1.1, 
-                      rotate: 5,
-                      boxShadow: "0 0 20px rgba(0, 255, 153, 0.3)"
-                    }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <div className="text-[28px]">{item.icon}</div>
-                  </motion.div>
-                  <div className="flex-1">
-                    <p className="text-slate-500 dark:text-white/60">{item.title}</p>
-                    <h3 className="text-xl xl:max-w-[25vw] text-slate-900 dark:text-white">
-                      {item.description}
-                    </h3>
-                  </div>
-                </motion.li>
-              ))}
-            </ul>
+                    {platform}
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
-      {/* background - COMMENTED OUT FOR TESTING
-      <div className="absolute inset-0 -z-10 w-full h-full">
-        <div className="hidden xl:block">
-          <RetroGrid />
-        </div>
-        <div className="block xl:hidden">
-          <GridPattern
-            numSquares={30}
-            maxOpacity={0.2}
-            duration={3}
-            repeatDelay={1}
-            className={cn(
-              "[mask-image:radial-gradient(1000px_circle_at_center,white,transparent_60%)]",
-              "inset-x-0 inset-y-[-30%] h-[100%] skew-y-12"
-            )}
-          />
-        </div>
-      </div>
-      */}
     </motion.section>
   );
 };

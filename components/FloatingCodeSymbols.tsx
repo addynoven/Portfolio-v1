@@ -22,23 +22,7 @@ interface FloatingSymbol {
 }
 
 // Generate symbols on client only to avoid hydration mismatch
-const generateSymbols = (): FloatingSymbol[] => {
-  const generated: FloatingSymbol[] = [];
-  for (let i = 0; i < 25; i++) {
-    generated.push({
-      id: i,
-      symbol: codeSymbols[Math.floor(Math.random() * codeSymbols.length)],
-      x: 5 + Math.random() * 90,
-      startY: 100 + Math.random() * 20,
-      size: 0.6 + Math.random() * 0.8,
-      duration: 12 + Math.random() * 15,
-      delay: Math.random() * -15,
-      rotation: Math.random() * 40 - 20,
-      drift: (Math.random() - 0.5) * 30,
-    });
-  }
-  return generated;
-};
+
 
 const FloatingCodeSymbols = () => {
   const [symbols, setSymbols] = useState<FloatingSymbol[]>([]);
@@ -48,7 +32,26 @@ const FloatingCodeSymbols = () => {
   // Only generate random symbols on client to avoid hydration mismatch
   useEffect(() => {
     setIsClient(true);
-    setSymbols(generateSymbols());
+    const isMobile = window.innerWidth < 768;
+    // Reduce count on mobile
+    const count = isMobile ? 8 : 25;
+    
+    // Generate here instead of helper function to easy access count
+    const generated: FloatingSymbol[] = [];
+    for (let i = 0; i < count; i++) {
+        generated.push({
+            id: i,
+            symbol: codeSymbols[Math.floor(Math.random() * codeSymbols.length)],
+            x: 5 + Math.random() * 90,
+            startY: 100 + Math.random() * 20,
+            size: 0.6 + Math.random() * 0.8,
+            duration: 12 + Math.random() * 15,
+            delay: Math.random() * -15,
+            rotation: Math.random() * 40 - 20,
+            drift: (Math.random() - 0.5) * 30,
+        });
+    }
+    setSymbols(generated);
   }, []);
 
   if (!isClient) return null;

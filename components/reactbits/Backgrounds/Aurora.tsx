@@ -58,9 +58,15 @@ const Aurora = ({
         const y = canvas.height * (0.3 + 0.4 * Math.cos(time * 0.7 + i * 1.5));
         const radius = Math.min(canvas.width, canvas.height) * (0.3 + 0.1 * Math.sin(time + i));
 
+        // Validate color - must be valid hex
+        let color = colorStops[i];
+        if (!color || !color.startsWith("#") || color.length < 7) {
+          color = "#00ff99"; // Fallback to default
+        }
+
         const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-        gradient.addColorStop(0, colorStops[i] + "80");
-        gradient.addColorStop(1, colorStops[i] + "00");
+        gradient.addColorStop(0, color + "80");
+        gradient.addColorStop(1, color + "00");
 
         ctx.fillStyle = gradient;
         ctx.beginPath();

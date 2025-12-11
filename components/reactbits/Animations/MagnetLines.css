@@ -1,0 +1,12 @@
+.magnetLines-container {
+  place-items: center;
+  position: relative;
+}
+
+.magnetLines-container span {
+  display: block;
+  border-radius: 2px;
+  transform: rotate(var(--rotate, 0deg));
+  transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}

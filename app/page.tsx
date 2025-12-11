@@ -10,8 +10,6 @@ import Hero from "@/components/sections/Hero";
 import SimpleText from "@/components/sections/SimpleText";
 import Work from "@/components/sections/Work";
 import Skills from "@/components/sections/Skills";
-import Resume from "@/components/sections/Resume";
-import Services from "@/components/sections/Services";
 import Contact from "@/components/sections/Contact";
 import InteractiveBadge from "@/components/sections/InteractiveBadge";
 
@@ -29,10 +27,6 @@ const Home = () => {
         <Work limit={5} />
          <div className="border-b border-slate-200 dark:border-white/10" />
         <Skills />
-        <div className="border-b border-slate-200 dark:border-white/10" />
-        <Resume />
-        <div className="border-b border-slate-200 dark:border-white/10" />
-        <Services />
         <div className="border-b border-slate-200 dark:border-white/10" />
         <Contact />
         <div className="border-b border-slate-200 dark:border-white/10" />

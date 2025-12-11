@@ -21,6 +21,7 @@ import ScrollStack, { ScrollStackItem } from "@/components/reactbits/Components/
 import { projects } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import QrCodePopup from "@/components/QrCodePopup";
+import { useAccentColor } from "@/lib/accentColor";
 
 interface WorkProps {
   limit?: number;
@@ -28,6 +29,7 @@ interface WorkProps {
 }
 
 const Work = ({ limit, isPage = false }: WorkProps) => {
+  const accentColor = useAccentColor();
   const displayedProjects = limit ? projects.slice(0, limit) : projects;
 
   return (
@@ -42,7 +44,7 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
       {/* Aurora Background for entire section */}
       <div className="absolute inset-0 z-0">
         <Aurora 
-          colorStops={["#00ff99", "#0a2a1a", "#00d4aa", "#1a1a2e"]}
+          colorStops={[accentColor, "#0a2a1a", "#00d4aa", "#1a1a2e"]}
           speed={2}
           blur={120}
         />
@@ -133,8 +135,8 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
                   )}
                   {index === 4 && (
                     <GridScan
-                      linesColor="#00ff99"
-                      scanColor="#00ff99"
+                      linesColor={accentColor}
+                      scanColor={accentColor}
                       scanOpacity={0.6}
                       gridScale={0.15}
                       lineThickness={1.5}
@@ -280,31 +282,34 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
               </ScrollStackItem>
             );
           })}
-        </ScrollStack>
           
-          {/* View All Projects Card */}
+          {/* View All Projects Card - Inside ScrollStack */}
           {!isPage && (
-             <motion.div 
-               className="w-full px-5 mt-16 pb-32 relative z-10"
-               initial={{ opacity: 0, y: 40 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true, margin: "-100px" }}
-               transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-             >
-               <div className="backdrop-blur-xl bg-black/80 border border-white/20 rounded-[40px] p-12 shadow-2xl w-full min-h-[24rem] flex items-center justify-center">
-                 <div className="text-center">
-                   <h3 className="text-3xl xl:text-4xl font-bold text-white mb-4">Want to see more?</h3>
-                   <p className="text-white/60 text-lg mb-8">Explore all my projects and creative work</p>
-                    <a href="/work" onClick={(e) => { e.preventDefault(); window.location.href = '/work'; }}>
-                      <Button variant="outline" size="lg" className="group text-lg px-10 py-6 border-UserAccent text-UserAccent hover:bg-UserAccent hover:text-primary">
-                         View All Projects
-                         <BsArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </a>
-                 </div>
-               </div>
-             </motion.div>
+            <ScrollStackItem
+              itemClassName="bg-white/90 dark:bg-black/85 backdrop-blur-md border border-white/20"
+            >
+              <div className="absolute inset-0 z-0">
+                <Aurora 
+                  colorStops={[accentColor, "#0a2a1a", "#00d4aa", "#1a1a2e"]}
+                  speed={2}
+                  blur={120}
+                />
+              </div>
+              <div className="relative z-10 w-full h-full flex items-center justify-center p-12">
+                <div className="text-center">
+                  <h3 className="text-3xl xl:text-4xl font-bold text-white mb-4">Want to see more?</h3>
+                  <p className="text-white/60 text-lg mb-8">Explore all my projects and creative work</p>
+                  <a href="/work" onClick={(e) => { e.preventDefault(); window.location.href = '/work'; }}>
+                    <Button variant="outline" size="lg" className="group text-lg px-10 py-6 border-UserAccent text-UserAccent hover:bg-UserAccent hover:text-primary">
+                       View All Projects
+                       <BsArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </ScrollStackItem>
           )}
+        </ScrollStack>
 
           {/* Back to Home Button (if on dedicated page) */}
           {isPage && (

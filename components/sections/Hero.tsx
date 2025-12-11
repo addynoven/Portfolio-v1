@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { FiDownload } from "react-icons/fi";
 import Typewriter from "typewriter-effect";
-import Photo from "@/components/Photo";
+import Terminal from "@/components/Terminal";
 import Social from "@/components/Social";
 import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
@@ -13,8 +13,11 @@ import FloatingCodeSymbols from "@/components/FloatingCodeSymbols";
 import HeroTiltCard from "@/components/HeroTiltCard";
 import ShinyText from "@/components/reactbits/TextAnimations/ShinyText";
 import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
+import { useAccentColor } from "@/lib/accentColor";
 
 const Hero = () => {
+  const accentColor = useAccentColor();
+  
   return (
     <section id="home" className="min-h-[calc(100vh-80px)] flex flex-col justify-center pt-4 pb-2 xl:pt-6 xl:pb-4 relative">
       {/* Three.js Particle Background */}
@@ -114,7 +117,7 @@ const Hero = () => {
               ease: [0.34, 1.56, 0.64, 1] // Spring bounce
             }}
           >
-            <ClickSpark sparkColor="#00ff99" sparks={15} sparkSize={8}>
+            <ClickSpark sparkColor={accentColor} sparks={15} sparkSize={8}>
               <motion.a 
                 href="/resume.pdf" 
                 download="Aditya_Sahu_Resume.pdf"
@@ -146,7 +149,7 @@ const Hero = () => {
           </motion.div>
         </motion.div>
         </HeroTiltCard>
-        {/* photo with floating effect */}
+        {/* Terminal with floating effect */}
         <motion.div 
           className="order-1 xl:order-none mb-8 xl:mb-0"
           initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
@@ -159,7 +162,7 @@ const Hero = () => {
         >
           <motion.div
             animate={{ 
-              y: [-8, 8, -8],
+              y: [-4, 4, -4],
             }}
             transition={{ 
               duration: 6, 
@@ -167,7 +170,7 @@ const Hero = () => {
               ease: "easeInOut" 
             }}
           >
-            <Photo />
+            <Terminal />
           </motion.div>
         </motion.div>
       </motion.div>

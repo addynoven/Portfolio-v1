@@ -30,8 +30,8 @@ module.exports = {
           foreground: "hsl(var(--primary-foreground))",
         },
         UserAccent: {
-          DEFAULT: "#00ff99",
-          hover: "#00e187",
+          DEFAULT: "var(--user-accent, #00ff99)",
+          hover: "var(--user-accent-hover, #00e187)",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

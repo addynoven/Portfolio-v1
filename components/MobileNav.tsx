@@ -8,8 +8,6 @@ import { useSectionTransition } from "./SectionTransitionContext";
 
 const links = [
   { name: "Home", path: "#home", targetId: "home" },
-  { name: "Services", path: "#services", targetId: "services" },
-  { name: "Resume", path: "#resume", targetId: "resume" },
   { name: "Work", path: "#work", targetId: "work" },
   { name: "Contact", path: "#contact", targetId: "contact" },
 ];

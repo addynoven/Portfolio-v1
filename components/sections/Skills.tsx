@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   Tooltip,
   TooltipContent,
@@ -8,10 +7,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import SplitText from "@/components/reactbits/TextAnimations/SplitText";
-import TiltCard from "@/components/reactbits/Components/TiltCard";
-import DecryptedText from "@/components/reactbits/TextAnimations/DecryptedText";
 import Particles from "@/components/reactbits/Backgrounds/Particles";
-import GradientText from "@/components/reactbits/TextAnimations/GradientText";
+import MagicBento from "@/components/reactbits/Components/MagicBento";
 
 // Import icons
 import {
@@ -23,6 +20,15 @@ import {
   FaCss3Alt,
   FaJava,
   FaGithub,
+  FaDocker,
+  FaAws,
+  FaLinux,
+  FaGitAlt,
+  FaTerminal,
+  FaDatabase,
+  FaGamepad,
+  FaNetworkWired,
+  FaCode,
 } from "react-icons/fa";
 
 import {
@@ -33,101 +39,157 @@ import {
   SiCplusplus,
   SiExpress,
   SiMongodb,
+  SiTypescript,
+  SiRedis,
+  SiPostgresql,
+  SiKubernetes,
+  SiGooglecloud,
+  SiFirebase,
+  SiVercel,
+  SiNginx,
+  SiJenkins,
+  SiGithubactions,
+  SiUnity,
+  SiUnrealengine,
+  SiGraphql,
+  SiSocketdotio,
+  SiPostman,
+  SiNotion,
+  SiSlack,
 } from "react-icons/si";
 
-// Skill categories with icons
+// Expanded skill categories with icons
 const skillCategories = [
   {
     name: "Languages",
-    description: "Core programming languages I work with",
+    description: "Core programming languages",
     skills: [
       { name: "Java", icon: <FaJava /> },
       { name: "Python", icon: <SiPython /> },
       { name: "C++", icon: <SiCplusplus /> },
       { name: "C", icon: <SiC /> },
+      { name: "TypeScript", icon: <SiTypescript /> },
+      { name: "JavaScript", icon: <FaJs /> },
     ],
-    gradient: ["#00ff99", "#00d4aa", "#00ff99"],
   },
   {
     name: "Frontend",
-    description: "Building beautiful user interfaces",
+    description: "Building beautiful interfaces",
     skills: [
-      { name: "HTML", icon: <FaHtml5 /> },
-      { name: "CSS", icon: <FaCss3Alt /> },
-      { name: "JavaScript", icon: <FaJs /> },
       { name: "React", icon: <FaReact /> },
       { name: "Next.js", icon: <SiNextdotjs /> },
-      { name: "Tailwind CSS", icon: <SiTailwindcss /> },
+      { name: "HTML", icon: <FaHtml5 /> },
+      { name: "CSS", icon: <FaCss3Alt /> },
+      { name: "Tailwind", icon: <SiTailwindcss /> },
+      { name: "TypeScript", icon: <SiTypescript /> },
     ],
-    gradient: ["#61dafb", "#00ff99", "#61dafb"],
   },
   {
     name: "Backend",
-    description: "Server-side technologies and databases",
+    description: "Server-side & APIs",
     skills: [
       { name: "Node.js", icon: <FaNode /> },
-      { name: "Express.js", icon: <SiExpress /> },
-      { name: "MongoDB", icon: <SiMongodb /> },
+      { name: "Express", icon: <SiExpress /> },
+      { name: "GraphQL", icon: <SiGraphql /> },
+      { name: "Socket.io", icon: <SiSocketdotio /> },
     ],
-    gradient: ["#68a063", "#00ff99", "#68a063"],
   },
   {
-    name: "Tools",
-    description: "Design and version control",
+    name: "Database",
+    description: "Data storage solutions",
+    skills: [
+      { name: "MongoDB", icon: <SiMongodb /> },
+      { name: "PostgreSQL", icon: <SiPostgresql /> },
+      { name: "Redis", icon: <SiRedis /> },
+      { name: "Firebase", icon: <SiFirebase /> },
+    ],
+  },
+  {
+    name: "Cloud & DevOps",
+    description: "Infrastructure & deployment",
+    skills: [
+      { name: "AWS", icon: <FaAws /> },
+      { name: "Google Cloud", icon: <SiGooglecloud /> },
+      { name: "Docker", icon: <FaDocker /> },
+      { name: "Kubernetes", icon: <SiKubernetes /> },
+      { name: "Vercel", icon: <SiVercel /> },
+      { name: "Nginx", icon: <SiNginx /> },
+    ],
+  },
+  {
+    name: "CI/CD & Tools",
+    description: "Automation & workflows",
+    skills: [
+      { name: "GitHub Actions", icon: <SiGithubactions /> },
+      { name: "Jenkins", icon: <SiJenkins /> },
+      { name: "Git", icon: <FaGitAlt /> },
+      { name: "Linux", icon: <FaLinux /> },
+      { name: "Terminal", icon: <FaTerminal /> },
+    ],
+  },
+  {
+    name: "Game Dev",
+    description: "Interactive experiences",
+    skills: [
+      { name: "Unity", icon: <SiUnity /> },
+      { name: "Unreal", icon: <SiUnrealengine /> },
+      { name: "C++", icon: <SiCplusplus /> },
+      { name: "Gaming", icon: <FaGamepad /> },
+    ],
+  },
+  {
+    name: "Productivity",
+    description: "Design & collaboration",
     skills: [
       { name: "Figma", icon: <FaFigma /> },
       { name: "GitHub", icon: <FaGithub /> },
+      { name: "VS Code", icon: <FaCode /> },
+      { name: "Postman", icon: <SiPostman /> },
+      { name: "Notion", icon: <SiNotion /> },
+      { name: "Slack", icon: <SiSlack /> },
     ],
-    gradient: ["#f24e1e", "#00ff99", "#f24e1e"],
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const categoryVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.4, 0.25, 1],
-    },
-  },
-};
-
-const skillVariants = {
-  hidden: { opacity: 0, scale: 0.5, rotateY: -90 },
-  visible: (index: number) => ({
-    opacity: 1,
-    scale: 1,
-    rotateY: 0,
-    transition: {
-      duration: 0.5,
-      delay: index * 0.08,
-      ease: [0.34, 1.56, 0.64, 1],
-    },
-  }),
-};
-
 const Skills = () => {
+  // Sort categories by skill count (more skills first for better grid layout)
+  const sortedCategories = [...skillCategories].sort((a, b) => b.skills.length - a.skills.length);
+  
+  const skillsItems = sortedCategories.map(category => {
+    const skillCount = category.skills.length;
+    // Cards with 5+ skills get 'large' size (will span 2 columns)
+    const cardSize: 'small' | 'large' = skillCount >= 5 ? 'large' : 'small';
+    
+    return {
+      title: category.name,
+      description: category.description,
+      label: "",
+      color: '#0a0a0f',
+      size: cardSize, // Pass size info to MagicBento
+      skillCount: skillCount,
+      content: (
+          <div className={`grid ${skillCount > 4 ? 'grid-cols-3' : 'grid-cols-2'} gap-5 mt-4 place-items-center`}>
+              {category.skills.map((skill, idx) => (
+                  <TooltipProvider key={idx} delayDuration={100}>
+                      <Tooltip>
+                          <TooltipTrigger asChild>
+                              <div className="text-4xl xl:text-5xl hover:text-UserAccent transition-all cursor-pointer text-white/80 hover:scale-125 duration-300">
+                                  {skill.icon}
+                              </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                              <p className="font-semibold text-base">{skill.name}</p>
+                          </TooltipContent>
+                      </Tooltip>
+                  </TooltipProvider>
+              ))}
+          </div>
+      )
+    };
+  });
+
   return (
-    <motion.section
-      id="skills"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="relative py-20 xl:py-32 min-h-screen overflow-hidden"
-    >
+    <section id="skills" className="relative py-20 xl:py-32 min-h-screen overflow-hidden">
       {/* Particles Background */}
       <div className="absolute inset-0 z-0">
         <Particles
@@ -145,140 +207,36 @@ const Skills = () => {
         />
       </div>
 
-      {/* Gradient Overlay - reduced opacity for better particle visibility */}
+      {/* Gradient Overlay */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-background/20 to-background/80 pointer-events-none" />
 
       <div className="container mx-auto relative z-10">
-        {/* Section Header */}
-        <motion.div
-          className="mb-16 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="mb-16 text-center">
           <h2 className="text-4xl xl:text-6xl font-bold mb-4">
             <SplitText text="Skills & Tech Stack" stagger={0.06} delay={0.2} />
           </h2>
-          <motion.p
-            className="text-lg text-slate-600 dark:text-white/60 max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-          >
-            Technologies and tools I use to bring ideas to life
-          </motion.p>
-          <motion.div
-            className="h-1 bg-gradient-to-r from-transparent via-UserAccent to-transparent rounded-full mx-auto mt-6"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
-            style={{ maxWidth: "300px" }}
-          />
-        </motion.div>
+          <p className="text-lg text-slate-600 dark:text-white/60 max-w-2xl mx-auto">
+             Technologies and tools I use to bring ideas to life
+          </p>
+        </div>
 
-        {/* Skills Categories */}
-        <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {skillCategories.map((category, catIndex) => (
-            <motion.div
-              key={category.name}
-              variants={categoryVariants}
-              className="relative"
-            >
-              {/* Category Card */}
-              <div className="backdrop-blur-xl bg-white/5 dark:bg-black/40 border border-white/10 rounded-3xl p-6 xl:p-8 h-full">
-                {/* Category Header */}
-                <div className="mb-6">
-                  <h3 className="text-2xl xl:text-3xl font-bold mb-2">
-                    <GradientText
-                      colors={category.gradient}
-                      animationSpeed={6}
-                    >
-                      <DecryptedText
-                        text={category.name}
-                        speed={40}
-                        revealDirection="start"
-                        className="font-bold"
-                      />
-                    </GradientText>
-                  </h3>
-                  <p className="text-sm text-slate-500 dark:text-white/40">
-                    {category.description}
-                  </p>
-                </div>
-
-                {/* Skills Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={skill.name}
-                      variants={skillVariants}
-                      custom={skillIndex}
-                      className="relative"
-                    >
-                      <TiltCard
-                        tiltAmount={15}
-                        glareOpacity={0.15}
-                        glareColor="rgba(0, 255, 153, 0.3)"
-                        className="h-full"
-                      >
-                        <TooltipProvider delayDuration={100}>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <motion.div
-                                className="w-full h-[100px] xl:h-[120px] bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-2xl flex flex-col justify-center items-center gap-2 group cursor-pointer border border-white/10 hover:border-UserAccent/50 transition-colors duration-300"
-                                whileHover={{
-                                  scale: 1.02,
-                                  boxShadow: "0 0 30px rgba(0, 255, 153, 0.2)",
-                                }}
-                                whileTap={{ scale: 0.98 }}
-                              >
-                                <motion.div
-                                  className="text-4xl xl:text-5xl text-slate-700 dark:text-white/80 group-hover:text-UserAccent transition-colors duration-300"
-                                  whileHover={{ 
-                                    scale: 1.2,
-                                    rotate: [0, -10, 10, 0],
-                                  }}
-                                  transition={{ duration: 0.3 }}
-                                >
-                                  {skill.icon}
-                                </motion.div>
-                                <span className="text-xs font-medium text-slate-600 dark:text-white/60 group-hover:text-white transition-colors duration-300">
-                                  {skill.name}
-                                </span>
-                              </motion.div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p className="capitalize">{skill.name}</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TiltCard>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Decorative corner glow */}
-              <div
-                className="absolute -top-2 -right-2 w-20 h-20 rounded-full blur-xl opacity-30 pointer-events-none"
-                style={{
-                  background: `linear-gradient(135deg, ${category.gradient[0]}, transparent)`,
-                }}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="flex justify-center w-full">
+            <MagicBento 
+                items={skillsItems}
+                textAutoHide={false}
+                enableStars={true}
+                enableSpotlight={true}
+                enableBorderGlow={true}
+                enableTilt={true}
+                enableMagnetism={true}
+                clickEffect={true}
+                spotlightRadius={400}
+                particleCount={15}
+                glowColor="0, 255, 153"
+            />
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

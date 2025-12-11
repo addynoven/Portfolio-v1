@@ -2,13 +2,15 @@ import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ScrollToTop from "@/components/ScrollToTop";
+import TerminalButton from "@/components/TerminalButton";
 import LoadingScreen from "@/components/LoadingScreen";
 import PageTransition from "@/components/PageTransition";
 import StairTransition from "@/components/StairTransition";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SectionTransitionProvider } from "@/components/SectionTransitionContext";
 import SectionStairTransition from "@/components/SectionStairTransition";
+import Oneko from "@/components/Oneko";
+import { CatProvider } from "@/components/CatContext";
 
 import type { Metadata } from "next";
 
@@ -60,7 +62,7 @@ export const metadata: Metadata = {
 };
 
 // Toggle loading screen on/off for development - set to false to skip
-const SHOW_LOADING_SCREEN = true;
+const SHOW_LOADING_SCREEN = false;
 
 export default function RootLayout({
 	children,
@@ -76,6 +78,7 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
+					<CatProvider>
 					<SectionTransitionProvider>
 						{SHOW_LOADING_SCREEN && <LoadingScreen />}
 						<Header />
@@ -83,8 +86,10 @@ export default function RootLayout({
 						<SectionStairTransition />
 						<PageTransition>{children}</PageTransition>
 						<Footer />
-							<ScrollToTop />
+						<TerminalButton />
+						<Oneko />
 					</SectionTransitionProvider>
+					</CatProvider>
 				</ThemeProvider>
 			</body>
 		</html>

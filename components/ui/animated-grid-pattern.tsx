@@ -49,13 +49,7 @@ export function GridPattern({
     }));
   }
 
-  const updateSquarePosition = (id: number) => {
-    setSquares((currentSquares) =>
-      currentSquares.map((sq) =>
-        sq.id === id ? { ...sq, pos: getPos() } : sq
-      )
-    );
-  };
+
 
   useEffect(() => {
     if (dimensions.width && dimensions.height) {
@@ -118,11 +112,10 @@ export function GridPattern({
             animate={{ opacity: maxOpacity }}
             transition={{
               duration,
-              repeat: 1,
+              repeat: Infinity,
               delay: index * 0.1,
               repeatType: "reverse",
             }}
-            onAnimationComplete={() => updateSquarePosition(id)}
             key={`${x}-${y}-${index}`}
             width={width - 1}
             height={height - 1}
