@@ -12,7 +12,7 @@ interface TerminalLine {
 const COMMANDS = [
   "help", "about", "neofetch", "skills", "projects", "contact", "social", "kitty", "clear",
   "reload", "exit", "color", "reset", "theme", "goto", "ls", "open", "whoami", "date",
-  "sudo", "matrix", "devtools", "tour"
+  "sudo", "matrix", "devtools", "tour", "loading"
 ];
 
 import { useCat } from "./CatContext";
@@ -97,6 +97,7 @@ export default function Terminal() {
         { type: "output", color: "cyan", text: "    open <link>    - open github/linkedin/twitter" },
         { type: "output", color: "green", text: "  ⚙️  System:" },
         { type: "output", color: "cyan", text: "    reload, exit, clear, date, whoami" },
+        { type: "output", color: "cyan", text: "    loading        - toggle loading screen on/off" },
         { type: "output", color: "green", text: "  🎮  Fun:" },
         { type: "output", color: "cyan", text: "    kitty, sudo, matrix, tour" },
         { type: "output", color: "cyan", text: "    tour           - restart the guided tour" },
@@ -358,6 +359,30 @@ export default function Terminal() {
         { type: "output", color: "green", text: "   👀 I can see when you're inspecting..." },
         { type: "output", color: "pink", text: "   Curious minds are always welcome here 💚" },
       ];
+    }
+
+    // Loading screen toggle
+    if (command === "loading") {
+      const arg = args[1];
+      if (arg === "on") {
+        localStorage.removeItem('skip-loading-screen');
+        return [
+          { type: "output", color: "green", text: "✅ Loading screen ENABLED" },
+          { type: "output", color: "cyan", text: "   Reload the page to see it!" },
+        ];
+      } else if (arg === "off") {
+        localStorage.setItem('skip-loading-screen', 'true');
+        return [
+          { type: "output", color: "yellow", text: "⏭️ Loading screen DISABLED" },
+          { type: "output", color: "cyan", text: "   Site will skip the intro animation." },
+        ];
+      } else {
+        const isDisabled = localStorage.getItem('skip-loading-screen') === 'true';
+        return [
+          { type: "output", color: "yellow", text: `🎬 Loading screen: ${isDisabled ? 'OFF' : 'ON'}` },
+          { type: "output", color: "cyan", text: "   Usage: loading on | loading off" },
+        ];
+      }
     }
 
     // Empty command

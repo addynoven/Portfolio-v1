@@ -39,6 +39,18 @@ const LoadingScreen = () => {
 	const [phase, setPhase] = useState<Phase>("chaos");
 	const [displayText, setDisplayText] = useState("");
 	const scramblerRef = useRef<Scrambler | null>(null);
+	const [skipLoading, setSkipLoading] = useState(false);
+
+	// Check if loading screen is disabled via terminal command
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			const shouldSkip = localStorage.getItem('skip-loading-screen') === 'true';
+			if (shouldSkip) {
+				setSkipLoading(true);
+				setPhase('done');
+			}
+		}
+	}, []);
 
 	// Callbacks for phase transitions
 	const handleLetterTransitionComplete = () => {

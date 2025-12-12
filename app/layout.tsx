@@ -61,8 +61,8 @@ export const metadata: Metadata = {
 	},
 };
 
-// Toggle loading screen on/off for development - set to false to skip
-const SHOW_LOADING_SCREEN = false;
+// Loading screen is controlled via terminal command: 'loading on' or 'loading off'
+const SHOW_LOADING_SCREEN = true;
 
 export default function RootLayout({
 	children,
