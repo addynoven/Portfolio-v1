@@ -59,7 +59,7 @@ const Stats = () => {
                     duration={3}
                     delay={0.5}
                     suffix={stat.suffix || ""}
-                    className="text-4xl xl:text-6xl font-extrabold"
+                    className="text-4xl xl:text-6xl font-extrabold text-slate-900 dark:text-white"
                     enableScrollSpy
                     scrollSpyOnce
                   />

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiTerminal, FiX } from "react-icons/fi";
 import Terminal from "./Terminal";
+import MatrixRain from "./MatrixRain";
 import { useCat } from "./CatContext";
 
 // DevTools detection Easter egg
@@ -128,7 +129,11 @@ const TerminalButton = () => {
   const [isVisible, setIsVisible] = useState(false);
   
   // Get cat context for syncing terminal state
-  const { setIsTerminalOpen } = useCat();
+  const { setIsTerminalOpen, isMatrixActive, setIsMatrixActive } = useCat();
+  
+  // Use ref to access setIsMatrixActive in effects without dependency issues
+  const setIsMatrixActiveRef = React.useRef(setIsMatrixActive);
+  setIsMatrixActiveRef.current = setIsMatrixActive;
   
   // Initialize DevTools detection
   useDevToolsDetection();
@@ -165,12 +170,24 @@ const TerminalButton = () => {
     return () => window.removeEventListener("keydown", handleKeydown);
   }, []);
 
+  // Stop matrix rain when modal closes
+  useEffect(() => {
+    if (!isModalOpen) {
+      setIsMatrixActiveRef.current(false);
+    }
+  }, [isModalOpen]);
+
   const handleClose = useCallback(() => {
     setIsModalOpen(false);
+    // Stop matrix rain when terminal closes
+    setIsMatrixActiveRef.current(false);
   }, []);
 
   return (
     <>
+      {/* Matrix Rain Background */}
+      <MatrixRain isActive={isMatrixActive} />
+      
       <AnimatePresence>
         {isVisible && (
           <motion.button

@@ -189,7 +189,7 @@ const Contact = () => {
               spotlightColor="rgba(0, 255, 153, 0.08)"
               className="rounded-2xl"
             >
-              <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl p-8 xl:p-10 border border-slate-200/50 dark:border-white/10">
+              <div className="bg-white/20 dark:bg-slate-900/20 backdrop-blur-xl rounded-2xl p-8 xl:p-10 border border-slate-200/50 dark:border-white/10">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Name Row */}
                   <div className="grid sm:grid-cols-2 gap-4">

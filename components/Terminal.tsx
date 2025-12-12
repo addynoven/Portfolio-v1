@@ -12,7 +12,7 @@ interface TerminalLine {
 const COMMANDS = [
   "help", "about", "neofetch", "skills", "projects", "contact", "social", "kitty", "clear",
   "reload", "exit", "color", "reset", "theme", "goto", "ls", "open", "whoami", "date",
-  "sudo", "matrix", "devtools", "tour", "loading"
+  "sudo", "matrix", "devtools", "tour", "loading", "cmatrix", "q"
 ];
 
 import { useCat } from "./CatContext";
@@ -20,7 +20,7 @@ import { useCat } from "./CatContext";
 export default function Terminal() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const { startTour } = useCat();
+  const { startTour, setIsMatrixActive } = useCat();
 
   const rotateX = useTransform(y, [-100, 100], [8, -8]);
   const rotateY = useTransform(x, [-100, 100], [-8, 8]);
@@ -54,6 +54,15 @@ export default function Terminal() {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [lines]);
+
+  // Auto-focus the input when terminal opens
+  useEffect(() => {
+    // Small delay to ensure the modal animation completes
+    const timer = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Helper to update accent color
   const updateAccentColor = (hex: string) => {
@@ -99,7 +108,7 @@ export default function Terminal() {
         { type: "output", color: "cyan", text: "    reload, exit, clear, date, whoami" },
         { type: "output", color: "cyan", text: "    loading        - toggle loading screen on/off" },
         { type: "output", color: "green", text: "  🎮  Fun:" },
-        { type: "output", color: "cyan", text: "    kitty, sudo, matrix, tour" },
+        { type: "output", color: "cyan", text: "    kitty, sudo, matrix, tour, cmatrix" },
         { type: "output", color: "cyan", text: "    tour           - restart the guided tour" },
       ];
 
@@ -195,15 +204,10 @@ export default function Terminal() {
       return [{ type: "output", color: "green", text: "🔄 Reloading..." }];
     }
 
-    // Exit
+    // Exit - redirect to Google
     if (command === "exit") {
-      // window.close() only works for tabs opened via script
-      window.close();
-      // If we're still here, it didn't work
-      return [
-        { type: "output", color: "yellow", text: "🚪 Nice try! But browsers don't let me close tabs I didn't open 😏" },
-        { type: "output", color: "cyan", text: "   Try Ctrl+W or Cmd+W instead!" },
-      ];
+      window.location.href = "https://www.google.com";
+      return [{ type: "output", color: "green", text: "� Goodbye! Redirecting..." }];
     }
 
     // Tour command
@@ -348,6 +352,23 @@ export default function Terminal() {
         { type: "output", color: "green", text: "Wake up, Neo..." },
         { type: "output", color: "green", text: "The Matrix has you..." },
         { type: "output", color: "green", text: "Follow the white rabbit 🐰" },
+      ];
+    }
+
+    // cmatrix - Full Matrix Rain effect
+    if (command === "cmatrix") {
+      setIsMatrixActive(true);
+      return [
+        { type: "output", color: "green", text: "🟢 Matrix Rain activated!" },
+        { type: "output", color: "cyan", text: "   Type 'q' to stop the rain" },
+      ];
+    }
+
+    // q - Stop Matrix Rain
+    if (command === "q") {
+      setIsMatrixActive(false);
+      return [
+        { type: "output", color: "yellow", text: "⏹️ Matrix Rain stopped" },
       ];
     }
 

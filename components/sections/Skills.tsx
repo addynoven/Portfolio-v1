@@ -204,7 +204,7 @@ const Skills = () => {
                   <TooltipProvider key={idx} delayDuration={100}>
                       <Tooltip>
                           <TooltipTrigger asChild>
-                              <div className="text-4xl xl:text-5xl hover:text-UserAccent transition-all cursor-pointer text-white/80 hover:scale-125 duration-300">
+                              <div className="text-4xl xl:text-5xl hover:text-UserAccent transition-all cursor-pointer text-slate-200 hover:scale-125 duration-300">
                                   {skill.icon}
                               </div>
                           </TooltipTrigger>

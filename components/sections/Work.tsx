@@ -213,7 +213,7 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
                     transition={{ duration: 0.6, delay: 0.3 }}
                   >
                     {/* Glassmorphic Container */}
-                    <div className="backdrop-blur-md bg-black/40 rounded-2xl p-5 xl:p-6 border border-white/10 shadow-xl">
+                    <div className="backdrop-blur-md bg-white/60 dark:bg-black/40 rounded-2xl p-5 xl:p-6 border border-slate-200/50 dark:border-white/10 shadow-xl">
                       <motion.span 
                         className="inline-block px-3 py-1.5 rounded-full bg-UserAccent/10 text-UserAccent text-sm font-medium mb-3"
                         whileHover={{ scale: 1.05 }}
@@ -324,8 +324,8 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
               </div>
               <div className="relative z-10 w-full h-full flex items-center justify-center p-12">
                 <div className="text-center">
-                  <h3 className="text-3xl xl:text-4xl font-bold text-white mb-4">Want to see more?</h3>
-                  <p className="text-white/60 text-lg mb-8">Explore all my projects and creative work</p>
+                  <h3 className="text-3xl xl:text-4xl font-bold text-slate-900 dark:text-white mb-4">Want to see more?</h3>
+                  <p className="text-slate-600 dark:text-white/60 text-lg mb-8">Explore all my projects and creative work</p>
                   <a href="/work" onClick={(e) => { e.preventDefault(); window.location.href = '/work'; }}>
                     <Button variant="outline" size="lg" className="group text-lg px-10 py-6 border-UserAccent text-UserAccent hover:bg-UserAccent hover:text-primary">
                        View All Projects

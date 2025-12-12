@@ -11,7 +11,7 @@ const GitHubContributions = dynamic(
   { 
     ssr: false,
     loading: () => (
-      <div className="h-32 flex items-center justify-center text-white/40">
+      <div className="h-32 flex items-center justify-center text-slate-600 dark:text-white/40">
         Loading contributions...
       </div>
     )
@@ -80,11 +80,11 @@ const LocalTime = () => {
 
   return (
     <div className="flex flex-col">
-      <span className="text-xs text-white/40 uppercase tracking-wider mb-1">
+      <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-1">
         Local Time (IST)
       </span>
-      <span className="text-2xl font-mono font-bold text-white">{time}</span>
-      <span className="text-sm text-white/60">{date}</span>
+      <span className="text-2xl font-mono font-bold text-slate-900 dark:text-white">{time}</span>
+      <span className="text-sm text-slate-600 dark:text-white/60">{date}</span>
     </div>
   );
 };
@@ -129,8 +129,8 @@ const CodingStats = () => {
       {displayStats.map((stat, i) => (
         <div key={i} className="flex flex-col">
           <span className="text-lg">{stat.icon}</span>
-          <span className="text-lg font-bold text-white">{stat.value}</span>
-          <span className="text-xs text-white/50">{stat.label}</span>
+          <span className="text-lg font-bold text-slate-900 dark:text-white">{stat.value}</span>
+          <span className="text-xs text-slate-500 dark:text-white/50">{stat.label}</span>
         </div>
       ))}
     </div>
@@ -158,7 +158,7 @@ const OnekoToggle = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <span className="text-xs text-white/40 uppercase tracking-wider">
+      <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider">
         Companion
       </span>
       <button
@@ -167,14 +167,14 @@ const OnekoToggle = () => {
           flex items-center gap-3 p-3 rounded-xl transition-all duration-150
           ${catEnabled 
             ? "bg-UserAccent/20 border border-UserAccent/30" 
-            : "bg-white/5 border border-white/10 hover:border-white/20"
+            : "bg-slate-200/50 dark:bg-white/5 border border-slate-300 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/20"
           }
         `}
       >
         <span className="text-2xl">🐱</span>
         <div className="flex flex-col items-start">
-          <span className="text-sm font-medium text-white">Oneko Cat</span>
-          <span className="text-xs text-white/50">
+          <span className="text-sm font-medium text-slate-900 dark:text-white">Oneko Cat</span>
+          <span className="text-xs text-slate-500 dark:text-white/50">
             {catEnabled ? "Following cursor" : "Click to enable"}
           </span>
         </div>
@@ -182,7 +182,7 @@ const OnekoToggle = () => {
         <div
           className={`
             ml-auto w-10 h-6 rounded-full relative transition-colors duration-150
-            ${catEnabled ? "bg-UserAccent" : "bg-white/20"}
+            ${catEnabled ? "bg-UserAccent" : "bg-slate-300 dark:bg-white/20"}
           `}
         >
           <div
@@ -208,13 +208,13 @@ const DevIdentity = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-xs text-white/40 uppercase tracking-wider mb-1">
+      <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-1">
         Dev Setup
       </span>
       {identity.map((item, i) => (
         <div key={i} className="flex justify-between text-sm">
-          <span className="text-white/50">{item.label}</span>
-          <span className="text-white font-medium">{item.value}</span>
+          <span className="text-slate-500 dark:text-white/50">{item.label}</span>
+          <span className="text-slate-900 dark:text-white font-medium">{item.value}</span>
         </div>
       ))}
     </div>
@@ -244,7 +244,7 @@ const ActivityDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
           {/* Discord Status - Large */}
           <BentoCard className="md:col-span-2 lg:col-span-2" delay={0.1}>
-            <span className="text-xs text-white/40 uppercase tracking-wider mb-3 block">
+            <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-3 block">
               Discord Presence
             </span>
             <DiscordStatus />
@@ -262,7 +262,7 @@ const ActivityDashboard = () => {
 
           {/* GitHub Calendar - Full Width */}
           <BentoCard className="md:col-span-2 lg:col-span-4" delay={0.4}>
-            <span className="text-xs text-white/40 uppercase tracking-wider mb-3 block">
+            <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-3 block">
               GitHub Contributions
             </span>
             <GitHubContributions username="addynoven" />
@@ -270,7 +270,7 @@ const ActivityDashboard = () => {
 
           {/* Coding Stats */}
           <BentoCard className="md:col-span-1 lg:col-span-2" delay={0.5}>
-            <span className="text-xs text-white/40 uppercase tracking-wider mb-3 block">
+            <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-3 block">
               Coding Stats
             </span>
             <CodingStats />

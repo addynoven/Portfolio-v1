@@ -95,8 +95,8 @@ const DiscordStatus = ({
 
   if (loading) {
     return (
-      <div className="flex items-center gap-2 text-white/60">
-        <div className="w-3 h-3 rounded-full bg-white/20 animate-pulse" />
+      <div className="flex items-center gap-2 text-slate-600 dark:text-white/60">
+        <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-white/20 animate-pulse" />
         <span className="text-sm">Loading...</span>
       </div>
     );
@@ -104,7 +104,7 @@ const DiscordStatus = ({
 
   if (error || !data) {
     return (
-      <div className="flex items-center gap-2 text-white/40">
+      <div className="flex items-center gap-2 text-slate-500 dark:text-white/40">
         <div className="w-3 h-3 rounded-full bg-gray-500" />
         <span className="text-sm">Discord status unavailable</span>
       </div>
@@ -124,7 +124,7 @@ const DiscordStatus = ({
           animate={status === "online" ? { scale: [1, 1.2, 1] } : {}}
           transition={{ repeat: Infinity, duration: 2 }}
         />
-        <span className="text-sm text-white/80">{statusLabels[status]}</span>
+        <span className="text-sm text-slate-700 dark:text-white/80">{statusLabels[status]}</span>
       </div>
     );
   }
@@ -141,7 +141,7 @@ const DiscordStatus = ({
             className="w-12 h-12 rounded-full"
           />
           <motion.div
-            className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-slate-900"
+            className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-slate-100 dark:border-slate-900"
             style={{ backgroundColor: statusColors[status] }}
             animate={status === "online" ? { scale: [1, 1.15, 1] } : {}}
             transition={{ repeat: Infinity, duration: 2 }}
@@ -150,10 +150,10 @@ const DiscordStatus = ({
 
         {/* User Info */}
         <div className="flex flex-col">
-          <span className="font-semibold text-white">
+          <span className="font-semibold text-slate-900 dark:text-white">
             {data.discord_user.display_name || data.discord_user.username}
           </span>
-          <span className="text-sm text-white/60">{statusLabels[status]}</span>
+          <span className="text-sm text-slate-600 dark:text-white/60">{statusLabels[status]}</span>
         </div>
       </div>
 
@@ -166,10 +166,10 @@ const DiscordStatus = ({
             className="w-10 h-10 rounded"
           />
           <div className="flex flex-col min-w-0">
-            <span className="text-sm font-medium text-white truncate">
+            <span className="text-sm font-medium text-slate-900 dark:text-white truncate">
               {data.spotify.song}
             </span>
-            <span className="text-xs text-white/60 truncate">
+            <span className="text-xs text-slate-600 dark:text-white/60 truncate">
               by {data.spotify.artist}
             </span>
           </div>
@@ -181,15 +181,15 @@ const DiscordStatus = ({
 
       {/* Activity */}
       {activity && !data.listening_to_spotify && (
-        <div className="flex items-center gap-2 text-sm text-white/70">
-          <span className="text-white/40">Playing</span>
-          <span className="font-medium text-white">{activity.name}</span>
+        <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-white/70">
+          <span className="text-slate-500 dark:text-white/40">Playing</span>
+          <span className="font-medium text-slate-900 dark:text-white">{activity.name}</span>
         </div>
       )}
 
       {/* Custom Status */}
       {customStatus?.state && (
-        <div className="text-sm text-white/60 italic">
+        <div className="text-sm text-slate-600 dark:text-white/60 italic">
           "{customStatus.state}"
         </div>
       )}

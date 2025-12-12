@@ -7,6 +7,10 @@ interface CatContextType {
   isTerminalOpen: boolean;
   setIsTerminalOpen: (open: boolean) => void;
   
+  // Matrix Rain state
+  isMatrixActive: boolean;
+  setIsMatrixActive: (active: boolean) => void;
+  
   // Current section
   currentSection: string;
   setCurrentSection: (section: string) => void;
@@ -50,6 +54,7 @@ interface CatProviderProps {
 
 export const CatProvider = ({ children }: CatProviderProps) => {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [isMatrixActive, setIsMatrixActive] = useState(false);
   const [currentSection, setCurrentSection] = useState("home");
   const [isTourActive, setIsTourActive] = useState(false);
   const [tourStep, setTourStep] = useState(0);
@@ -59,18 +64,8 @@ export const CatProvider = ({ children }: CatProviderProps) => {
   const [isPetting, setIsPetting] = useState(false);
   const [isScrollingFast, setIsScrollingFast] = useState(false);
 
-  // Check if user has seen tour
-  useEffect(() => {
-    const seen = localStorage.getItem("neko-tour-seen");
-    if (!seen) {
-      setHasSeenTour(false);
-      // Start tour after a delay
-      setTimeout(() => {
-        setIsTourActive(true);
-        setSpeechMessage("Welcome! I'm Neko! 🐱");
-      }, 2000);
-    }
-  }, []);
+  // Tour is now only triggered from the terminal 'tour' command
+  // No auto-start for new users
 
   // Detect fast scrolling
   useEffect(() => {
@@ -131,6 +126,8 @@ export const CatProvider = ({ children }: CatProviderProps) => {
   const value: CatContextType = {
     isTerminalOpen,
     setIsTerminalOpen,
+    isMatrixActive,
+    setIsMatrixActive,
     currentSection,
     setCurrentSection,
     isTourActive,

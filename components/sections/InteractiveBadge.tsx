@@ -9,14 +9,14 @@ const InteractiveBadge = ( { name, title, handle, status, contactText, avatarUrl
     <section className={cn("h-screen w-full relative overflow-hidden flex flex-col items-center justify-center dark:bg-gradient-to-b from-transparent to-black/5", className)}>
       {/* Premium Header */}
       <div className="absolute top-8 z-10 text-center">
-        <div className="relative px-8 py-5 rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-2xl">
+        <div className="relative px-8 py-5 rounded-2xl backdrop-blur-xl bg-slate-100/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-2xl">
           {/* Glow effect behind */}
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-UserAccent/20 via-transparent to-UserAccent/20 blur-xl -z-10" />
           
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight">
             Interactive <span className="text-UserAccent">Badge</span>
           </h2>
-          <p className="text-sm md:text-base text-white/60 flex items-center justify-center gap-2">
+          <p className="text-sm md:text-base text-slate-600 dark:text-white/60 flex items-center justify-center gap-2">
             <span className="inline-block w-2 h-2 rounded-full bg-UserAccent animate-pulse" />
             Drag to play with physics
           </p>
