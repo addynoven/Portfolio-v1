@@ -1,14 +1,45 @@
 "use client";
 
+import { motion } from "framer-motion";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import SplitText from "@/components/reactbits/TextAnimations/SplitText";
 import Particles from "@/components/reactbits/Backgrounds/Particles";
 import MagicBento from "@/components/reactbits/Components/MagicBento";
+
+// Animated text component with forever looping wave animation
+const AnimatedTitle = ({ text }: { text: string }) => {
+  const characters = text.split("");
+  
+  return (
+    <>
+      {characters.map((char, index) => (
+        <motion.span
+          key={index}
+          animate={{
+            y: [0, -8, 0],
+            color: ["#ffffff", "#00ff99", "#ffffff"],
+          }}
+          transition={{
+            duration: 2,
+            delay: index * 0.08,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          style={{ 
+            display: "inline-block",
+            textShadow: "0 0 20px rgba(0, 255, 153, 0.3)",
+          }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </>
+  );
+};
 
 // Import icons
 import {
@@ -213,7 +244,7 @@ const Skills = () => {
       <div className="container mx-auto relative z-10">
         <div className="mb-16 text-center">
           <h2 className="text-4xl xl:text-6xl font-bold mb-4">
-            <SplitText text="Skills & Tech Stack" delay={60} />
+            <AnimatedTitle text="Skills & Tech Stack" />
           </h2>
           <p className="text-lg text-slate-600 dark:text-white/60 max-w-2xl mx-auto">
              Technologies and tools I use to bring ideas to life

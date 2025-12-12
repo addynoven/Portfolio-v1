@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/tooltip";
 import Link from "next/link";
 import Image from "next/image";
-import SplitText from "@/components/reactbits/TextAnimations/SplitText";
 import Aurora from "@/components/reactbits/Backgrounds/Aurora";
 import Squares from "@/components/reactbits/Backgrounds/Squares";
 import Waves from "@/components/reactbits/Backgrounds/Waves";
@@ -22,6 +21,32 @@ import { projects } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import QrCodePopup from "@/components/QrCodePopup";
 import { useAccentColor } from "@/lib/accentColor";
+
+// Animated text component using Framer Motion
+const AnimatedTitle = ({ text }: { text: string }) => {
+  const characters = text.split("");
+  
+  return (
+    <>
+      {characters.map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 0.5,
+            delay: index * 0.05,
+            ease: [0.25, 0.4, 0.25, 1],
+          }}
+          style={{ display: "inline-block" }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </>
+  );
+};
 
 interface WorkProps {
   limit?: number;
@@ -53,14 +78,14 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
       <div className="container mx-auto relative z-10">
         {/* Section Header */}
         <motion.div
-          className="mb-16"
+          className="-mb-32"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-4xl xl:text-5xl font-bold mb-4">
-            <SplitText text={isPage ? "All Projects" : "My Work"} delay={80} />
+            <AnimatedTitle text={isPage ? "All Projects" : "My Work"} />
           </h2>
           <motion.div
             className="h-1 bg-gradient-to-r from-UserAccent to-transparent rounded-full"
@@ -81,6 +106,8 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
           scaleEndPosition="8%"
           baseScale={0.88}
           useWindowScroll={true}
+          blurAmount={2}
+          rotationAmount = {0.3}
         >
           {displayedProjects.map((project, index) => {
             const isEven = index % 2 === 0;

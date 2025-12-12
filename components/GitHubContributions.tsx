@@ -18,8 +18,8 @@ const GitHubContributions = ({ username = "addynoven" }: GitHubContributionsProp
         username={username}
         colorScheme="dark"
         theme={customTheme}
-        fontSize={12}
-        blockSize={12}
+        fontSize={15}
+        blockSize={17}
         blockMargin={4}
       />
     </div>
