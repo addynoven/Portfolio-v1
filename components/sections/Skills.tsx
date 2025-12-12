@@ -213,7 +213,7 @@ const Skills = () => {
       <div className="container mx-auto relative z-10">
         <div className="mb-16 text-center">
           <h2 className="text-4xl xl:text-6xl font-bold mb-4">
-            <SplitText text="Skills & Tech Stack" stagger={0.06} delay={0.2} />
+            <SplitText text="Skills & Tech Stack" delay={60} />
           </h2>
           <p className="text-lg text-slate-600 dark:text-white/60 max-w-2xl mx-auto">
              Technologies and tools I use to bring ideas to life
