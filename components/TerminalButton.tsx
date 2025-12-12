@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiTerminal, FiX, FiArrowUp } from "react-icons/fi";
 import Terminal from "./Terminal";
 import MatrixRain from "./MatrixRain";
 import { useCat } from "./CatContext";
+import Magnet from "@/components/reactbits/Animations/Magnet";
 
 // DevTools detection Easter egg
 const useDevToolsDetection = () => {
@@ -192,29 +193,104 @@ const TerminalButton = () => {
         {isVisible && (
           <>
             {/* Back to Top Button */}
-            <motion.button
+            <motion.div
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.5 }}
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="fixed bottom-8 right-24 z-50 w-12 h-12 rounded-full bg-UserAccent/20 border border-UserAccent text-UserAccent flex items-center justify-center shadow-lg hover:bg-UserAccent hover:text-primary transition-all duration-300"
-              aria-label="Back to Top"
-              title="Back to Top"
+              className="fixed bottom-8 right-24 z-50"
             >
-              <FiArrowUp className="text-xl" />
-            </motion.button>
+              <Magnet strength={0.4}>
+                <button
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  className="block"
+                  aria-label="Back to Top"
+                  title="Back to Top"
+                >
+                  <div
+                    className="relative w-12 h-12 rounded-full border-2 border-UserAccent overflow-hidden"
+                    style={{
+                      transform: 'scale(1.1)',
+                      boxShadow: '0 0 20px rgba(var(--accent-rgb), 0.4)',
+                    }}
+                  >
+                    {/* Wave water fill effect - always filled */}
+                    <div className="absolute inset-x-0 bottom-0 h-full">
+                      {/* Wave SVG pattern */}
+                      <svg
+                        className="absolute top-0 left-0 w-[200%] h-6 -translate-y-[90%]"
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                        style={{
+                          animation: 'socialWave 1.5s linear infinite',
+                        }}
+                      >
+                        <path
+                          d="M0,60 C150,120 350,0 600,60 C850,120 1050,0 1200,60 L1200,120 L0,120 Z"
+                          className="fill-UserAccent"
+                        />
+                      </svg>
+                      {/* Solid fill below the wave */}
+                      <div className="absolute inset-0 top-3 bg-UserAccent" />
+                    </div>
+
+                    {/* Icon */}
+                    <span className="absolute inset-0 flex items-center justify-center z-10 text-xl text-primary">
+                      <FiArrowUp />
+                    </span>
+                  </div>
+                </button>
+              </Magnet>
+            </motion.div>
+            
             {/* Terminal Button */}
-            <motion.button
+            <motion.div
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.5 }}
-              onClick={() => setIsModalOpen(true)}
-              className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-UserAccent/20 border border-UserAccent text-UserAccent flex items-center justify-center shadow-lg hover:bg-UserAccent hover:text-primary transition-all duration-300"
-              aria-label="Open Terminal"
-              title="Open Terminal (~ or F2)"
+              className="fixed bottom-8 right-8 z-50"
             >
-              <FiTerminal className="text-xl" />
-            </motion.button>
+              <Magnet strength={0.4}>
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="block"
+                  aria-label="Open Terminal"
+                  title="Open Terminal (~ or F2)"
+                >
+                  <div
+                    className="relative w-12 h-12 rounded-full border-2 border-UserAccent overflow-hidden"
+                    style={{
+                      transform: 'scale(1.1)',
+                      boxShadow: '0 0 20px rgba(var(--accent-rgb), 0.4)',
+                    }}
+                  >
+                    {/* Wave water fill effect - always filled */}
+                    <div className="absolute inset-x-0 bottom-0 h-full">
+                      {/* Wave SVG pattern */}
+                      <svg
+                        className="absolute top-0 left-0 w-[200%] h-6 -translate-y-[90%]"
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                        style={{
+                          animation: 'socialWave 1.5s linear infinite',
+                        }}
+                      >
+                        <path
+                          d="M0,60 C150,120 350,0 600,60 C850,120 1050,0 1200,60 L1200,120 L0,120 Z"
+                          className="fill-UserAccent"
+                        />
+                      </svg>
+                      {/* Solid fill below the wave */}
+                      <div className="absolute inset-0 top-3 bg-UserAccent" />
+                    </div>
+
+                    {/* Icon */}
+                    <span className="absolute inset-0 flex items-center justify-center z-10 text-xl text-primary">
+                      <FiTerminal />
+                    </span>
+                  </div>
+                </button>
+              </Magnet>
+            </motion.div>
           </>
         )}
       </AnimatePresence>
