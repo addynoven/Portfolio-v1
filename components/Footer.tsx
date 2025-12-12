@@ -21,6 +21,11 @@ const Footer = () => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
+    // For "home", scroll to absolute top of page so navbar is visible
+    if (targetId === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
     navigateToSection(targetId);
   };
 

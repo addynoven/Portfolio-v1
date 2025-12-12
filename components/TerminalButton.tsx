@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiTerminal, FiX } from "react-icons/fi";
+import { FiTerminal, FiX, FiArrowUp } from "react-icons/fi";
 import Terminal from "./Terminal";
 import MatrixRain from "./MatrixRain";
 import { useCat } from "./CatContext";
@@ -190,17 +190,32 @@ const TerminalButton = () => {
       
       <AnimatePresence>
         {isVisible && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            onClick={() => setIsModalOpen(true)}
-            className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-UserAccent/20 border border-UserAccent text-UserAccent flex items-center justify-center shadow-lg hover:bg-UserAccent hover:text-primary transition-all duration-300"
-            aria-label="Open Terminal"
-            title="Open Terminal (~ or F2)"
-          >
-            <FiTerminal className="text-xl" />
-          </motion.button>
+          <>
+            {/* Back to Top Button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="fixed bottom-8 right-24 z-50 w-12 h-12 rounded-full bg-UserAccent/20 border border-UserAccent text-UserAccent flex items-center justify-center shadow-lg hover:bg-UserAccent hover:text-primary transition-all duration-300"
+              aria-label="Back to Top"
+              title="Back to Top"
+            >
+              <FiArrowUp className="text-xl" />
+            </motion.button>
+            {/* Terminal Button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              onClick={() => setIsModalOpen(true)}
+              className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-UserAccent/20 border border-UserAccent text-UserAccent flex items-center justify-center shadow-lg hover:bg-UserAccent hover:text-primary transition-all duration-300"
+              aria-label="Open Terminal"
+              title="Open Terminal (~ or F2)"
+            >
+              <FiTerminal className="text-xl" />
+            </motion.button>
+          </>
         )}
       </AnimatePresence>
       <TerminalModal isOpen={isModalOpen} onClose={handleClose} />
