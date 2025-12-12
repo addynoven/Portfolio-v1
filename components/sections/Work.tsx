@@ -63,7 +63,7 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.3 }}
       className="relative py-16 xl:py-24 min-h-screen"
     >
       {/* Aurora Background for entire section */}
@@ -79,10 +79,10 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
         {/* Section Header */}
         <motion.div
           className="-mb-32"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
         >
           <h2 className="text-4xl xl:text-5xl font-bold mb-4">
             <AnimatedTitle text={isPage ? "All Projects" : "My Work"} />
@@ -92,7 +92,7 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
             initial={{ scaleX: 0, originX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
+            transition={{ duration: 0.4, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
             style={{ maxWidth: "200px" }}
           />
         </motion.div>
@@ -197,10 +197,10 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
 
                       {/* Project Number Badge */}
                       <motion.div 
-                        className="absolute top-4 left-4 z-20 w-12 h-12 rounded-full bg-UserAccent/90 backdrop-blur-sm flex items-center justify-center"
+                        className="absolute top-4 left-4 z-20 w-12 h-12 rounded-full bg-UserAccent backdrop-blur-sm flex items-center justify-center shadow-lg"
                         whileHover={{ scale: 1.1, rotate: 10 }}
                       >
-                        <span className="text-lg font-bold text-primary">{project.num}</span>
+                        <span className="text-lg font-bold text-black">{project.num}</span>
                       </motion.div>
                     </div>
                   </motion.div>

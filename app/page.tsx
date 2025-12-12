@@ -4,8 +4,7 @@ import { cn } from "@/lib/utils";
 import RetroGrid from "@/components/ui/retro-grid";
 import GridPattern from "@/components/ui/animated-grid-pattern";
 
-
-// Section Components
+// Section Components - Direct imports
 import Hero from "@/components/sections/Hero";
 import AboutMe from "@/components/sections/AboutMe";
 import ActivityDashboard from "@/components/sections/ActivityDashboard";
