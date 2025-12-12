@@ -14,6 +14,7 @@ import Aurora from "@/components/reactbits/Backgrounds/Aurora";
 import Squares from "@/components/reactbits/Backgrounds/Squares";
 import Waves from "@/components/reactbits/Backgrounds/Waves";
 import Threads from "@/components/reactbits/Backgrounds/Threads";
+import Hyperspeed from "@/components/reactbits/Backgrounds/Hyperspeed";
 import GridPulse from "@/components/reactbits/Backgrounds/GridPulse";
 import { GridScan } from "@/components/reactbits/Backgrounds/GridScan";
 import ScrollStack, { ScrollStackItem } from "@/components/reactbits/Components/ScrollStack";
@@ -152,12 +153,45 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
                     />
                   )}
                   {index === 3 && (
-                    <GridPulse 
-                      color="rgba(0, 255, 153, 0.4)"
-                      backgroundColor="rgba(0, 0, 0, 0.3)"
-                      gridSize={35}
-                      speed={1.5}
-                      pulseRadius={180}
+                    <Hyperspeed
+                      effectOptions={{
+                        onSpeedUp: () => {},
+                        onSlowDown: () => {},
+                        distortion: 'turbulentDistortion',
+                        length: 400,
+                        roadWidth: 10,
+                        islandWidth: 2,
+                        lanesPerRoad: 4,
+                        fov: 90,
+                        fovSpeedUp: 150,
+                        speedUp: 2,
+                        carLightsFade: 0.4,
+                        totalSideLightSticks: 20,
+                        lightPairsPerRoadWay: 40,
+                        shoulderLinesWidthPercentage: 0.05,
+                        brokenLinesWidthPercentage: 0.1,
+                        brokenLinesLengthPercentage: 0.5,
+                        lightStickWidth: [0.12, 0.5],
+                        lightStickHeight: [1.3, 1.7],
+                        movingAwaySpeed: [60, 80],
+                        movingCloserSpeed: [-120, -160],
+                        carLightsLength: [400 * 0.03, 400 * 0.2],
+                        carLightsRadius: [0.05, 0.14],
+                        carWidthPercentage: [0.3, 0.5],
+                        carShiftX: [-0.8, 0.8],
+                        carFloorSeparation: [0, 5],
+                        cameraY: 8,
+                        colors: {
+                          roadColor: 0x080808,
+                          islandColor: 0x0a0a0a,
+                          background: 0x000000,
+                          shoulderLines: 0x00ff99,
+                          brokenLines: 0x00ff99,
+                          leftCars: [0x00ff99, 0x00cc77, 0x00aa66],
+                          rightCars: [0x00ff99, 0x00cc77, 0x00aa66],
+                          sticks: 0x00ff99,
+                        },
+                      }}
                     />
                   )}
                   {index === 4 && (

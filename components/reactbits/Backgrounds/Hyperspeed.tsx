@@ -1115,17 +1115,40 @@ const Hyperspeed = ({
       return needResize;
     }
 
-    (function () {
+    // Use requestAnimationFrame to ensure DOM is fully laid out
+    const initTimeout = requestAnimationFrame(() => {
       const container = hyperspeed.current;
+      if (!container) return;
+      
+      // Wait for container to have proper dimensions
+      if (container.offsetWidth === 0 || container.offsetHeight === 0) {
+        console.warn('Hyperspeed: Container has no dimensions yet, retrying...');
+        // Retry after a short delay
+        setTimeout(() => {
+          const retryContainer = hyperspeed.current;
+          if (!retryContainer || retryContainer.offsetWidth === 0 || retryContainer.offsetHeight === 0) {
+            console.error('Hyperspeed: Container still has no dimensions, aborting.');
+            return;
+          }
+          initHyperspeed(retryContainer);
+        }, 100);
+        return;
+      }
+      
+      initHyperspeed(container);
+    });
+
+    function initHyperspeed(container) {
       const options = { ...effectOptions };
       options.distortion = distortions[options.distortion];
 
       const myApp = new App(container, options);
       appRef.current = myApp;
       myApp.loadAssets().then(myApp.init);
-    })();
+    }
 
     return () => {
+      cancelAnimationFrame(initTimeout);
       if (appRef.current) {
         appRef.current.dispose();
       }
@@ -1134,6 +1157,7 @@ const Hyperspeed = ({
 
   return (
     <div 
+      id="lights"
       ref={hyperspeed} 
       style={{ 
         width: '100%', 
