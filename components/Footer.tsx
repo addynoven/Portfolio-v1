@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 
 const footerLinks = [
   { name: "Home", targetId: "home" },
-  { name: "Services", targetId: "services" },
-  { name: "Resume", targetId: "resume" },
+  { name: "About", targetId: "about" },
   { name: "Work", targetId: "work" },
+  { name: "Skills", targetId: "skills" },
   { name: "Contact", targetId: "contact" },
 ];
 
