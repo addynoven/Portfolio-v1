@@ -106,7 +106,7 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
           scaleEndPosition="8%"
           baseScale={0.88}
           useWindowScroll={true}
-          blurAmount={2}
+          blurAmount={0}
           rotationAmount = {0.3}
         >
           {displayedProjects.map((project, index) => {

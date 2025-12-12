@@ -3,7 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TerminalButton from "@/components/TerminalButton";
-import LoadingScreen from "@/components/LoadingScreen";
+import LoadingScreenWrapper from "@/components/LoadingScreenWrapper";
 import PageTransition from "@/components/PageTransition";
 import StairTransition from "@/components/StairTransition";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -61,8 +61,8 @@ export const metadata: Metadata = {
 	},
 };
 
-// Loading screen is controlled via terminal command: 'loading on' or 'loading off'
-const SHOW_LOADING_SCREEN = true;
+// Loading screen visibility is controlled via terminal command: 'loading on' or 'loading off'
+// The LoadingScreen component reads from localStorage to determine if it should show
 
 export default function RootLayout({
 	children,
@@ -80,7 +80,7 @@ export default function RootLayout({
 				>
 					<CatProvider>
 					<SectionTransitionProvider>
-						{SHOW_LOADING_SCREEN && <LoadingScreen />}
+						<LoadingScreenWrapper />
 						<Header />
 						<StairTransition />
 						<SectionStairTransition />
