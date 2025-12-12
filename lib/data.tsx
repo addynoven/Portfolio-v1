@@ -327,8 +327,7 @@ export const contactInfo: ContactInfoItem[] = [
     {
         title: "Address",
         icon: <FaMapMarkerAlt />,
-        description:
-            "House No. 7, Narmada Kunj, Shaheed Nagar Colony, Bhopal, MP, India",
-        value: "House No. 7, Narmada Kunj, Shaheed Nagar Colony, Bhopal, MP, India",
+        description: "Bhopal, MP, India",
+        value: "Bhopal, MP, India",
     },
 ];
