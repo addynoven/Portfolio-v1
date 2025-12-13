@@ -1,5 +1,7 @@
 "use client";
 
+import { memo } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { FiDownload } from "react-icons/fi";
 import Typewriter from "typewriter-effect";
@@ -8,14 +10,22 @@ import Social from "@/components/Social";
 import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
 import { staggerContainer, staggerItem, fadeInLeft } from "@/hooks/useScrollAnimation";
-import ParticleBackground from "@/components/ParticleBackground";
-import FloatingCodeSymbols from "@/components/FloatingCodeSymbols";
 import HeroTiltCard from "@/components/HeroTiltCard";
 import ShinyText from "@/components/reactbits/TextAnimations/ShinyText";
 import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
 import { useAccentColor } from "@/lib/accentColor";
 
-const Hero = () => {
+// Lazy load heavy Three.js and animation components
+const ParticleBackground = dynamic(
+  () => import("@/components/ParticleBackground"),
+  { ssr: false }
+);
+const FloatingCodeSymbols = dynamic(
+  () => import("@/components/FloatingCodeSymbols"),
+  { ssr: false }
+);
+
+const Hero = memo(function Hero() {
   const accentColor = useAccentColor();
   
   return (
@@ -179,6 +189,6 @@ const Hero = () => {
       </div>
     </section>
   );
-};
+});
 
 export default Hero;

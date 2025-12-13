@@ -1,12 +1,22 @@
 "use client";
 
+import { memo } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import ScrollReveal from "@/components/reactbits/TextAnimations/ScrollReveal";
 import Typewriter from "typewriter-effect";
-import Photo from "@/components/Photo";
 import { staggerContainer, staggerItem, fadeInLeft } from "@/hooks/useScrollAnimation";
 
-const AboutMe = () => {
+// Lazy load heavy components
+const ScrollReveal = dynamic(
+  () => import("@/components/reactbits/TextAnimations/ScrollReveal"),
+  { ssr: false }
+);
+const Photo = dynamic(
+  () => import("@/components/Photo"),
+  { ssr: false }
+);
+
+const AboutMe = memo(function AboutMe() {
   return (
     <section id="about" className="py-20 xl:py-32 relative z-20">
       <div className="container mx-auto px-4">
@@ -86,6 +96,6 @@ const AboutMe = () => {
       </div>
     </section>
   );
-};
+});
 
 export default AboutMe;

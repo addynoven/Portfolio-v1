@@ -1,5 +1,7 @@
 "use client";
 
+import { memo } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { BsArrowUpRight, BsGithub, BsArrowRight } from "react-icons/bs";
 import {
@@ -10,21 +12,26 @@ import {
 } from "@/components/ui/tooltip";
 import Link from "next/link";
 import Image from "next/image";
-import Aurora from "@/components/reactbits/Backgrounds/Aurora";
-import Squares from "@/components/reactbits/Backgrounds/Squares";
-import Waves from "@/components/reactbits/Backgrounds/Waves";
-import Threads from "@/components/reactbits/Backgrounds/Threads";
-import Hyperspeed from "@/components/reactbits/Backgrounds/Hyperspeed";
-import GridPulse from "@/components/reactbits/Backgrounds/GridPulse";
-import { GridScan } from "@/components/reactbits/Backgrounds/GridScan";
 import ScrollStack, { ScrollStackItem } from "@/components/reactbits/Components/ScrollStack";
 import { projects } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import QrCodePopup from "@/components/QrCodePopup";
 import { useAccentColor } from "@/lib/accentColor";
 
-// Animated text component using Framer Motion
-const AnimatedTitle = ({ text }: { text: string }) => {
+// Lazy load ALL heavy background components to prevent loading them simultaneously
+const Aurora = dynamic(() => import("@/components/reactbits/Backgrounds/Aurora"), { ssr: false });
+const Squares = dynamic(() => import("@/components/reactbits/Backgrounds/Squares"), { ssr: false });
+const Waves = dynamic(() => import("@/components/reactbits/Backgrounds/Waves"), { ssr: false });
+const Threads = dynamic(() => import("@/components/reactbits/Backgrounds/Threads"), { ssr: false });
+const Hyperspeed = dynamic(() => import("@/components/reactbits/Backgrounds/Hyperspeed"), { ssr: false });
+const GridPulse = dynamic(() => import("@/components/reactbits/Backgrounds/GridPulse"), { ssr: false });
+const GridScan = dynamic(
+  () => import("@/components/reactbits/Backgrounds/GridScan").then(mod => ({ default: mod.GridScan })),
+  { ssr: false }
+);
+
+// Memoized animated text component to prevent re-renders
+const AnimatedTitle = memo(function AnimatedTitle({ text }: { text: string }) {
   const characters = text.split("");
   
   return (
@@ -47,14 +54,14 @@ const AnimatedTitle = ({ text }: { text: string }) => {
       ))}
     </>
   );
-};
+});
 
 interface WorkProps {
   limit?: number;
   isPage?: boolean;
 }
 
-const Work = ({ limit, isPage = false }: WorkProps) => {
+const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
   const accentColor = useAccentColor();
   const displayedProjects = limit ? projects.slice(0, limit) : projects;
 
@@ -390,6 +397,6 @@ const Work = ({ limit, isPage = false }: WorkProps) => {
       </div>
     </motion.section>
   );
-};
+});
 
 export default Work;

@@ -1,9 +1,10 @@
 "use client";
 
+import { memo, useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useState, useRef } from "react";
 
 import {
   Select,
@@ -20,13 +21,21 @@ import { cn } from "@/lib/utils";
 import { FiSend, FiCheck, FiAlertCircle, FiMail, FiMapPin, FiPhone, FiArrowRight, FiCopy } from "react-icons/fi";
 
 import { contactInfo } from "@/lib/data";
-
-// Minimal, focused ReactBits imports
-
-import SpotlightCard from "@/components/reactbits/Components/SpotlightCard";
-import Magnet from "@/components/reactbits/Animations/Magnet";
-import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
 import { useAccentColor } from "@/lib/accentColor";
+
+// Lazy load animation components
+const SpotlightCard = dynamic(
+  () => import("@/components/reactbits/Components/SpotlightCard"),
+  { ssr: false }
+);
+const Magnet = dynamic(
+  () => import("@/components/reactbits/Animations/Magnet"),
+  { ssr: false }
+);
+const ClickSpark = dynamic(
+  () => import("@/components/reactbits/Animations/ClickSpark"),
+  { ssr: false }
+);
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -37,7 +46,7 @@ const iconMap: Record<string, React.ReactNode> = {
   "Address": <FiMapPin className="text-lg" />,
 };
 
-const Contact = () => {
+const Contact = memo(function Contact() {
   const accentColor = useAccentColor();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -474,6 +483,6 @@ const Contact = () => {
       </div>
     </motion.section>
   );
-};
+});
 
 export default Contact;

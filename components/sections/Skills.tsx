@@ -1,5 +1,7 @@
 "use client";
 
+import { memo } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import {
   Tooltip,
@@ -7,11 +9,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Particles from "@/components/reactbits/Backgrounds/Particles";
-import MagicBento from "@/components/reactbits/Components/MagicBento";
 
-// Animated text component with forever looping wave animation
-const AnimatedTitle = ({ text }: { text: string }) => {
+// Lazy load heavy animation components
+const Particles = dynamic(
+  () => import("@/components/reactbits/Backgrounds/Particles"),
+  { ssr: false }
+);
+const MagicBento = dynamic(
+  () => import("@/components/reactbits/Components/MagicBento"),
+  { ssr: false }
+);
+
+// Memoized animated text component with forever looping wave animation
+const AnimatedTitle = memo(function AnimatedTitle({ text }: { text: string }) {
   const characters = text.split("");
   
   return (
@@ -39,7 +49,7 @@ const AnimatedTitle = ({ text }: { text: string }) => {
       ))}
     </>
   );
-};
+});
 
 // Import icons
 import {
@@ -182,7 +192,7 @@ const skillCategories = [
   },
 ];
 
-const Skills = () => {
+const Skills = memo(function Skills() {
   // Sort categories by skill count (more skills first for better grid layout)
   const sortedCategories = [...skillCategories].sort((a, b) => b.skills.length - a.skills.length);
   
@@ -224,7 +234,7 @@ const Skills = () => {
       {/* Particles Background */}
       <div className="absolute inset-0 z-0">
         <Particles
-          particleCount={400}
+          particleCount={100}
           particleSpread={12}
           speed={0.12}
           particleColors={["#00ff99", "#00d4aa", "#10b981", "#34d399", "#ffffff"]}
@@ -269,6 +279,6 @@ const Skills = () => {
       </div>
     </section>
   );
-};
+});
 
 export default Skills;

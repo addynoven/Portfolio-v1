@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { memo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import DiscordStatus from "@/components/DiscordStatus";
@@ -221,7 +221,7 @@ const DevIdentity = () => {
   );
 };
 
-const ActivityDashboard = () => {
+const ActivityDashboard = memo(function ActivityDashboard() {
   return (
     <section className="py-20 xl:py-32 relative z-20">
       <div className="container mx-auto px-4">
@@ -284,6 +284,6 @@ const ActivityDashboard = () => {
       </div>
     </section>
   );
-};
+});
 
 export default ActivityDashboard;
