@@ -14,6 +14,7 @@ import HeroTiltCard from "@/components/HeroTiltCard";
 import ShinyText from "@/components/reactbits/TextAnimations/ShinyText";
 import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
 import { useAccentColor } from "@/lib/accentColor";
+import { LazyRender } from "@/components/LazyRender";
 
 // Lazy load heavy Three.js and animation components
 const ParticleBackground = dynamic(
@@ -30,10 +31,14 @@ const Hero = memo(function Hero() {
   
   return (
     <section id="home" className="min-h-[calc(100vh-80px)] flex flex-col justify-center pt-4 pb-2 xl:pt-6 xl:pb-4 relative">
-      {/* Three.js Particle Background */}
-      <ParticleBackground />
-      {/* Floating Code Symbols */}
-      <FloatingCodeSymbols />
+      {/* Three.js Particle Background - unmounts when off-screen */}
+      <LazyRender className="absolute inset-0 -z-10" keepMounted={false}>
+        <ParticleBackground />
+      </LazyRender>
+      {/* Floating Code Symbols - unmounts when off-screen */}
+      <LazyRender className="absolute inset-0 z-0 pointer-events-none" keepMounted={false}>
+        <FloatingCodeSymbols />
+      </LazyRender>
       <motion.div 
         className="flex flex-col xl:flex-row items-center justify-between xl:justify-evenly pb-0 relative z-10"
         variants={staggerContainer}

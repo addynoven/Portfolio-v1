@@ -44,8 +44,8 @@ const ParticleBackground = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2));
     container.appendChild(renderer.domElement);
 
-    // Particle settings - Drastically reduced on mobile
-    const particleCount = isMobile ? 40 : 250; 
+    // Particle settings - Reduced for performance
+    const particleCount = isMobile ? 25 : 120; 
     const positions = new Float32Array(particleCount * 3);
     const velocities: { x: number; y: number; z: number }[] = [];
     const sizes = new Float32Array(particleCount);

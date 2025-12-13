@@ -17,31 +17,42 @@ const Home = () => {
   return (
     <section className="h-full relative">
       <div className="container mx-auto h-full">
-        {/* Hero Section */}
+        {/* Hero Section - Above the fold, render immediately */}
         <Hero />
 
-        {/* Other Sections */}
-        
-        <div className="border-b border-slate-200 dark:border-white/10" />
-        <Work limit={5} />
-        <div className="border-b border-slate-200 dark:border-white/10" />
-        <Skills />
-        <div className="border-b border-slate-200 dark:border-white/10" />
-        <AboutMe />
-        <div className="border-b border-slate-200 dark:border-white/10" />
-        <ActivityDashboard />
-        <div className="border-b border-slate-200 dark:border-white/10" />
-        <Contact />
-        <div className="border-b border-slate-200 dark:border-white/10" />
-        <InteractiveBadge name="Aditya Sahu" title="Full Stack Developer" handle="neonstain" status="Available" contactText="Contact Me" avatarUrl="photo.jpg" />
+        {/* Below the fold sections - use content-visibility optimization */}
+        <div className="content-auto">
+          <div className="border-b border-slate-200 dark:border-white/10" />
+          <Work limit={5} />
+        </div>
+        <div className="content-auto">
+          <div className="border-b border-slate-200 dark:border-white/10" />
+          <Skills />
+        </div>
+        <div className="content-auto">
+          <div className="border-b border-slate-200 dark:border-white/10" />
+          <AboutMe />
+        </div>
+        <div className="content-auto">
+          <div className="border-b border-slate-200 dark:border-white/10" />
+          <ActivityDashboard />
+        </div>
+        <div className="content-auto">
+          <div className="border-b border-slate-200 dark:border-white/10" />
+          <Contact />
+        </div>
+        <div className="content-auto">
+          <div className="border-b border-slate-200 dark:border-white/10" />
+          <InteractiveBadge name="Aditya Sahu" title="Full Stack Developer" handle="neonstain" status="Available" contactText="Contact Me" avatarUrl="photo.jpg" />
+        </div>
       </div>
       
       {/* Background */}
       <div className="fixed inset-0 -z-10 w-full h-full pointer-events-none">
-        <div className="hidden xl:block">
+        {/* <div className="hidden xl:block">
           <RetroGrid />
-        </div>
-        <div className="block xl:hidden">
+        </div> */}
+        {/* <div className="block xl:hidden">
           <GridPattern
             numSquares={30}
             maxOpacity={0.2}
@@ -52,7 +63,7 @@ const Home = () => {
               "inset-x-0 inset-y-[-30%] h-[100%] skew-y-12"
             )}
           />
-        </div>
+        </div> */}
       </div>
     </section>
   );

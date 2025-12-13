@@ -11,13 +11,16 @@ import { SectionTransitionProvider } from "@/components/SectionTransitionContext
 import SectionStairTransition from "@/components/SectionStairTransition";
 import Oneko from "@/components/Oneko";
 import { CatProvider } from "@/components/CatContext";
+import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 const jetbrainsMono = JetBrains_Mono({
 	subsets: ["latin"],
 	weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
 	variable: "--font-jetbrainsMono",
+	display: "swap", // Prevent FOIT (Flash of Invisible Text)
+	preload: true,
 });
 
 export const metadata: Metadata = {
@@ -61,6 +64,18 @@ export const metadata: Metadata = {
 	},
 };
 
+// Viewport configuration for better mobile performance
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
+	maximumScale: 5,
+	userScalable: true,
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "#ffffff" },
+		{ media: "(prefers-color-scheme: dark)", color: "#000000" },
+	],
+};
+
 // Loading screen visibility is controlled via terminal command: 'loading on' or 'loading off'
 // The LoadingScreen component reads from localStorage to determine if it should show
 
@@ -91,6 +106,7 @@ export default function RootLayout({
 					</SectionTransitionProvider>
 					</CatProvider>
 				</ThemeProvider>
+				<ServiceWorkerRegistration />
 			</body>
 		</html>
 	);

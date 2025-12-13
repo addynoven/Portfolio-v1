@@ -64,8 +64,8 @@ const AboutMe = memo(function AboutMe() {
                 options={{
                   strings: ["About Me"],
                   autoStart: true,
-                  loop: true,
-                  deleteSpeed: 50,
+                  loop: false, // NO infinite loop - type once and stop
+                  deleteSpeed: Infinity, // Never delete
                   delay: 80,
                   cursor: "_",
                   cursorClassName: "text-UserAccent",

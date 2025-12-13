@@ -22,32 +22,39 @@ const MagicBento = dynamic(
 
 import { LazyRender } from "@/components/LazyRender";
 
-// Memoized animated text component with forever looping wave animation
+// CSS-based animated title - NO React re-renders, pure GPU animation
 const AnimatedTitle = memo(function AnimatedTitle({ text }: { text: string }) {
   const characters = text.split("");
   
   return (
     <>
+      <style jsx>{`
+        @keyframes waveChar {
+          0%, 100% { 
+            transform: translateY(0); 
+            color: #ffffff; 
+          }
+          50% { 
+            transform: translateY(-8px); 
+            color: #00ff99; 
+          }
+        }
+        .wave-char {
+          display: inline-block;
+          animation: waveChar 2s ease-in-out infinite;
+          text-shadow: 0 0 20px rgba(0, 255, 153, 0.3);
+        }
+      `}</style>
       {characters.map((char, index) => (
-        <motion.span
+        <span
           key={index}
-          animate={{
-            y: [0, -8, 0],
-            color: ["#ffffff", "#00ff99", "#ffffff"],
-          }}
-          transition={{
-            duration: 2,
-            delay: index * 0.08,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          className="wave-char"
           style={{ 
-            display: "inline-block",
-            textShadow: "0 0 20px rgba(0, 255, 153, 0.3)",
+            animationDelay: `${index * 0.08}s`,
           }}
         >
           {char === " " ? "\u00A0" : char}
-        </motion.span>
+        </span>
       ))}
     </>
   );
@@ -233,19 +240,19 @@ const Skills = memo(function Skills() {
 
   return (
     <section id="skills" className="relative py-20 xl:py-32 min-h-screen overflow-hidden">
-      {/* Particles Background - Only renders when in viewport */}
+      {/* Particles Background - unmounts when off-screen to free GPU */}
       <div className="absolute inset-0 z-0">
-        <LazyRender className="w-full h-full">
+        <LazyRender className="w-full h-full" keepMounted={false}>
           <Particles
-            particleCount={100}
+            particleCount={60}
             particleSpread={12}
-            speed={0.12}
+            speed={0.08}
             particleColors={["#00ff99", "#00d4aa", "#10b981", "#34d399", "#ffffff"]}
             alphaParticles={false}
-            particleBaseSize={180}
+            particleBaseSize={150}
             sizeRandomness={1.2}
             cameraDistance={18}
-            moveParticlesOnHover={true}
+            moveParticlesOnHover={false}
             particleHoverFactor={0.8}
             className=""
           />

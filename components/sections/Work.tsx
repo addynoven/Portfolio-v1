@@ -72,13 +72,15 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
       transition={{ duration: 0.3 }}
       className="relative py-16 xl:py-24 min-h-screen"
     >
-      {/* Aurora Background for entire section */}
+      {/* Aurora Background for entire section - unmounts when off-screen */}
       <div className="absolute inset-0 z-0">
-        <Aurora 
-          colorStops={[accentColor, "#0a2a1a", "#00d4aa", "#1a1a2e"]}
-          speed={2}
-          blur={120}
-        />
+        <LazyRender className="w-full h-full" keepMounted={false}>
+          <Aurora 
+            colorStops={[accentColor, "#0a2a1a", "#00d4aa", "#1a1a2e"]}
+            speed={2}
+            blur={120}
+          />
+        </LazyRender>
       </div>
 
       <div className="container mx-auto relative z-10">
@@ -365,11 +367,13 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
               itemClassName="bg-white/90 dark:bg-black/85 backdrop-blur-md border border-white/20"
             >
               <div className="absolute inset-0 z-0">
-                <Aurora 
-                  colorStops={[accentColor, "#0a2a1a", "#00d4aa", "#1a1a2e"]}
-                  speed={2}
-                  blur={120}
-                />
+                <LazyRender className="w-full h-full" keepMounted={false}>
+                  <Aurora 
+                    colorStops={[accentColor, "#0a2a1a", "#00d4aa", "#1a1a2e"]}
+                    speed={2}
+                    blur={120}
+                  />
+                </LazyRender>
               </div>
               <div className="relative z-10 w-full h-full flex items-center justify-center p-12">
                 <div className="text-center">

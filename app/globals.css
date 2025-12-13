@@ -134,3 +134,60 @@
     100% { transform: translateX(-50%); }
 }
 
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+/* GPU hints for animated elements */
+@layer utilities {
+    .gpu-accelerated {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+    }
+    
+    /* Content visibility for off-screen optimization */
+    .content-auto {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 500px;
+    }
+}
+
+/* Optimize animations globally */
+@layer base {
+    /* Reduce animation for users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+        
+        .floating-symbol,
+        .wave-char,
+        .grid-square,
+        .glow-orb {
+            animation: none !important;
+        }
+    }
+    
+    /* GPU optimization for common animated elements */
+    canvas,
+    .floating-symbol,
+    .wave-char,
+    .grid-square {
+        will-change: transform, opacity;
+    }
+    
+    /* Optimize section rendering */
+    section {
+        contain: layout style;
+    }
+}
+
+/* Optimize Three.js canvas */
+canvas {
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
