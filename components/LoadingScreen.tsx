@@ -35,6 +35,10 @@ const LoadingScreen = () => {
 	const pathname = usePathname();
 	// Toggle this to true to re-enable the dissolve effect for testing
 	const ENABLE_DISSOLVE = false;
+	// FAST_MODE: Shorter animation - skips letterChange and greeting phases
+	// chaos -> NEONVERSE -> NEON -> Neon. (with quick fade)
+	// Total time: ~3.5s instead of ~8s
+	const FAST_MODE = true;
 	const { theme } = useTheme();
 	const [phase, setPhase] = useState<Phase>("chaos");
 	const [displayText, setDisplayText] = useState("");
@@ -71,42 +75,84 @@ const LoadingScreen = () => {
 					// 200ms breathing room - blank screen before site reveals
 					setTimeout(() => setPhase("done"), 200);
 				}
-			}, 1000);
-		}, 600);
+			}, FAST_MODE ? 500 : 1000);
+		}, FAST_MODE ? 300 : 600);
+	};
+
+	// Fast mode: Direct transition from NEON to Neon. (skip letter struggle)
+	const handleFastBrandComplete = () => {
+		setPhase("centering");
+		setTimeout(() => {
+			setPhase("logoFading");
+			setTimeout(() => {
+				if (ENABLE_DISSOLVE) setPhase("dissolving");
+				else {
+					setTimeout(() => setPhase("done"), 150);
+				}
+			}, 500);
+		}, 400);
 	};
 
 	useEffect(() => {
 		// Initialize Scrambler
 		scramblerRef.current = new Scrambler((text) => setDisplayText(text));
 
-		// TIMELINE - Clear sequential phases
-		// 0s: Chaos starts
+		if (FAST_MODE) {
+			// FAST TIMELINE - Total ~3.5s
+			// 0s: Chaos starts
+			
+			// 1.0s: Start forming "NEONVERSE"
+			const timer1 = setTimeout(() => {
+				setPhase("concentrate");
+				scramblerRef.current?.setText("NEONVERSE", 40);
+			}, 1000);
 
-		// 2.0s: Start forming "NEONVERSE"
-		const timer1 = setTimeout(() => {
-			setPhase("concentrate");
-			scramblerRef.current?.setText("NEONVERSE", 60);
-		}, 2000);
+			// 2.5s: Shrink to "NEON"
+			const timer2 = setTimeout(() => {
+				setPhase("brand");
+				scramblerRef.current?.setText("NEON", 40);
+			}, 2500);
 
-		// 4.0s: Shrink to "NEON"
-		const timer2 = setTimeout(() => {
-			setPhase("brand");
-			scramblerRef.current?.setText("NEON", 60);
-		}, 4000);
+			// 3.3s: Skip to centering (Neon.)
+			const timer3 = setTimeout(() => {
+				handleFastBrandComplete();
+			}, 3300);
 
-		// 5.0s: Start letter-by-letter transition (NEON -> Neon with struggle on last N)
-		const timer3 = setTimeout(() => {
-			setPhase("letterChange");
-		}, 5000);
+			return () => {
+				clearTimeout(timer1);
+				clearTimeout(timer2);
+				clearTimeout(timer3);
+			};
+		} else {
+			// ORIGINAL TIMELINE - Full animation (~8s)
+			// 0s: Chaos starts
 
-		// Note: greeting is triggered by LetterTransition callback, not a fixed timer
-		// Note: logoFading and dissolving are triggered by callbacks, not fixed timers
+			// 2.0s: Start forming "NEONVERSE"
+			const timer1 = setTimeout(() => {
+				setPhase("concentrate");
+				scramblerRef.current?.setText("NEONVERSE", 60);
+			}, 2000);
 
-		return () => {
-			clearTimeout(timer1);
-			clearTimeout(timer2);
-			clearTimeout(timer3);
-		};
+			// 4.0s: Shrink to "NEON"
+			const timer2 = setTimeout(() => {
+				setPhase("brand");
+				scramblerRef.current?.setText("NEON", 60);
+			}, 4000);
+
+			// 5.0s: Start letter-by-letter transition (NEON -> Neon with struggle on last N)
+			const timer3 = setTimeout(() => {
+				setPhase("letterChange");
+			}, 5000);
+
+			// Note: greeting is triggered by LetterTransition callback, not a fixed timer
+			// Note: logoFading and dissolving are triggered by callbacks, not fixed timers
+
+			return () => {
+				clearTimeout(timer1);
+				clearTimeout(timer2);
+				clearTimeout(timer3);
+			};
+		}
 	}, []);
 
 	const handleDissolveComplete = () => {
