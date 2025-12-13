@@ -48,7 +48,7 @@ const Home = () => {
       </div>
       
       {/* Background */}
-      <div className="fixed inset-0 -z-10 w-full h-full pointer-events-none">
+      {/* <div className="fixed inset-0 -z-10 w-full h-full pointer-events-none"> */}
         {/* <div className="hidden xl:block">
           <RetroGrid />
         </div> */}
@@ -64,7 +64,7 @@ const Home = () => {
             )}
           />
         </div> */}
-      </div>
+      {/* </div> */}
     </section>
   );
 };
