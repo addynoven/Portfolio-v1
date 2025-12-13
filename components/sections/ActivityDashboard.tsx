@@ -18,21 +18,18 @@ const GitHubContributions = dynamic(
   }
 );
 
-// Bento Card wrapper component
+// Bento Card wrapper component - renders instantly
 const BentoCard = ({
   children,
   className = "",
-  delay = 0,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
 }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.25, delay: delay * 0.5 }}
-    viewport={{ once: true }}
+    initial={{ opacity: 1, y: 0 }}
+    animate={{ opacity: 1, y: 0 }}
     className={`
       relative overflow-hidden rounded-2xl
       bg-slate-100/80 dark:bg-white/5
@@ -225,11 +222,10 @@ const ActivityDashboard = memo(function ActivityDashboard() {
   return (
     <section className="py-20 xl:py-32 relative z-20">
       <div className="container mx-auto px-4">
-        {/* Section Title */}
+        {/* Section Title - renders instantly */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">

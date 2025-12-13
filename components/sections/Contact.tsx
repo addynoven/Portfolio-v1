@@ -130,10 +130,8 @@ const Contact = memo(function Contact() {
     <motion.section
       ref={sectionRef}
       id="contact"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
       className="py-24 xl:py-32 relative overflow-hidden"
     >
       {/* Subtle gradient background */}
@@ -155,30 +153,18 @@ const Contact = memo(function Contact() {
           <div className="flex flex-col items-center text-center max-w-2xl mx-auto">
             <motion.span
               className="text-sm font-medium tracking-widest text-UserAccent uppercase mb-4"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
             >
               Contact
             </motion.span>
             
               <motion.h2
                  className="text-4xl text-center md:text-5xl xl:text-6xl font-bold text-UserAccent mb-6"
-                 initial={{ opacity: 0, y: 20 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.3, duration: 0.5 }}
               >
                 Let's Work Together
               </motion.h2>
             
             <motion.p
               className="text-lg text-slate-600 dark:text-white/60 max-w-lg"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.5 }}
             >
               Have a project in mind? I'd love to hear about it. Drop me a message and let's create something amazing.
             </motion.p>
@@ -189,10 +175,8 @@ const Contact = memo(function Contact() {
           {/* Contact Form */}
           <motion.div 
             className="lg:col-span-3"
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
           >
             <SpotlightCard 
               spotlightColor="rgba(0, 255, 153, 0.08)"
@@ -370,20 +354,16 @@ const Contact = memo(function Contact() {
           {/* Contact Info Sidebar */}
           <motion.div 
             className="lg:col-span-2 space-y-6"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            initial={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
           >
             {/* Contact Cards */}
             <div className="space-y-4">
               {contactInfo.map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 + index * 0.1 }}
+                  initial={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: 1, y: 0 }}
                 >
                   <div 
                     className={cn(
@@ -430,10 +410,8 @@ const Contact = memo(function Contact() {
 
             {/* Availability Card */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.7 }}
+              initial={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               className="p-6 rounded-xl bg-gradient-to-br from-UserAccent/10 to-cyan-500/10 border border-UserAccent/20"
             >
               <div className="flex items-start gap-4">
@@ -451,10 +429,8 @@ const Contact = memo(function Contact() {
 
             {/* Quick Links */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.8 }}
+              initial={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               className="pt-4"
             >
               <p className="text-xs uppercase tracking-wider text-slate-500 dark:text-white/40 mb-3">

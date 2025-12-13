@@ -3,8 +3,6 @@
 import { memo } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import Typewriter from "typewriter-effect";
-import { staggerContainer, staggerItem, fadeInLeft } from "@/hooks/useScrollAnimation";
 
 // Lazy load heavy components
 const ScrollReveal = dynamic(
@@ -22,23 +20,14 @@ const AboutMe = memo(function AboutMe() {
       <div className="container mx-auto px-4">
         <motion.div
           className="flex flex-col xl:flex-row items-center justify-center xl:gap-16"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
         >
-          {/* Photo on the left */}
+          {/* Photo on the left - renders instantly */}
           <motion.div
             className="order-2 xl:order-1 flex-shrink-0"
-            variants={staggerItem}
-            initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.8,
-              delay: 0.3,
-              ease: [0.34, 1.56, 0.64, 1],
-            }}
+            initial={{ opacity: 1, scale: 1, rotate: 0 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
           >
             <motion.div
               animate={{
@@ -54,30 +43,16 @@ const AboutMe = memo(function AboutMe() {
             </motion.div>
           </motion.div>
 
-          {/* Text content on the right */}
+          {/* Text content on the right - renders instantly */}
           <motion.div
             className="order-1 xl:order-2 text-center xl:text-left max-w-2xl mb-8 xl:mb-0"
-            variants={staggerItem}
           >
-            <motion.div variants={fadeInLeft} custom={0.2}>
-              <Typewriter
-                options={{
-                  strings: ["About Me"],
-                  autoStart: true,
-                  loop: false, // NO infinite loop - type once and stop
-                  deleteSpeed: Infinity, // Never delete
-                  delay: 80,
-                  cursor: "_",
-                  cursorClassName: "text-UserAccent",
-                  wrapperClassName: "text-4xl font-bold text-UserAccent",
-                }}
-              />
+            <motion.div>
+              <h3 className="text-4xl font-bold text-UserAccent">About Me</h3>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              initial={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               className="mt-6"
             >
               <ScrollReveal

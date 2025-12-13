@@ -28,30 +28,9 @@ const Hyperspeed = dynamic(() => import("@/components/reactbits/Backgrounds/Hype
 const GridPulse = dynamic(() => import("@/components/reactbits/Backgrounds/GridPulse"), { ssr: false });
 const GridScan = dynamic(() => import("@/components/reactbits/Backgrounds/GridScan"), { ssr: false });
 
-// Memoized animated text component to prevent re-renders
+// Memoized title component - renders instantly for LCP optimization
 const AnimatedTitle = memo(function AnimatedTitle({ text }: { text: string }) {
-  const characters = text.split("");
-  
-  return (
-    <>
-      {characters.map((char, index) => (
-        <motion.span
-          key={index}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{
-            duration: 0.5,
-            delay: index * 0.05,
-            ease: [0.25, 0.4, 0.25, 1],
-          }}
-          style={{ display: "inline-block" }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
-    </>
-  );
+  return <>{text}</>;
 });
 
 interface WorkProps {
@@ -84,23 +63,18 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
       </div>
 
       <div className="container mx-auto relative z-10">
-        {/* Section Header */}
+        {/* Section Header - renders instantly */}
         <motion.div
           className="-mb-32"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3 }}
+          initial={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
         >
           <h2 className="text-4xl xl:text-5xl font-bold mb-4">
             <AnimatedTitle text={isPage ? "All Projects" : "My Work"} />
           </h2>
           <motion.div
             className="h-1 bg-gradient-to-r from-UserAccent to-transparent rounded-full"
-            initial={{ scaleX: 0, originX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
+            initial={{ scaleX: 1, originX: 0 }}
             style={{ maxWidth: "200px" }}
           />
         </motion.div>
@@ -258,10 +232,8 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
 
                   <motion.div 
                     className={`w-full xl:w-[50%] ${isEven ? "xl:text-left" : "xl:text-right"}`}
-                    initial={{ opacity: 0, x: isEven ? 30 : -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
+                    initial={{ opacity: 1, x: 0 }}
+                    animate={{ opacity: 1, x: 0 }}
                   >
                     {/* Glassmorphic Container */}
                     <div className="backdrop-blur-md bg-white/60 dark:bg-black/40 rounded-2xl p-5 xl:p-6 border border-slate-200/50 dark:border-white/10 shadow-xl">
@@ -288,10 +260,6 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
                           <motion.span
                             key={stack.name}
                             className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white/80 text-xs font-medium border border-slate-200/50 dark:border-white/10"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.3, delay: 0.4 + stackIndex * 0.05 }}
                             whileHover={{ 
                               scale: 1.05, 
                               backgroundColor: "rgba(0, 255, 153, 0.1)",
