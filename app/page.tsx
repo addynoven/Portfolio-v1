@@ -21,14 +21,15 @@ const Home = () => {
         <Hero />
 
         {/* Other Sections */}
+        
+        <div className="border-b border-slate-200 dark:border-white/10" />
+        <Work limit={5} />
+        <div className="border-b border-slate-200 dark:border-white/10" />
+        <Skills />
         <div className="border-b border-slate-200 dark:border-white/10" />
         <AboutMe />
         <div className="border-b border-slate-200 dark:border-white/10" />
         <ActivityDashboard />
-        <div className="border-b border-slate-200 dark:border-white/10" />
-        <Work limit={5} />
-         <div className="border-b border-slate-200 dark:border-white/10" />
-        <Skills />
         <div className="border-b border-slate-200 dark:border-white/10" />
         <Contact />
         <div className="border-b border-slate-200 dark:border-white/10" />

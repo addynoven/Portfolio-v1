@@ -25,10 +25,7 @@ const Waves = dynamic(() => import("@/components/reactbits/Backgrounds/Waves"), 
 const Threads = dynamic(() => import("@/components/reactbits/Backgrounds/Threads"), { ssr: false });
 const Hyperspeed = dynamic(() => import("@/components/reactbits/Backgrounds/Hyperspeed"), { ssr: false });
 const GridPulse = dynamic(() => import("@/components/reactbits/Backgrounds/GridPulse"), { ssr: false });
-const GridScan = dynamic(
-  () => import("@/components/reactbits/Backgrounds/GridScan").then(mod => ({ default: mod.GridScan })),
-  { ssr: false }
-);
+const GridScan = dynamic(() => import("@/components/reactbits/Backgrounds/GridScan"), { ssr: false });
 
 // Memoized animated text component to prevent re-renders
 const AnimatedTitle = memo(function AnimatedTitle({ text }: { text: string }) {
