@@ -9,7 +9,6 @@ import Terminal from "@/components/Terminal";
 import Social from "@/components/Social";
 import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
-import { staggerContainer, staggerItem, fadeInLeft } from "@/hooks/useScrollAnimation";
 import HeroTiltCard from "@/components/HeroTiltCard";
 import ShinyText from "@/components/reactbits/TextAnimations/ShinyText";
 import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
@@ -54,20 +53,15 @@ const Hero = memo(function Hero() {
       )}
       <motion.div 
         className="flex flex-col xl:flex-row items-center justify-between xl:justify-evenly pb-0 relative z-10"
-        variants={staggerContainer}
-        initial="hidden"
-        animate="visible"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 1 }}
       >
         {/* text */}
         <HeroTiltCard className="text-center xl:text-left order-2 xl:order-none">
-        <motion.div 
-          variants={staggerItem}
-        >
+        <motion.div>
           {/* Typewriter role */}
           <motion.span 
             className="text-xl flex items-center justify-center xl:justify-start gap-2"
-            variants={fadeInLeft}
-            custom={0.2}
           >
             <Typewriter
               options={{
@@ -123,25 +117,19 @@ const Hero = memo(function Hero() {
 
           <motion.p 
             className="max-w-[500px] mb-6 text-slate-600 dark:text-white/80"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
           >
             I excel at crafting elegant digital experiences and I am
             proficient in various programming languages, frameworks and
             technologies.
           </motion.p>
           
-          {/* button and Social with spring physics */}
+          {/* button and Social */}
           <motion.div 
             className="flex flex-col xl:flex-row items-center gap-8"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              duration: 0.6, 
-              delay: 1,
-              ease: [0.34, 1.56, 0.64, 1] // Spring bounce
-            }}
           >
             <ClickSpark sparkColor={accentColor} sparks={15} sparkSize={8}>
               <motion.a 
@@ -161,9 +149,8 @@ const Hero = memo(function Hero() {
               </motion.a>
             </ClickSpark>
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 1, scale: 1 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
             >
               <Social
                 containerStyles={"flex gap-6"}
@@ -175,16 +162,11 @@ const Hero = memo(function Hero() {
           </motion.div>
         </motion.div>
         </HeroTiltCard>
-        {/* Terminal with floating effect */}
+        {/* Terminal - visible immediately */}
         <motion.div 
           className="order-1 xl:order-none mb-8 xl:mb-0"
-          initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+          initial={{ opacity: 1, scale: 1, rotate: 0 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ 
-            duration: 0.8, 
-            delay: 0.5,
-            ease: [0.34, 1.56, 0.64, 1]
-          }}
         >
           <motion.div
             animate={{ 
