@@ -20,6 +20,8 @@ const MagicBento = dynamic(
   { ssr: false }
 );
 
+import { LazyRender } from "@/components/LazyRender";
+
 // Memoized animated text component with forever looping wave animation
 const AnimatedTitle = memo(function AnimatedTitle({ text }: { text: string }) {
   const characters = text.split("");
@@ -231,21 +233,23 @@ const Skills = memo(function Skills() {
 
   return (
     <section id="skills" className="relative py-20 xl:py-32 min-h-screen overflow-hidden">
-      {/* Particles Background */}
+      {/* Particles Background - Only renders when in viewport */}
       <div className="absolute inset-0 z-0">
-        <Particles
-          particleCount={100}
-          particleSpread={12}
-          speed={0.12}
-          particleColors={["#00ff99", "#00d4aa", "#10b981", "#34d399", "#ffffff"]}
-          alphaParticles={false}
-          particleBaseSize={180}
-          sizeRandomness={1.2}
-          cameraDistance={18}
-          moveParticlesOnHover={true}
-          particleHoverFactor={0.8}
-          className=""
-        />
+        <LazyRender className="w-full h-full">
+          <Particles
+            particleCount={100}
+            particleSpread={12}
+            speed={0.12}
+            particleColors={["#00ff99", "#00d4aa", "#10b981", "#34d399", "#ffffff"]}
+            alphaParticles={false}
+            particleBaseSize={180}
+            sizeRandomness={1.2}
+            cameraDistance={18}
+            moveParticlesOnHover={true}
+            particleHoverFactor={0.8}
+            className=""
+          />
+        </LazyRender>
       </div>
 
       {/* Gradient Overlay */}
