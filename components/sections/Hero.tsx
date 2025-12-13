@@ -1,6 +1,6 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { FiDownload } from "react-icons/fi";
@@ -29,16 +29,29 @@ const FloatingCodeSymbols = dynamic(
 const Hero = memo(function Hero() {
   const accentColor = useAccentColor();
   
+  // Delay heavy visual effects until after LCP (~1.5s)
+  // This ensures the hero text renders immediately for Lighthouse
+  const [showEffects, setShowEffects] = useState(false);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => setShowEffects(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+  
   return (
     <section id="home" className="min-h-[calc(100vh-80px)] flex flex-col justify-center pt-4 pb-2 xl:pt-6 xl:pb-4 relative">
-      {/* Three.js Particle Background - unmounts when off-screen */}
-      <LazyRender className="absolute inset-0 -z-10" keepMounted={false}>
-        <ParticleBackground />
-      </LazyRender>
-      {/* Floating Code Symbols - unmounts when off-screen */}
-      <LazyRender className="absolute inset-0 z-0 pointer-events-none" keepMounted={false}>
-        <FloatingCodeSymbols />
-      </LazyRender>
+      {/* Three.js Particle Background - delayed for LCP optimization */}
+      {showEffects && (
+        <LazyRender className="absolute inset-0 -z-10" keepMounted={false}>
+          <ParticleBackground />
+        </LazyRender>
+      )}
+      {/* Floating Code Symbols - delayed for LCP optimization */}
+      {showEffects && (
+        <LazyRender className="absolute inset-0 z-0 pointer-events-none" keepMounted={false}>
+          <FloatingCodeSymbols />
+        </LazyRender>
+      )}
       <motion.div 
         className="flex flex-col xl:flex-row items-center justify-between xl:justify-evenly pb-0 relative z-10"
         variants={staggerContainer}
@@ -73,31 +86,29 @@ const Hero = memo(function Hero() {
             />
           </motion.span>
           
-          {/* Main heading with staggered reveal */}
+          {/* Main heading - LCP optimized: renders instantly, animations are subtle */}
           <motion.h1 
             className="h1 mb-4"
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
           >
             <motion.span
               className="inline-block"
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 1, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
             >
               Hello I'm
             </motion.span>
             <br />
             <motion.span 
               className="text-UserAccent inline-block relative"
-              initial={{ opacity: 0, x: 50, filter: "blur(10px)" }}
+              initial={{ opacity: 1, x: 0, filter: "blur(0px)" }}
               animate={{ 
                 opacity: 1, 
                 x: 0, 
                 filter: "blur(0px)",
               }}
-              transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+              transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
               style={{
                 textShadow: "0 0 40px rgba(34, 197, 94, 0.5), 0 0 80px rgba(34, 197, 94, 0.3)",
               }}
