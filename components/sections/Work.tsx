@@ -148,8 +148,9 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
 
         {/* Vertical Timeline */}
         <VerticalTimeline
-          lineColor="var(--accent)"
+          lineColor="#22c55e"
           animate={true}
+          layout="2-columns"
         >
           {displayedProjects.map((project, index) => (
             <VerticalTimelineElement
@@ -230,27 +231,59 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
         )}
       </div>
 
-      {/* Custom styles for timeline in dark mode */}
+      {/* Custom styles for timeline */}
       <style jsx global>{`
-        .dark .vertical-timeline-element-content {
-          background: rgba(0, 0, 0, 0.8) !important;
-          border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        }
-        .dark .vertical-timeline-element-content-arrow {
-          border-right-color: rgba(0, 0, 0, 0.8) !important;
+        /* Force timeline line to be visible */
+        .vertical-timeline {
+          position: relative !important;
         }
         .vertical-timeline::before {
-          background: linear-gradient(
-            to bottom,
-            var(--accent),
-            rgba(var(--accent-rgb), 0.3),
-            transparent
-          ) !important;
+          content: '' !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: 4px !important;
+          height: 100% !important;
+          background: #22c55e !important;
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          z-index: 0 !important;
         }
+        
+        /* Mobile: line on left */
+        @media only screen and (max-width: 1169px) {
+          .vertical-timeline::before {
+            left: 18px !important;
+            transform: none !important;
+          }
+        }
+        
+        /* Light mode content cards */
+        .vertical-timeline-element-content {
+          background: rgba(255, 255, 255, 0.95) !important;
+          backdrop-filter: blur(10px) !important;
+        }
+        
+        /* Dark mode content cards */
+        .dark .vertical-timeline-element-content {
+          background: rgba(0, 0, 0, 0.85) !important;
+          border: 1px solid rgba(255, 255, 255, 0.15) !important;
+          backdrop-filter: blur(10px) !important;
+        }
+        .dark .vertical-timeline-element-content-arrow {
+          border-right-color: rgba(0, 0, 0, 0.85) !important;
+        }
+        
+        /* Icon styling */
         .vertical-timeline-element-icon {
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
+          box-shadow: 0 0 0 4px #22c55e, 
+                      0 0 15px rgba(34, 197, 94, 0.5),
+                      inset 0 2px 0 rgba(0,0,0,0.08) !important;
         }
       `}</style>
     </section>
