@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import QrCodePopup from "@/components/QrCodePopup";
 import { LazyRender } from "@/components/LazyRender";
 import { useAccentColor } from "@/lib/accentColor";
+import { usePerformance } from "@/hooks/usePerformance";
 
 // Lazy load ALL heavy background components to prevent loading them simultaneously
 const Aurora = dynamic(() => import("@/components/reactbits/Backgrounds/Aurora"), { ssr: false });
@@ -40,6 +41,7 @@ interface WorkProps {
 
 const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
   const accentColor = useAccentColor();
+  const { isLowEnd } = usePerformance();
   const displayedProjects = limit ? projects.slice(0, limit) : projects;
 
   return (
@@ -51,15 +53,20 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
       transition={{ duration: 0.3 }}
       className="relative py-16 xl:py-24 min-h-screen"
     >
-      {/* Aurora Background for entire section - unmounts when off-screen */}
+      {/* Aurora Background for entire section - disabled on low-end devices */}
       <div className="absolute inset-0 z-0">
-        <LazyRender className="w-full h-full" keepMounted={false}>
-          <Aurora 
-            colorStops={[accentColor, "#0a2a1a", "#00d4aa", "#1a1a2e"]}
-            speed={2}
-            blur={120}
-          />
-        </LazyRender>
+        {isLowEnd ? (
+          // Simple gradient fallback for low-end devices
+          <div className="w-full h-full bg-gradient-to-br from-UserAccent/5 via-transparent to-cyan-500/5" />
+        ) : (
+          <LazyRender className="w-full h-full" keepMounted={false}>
+            <Aurora 
+              colorStops={[accentColor, "#0a2a1a", "#00d4aa", "#1a1a2e"]}
+              speed={2}
+              blur={120}
+            />
+          </LazyRender>
+        )}
       </div>
 
       <div className="container mx-auto relative z-10">
@@ -99,104 +106,111 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
                 key={project.num}
                 itemClassName="bg-white/90 dark:bg-black/85 backdrop-blur-md border border-white/20"
               >
-                {/* Dynamic Background Effect - ONLY renders when in viewport */}
+                {/* Dynamic Background Effect - DISABLED on low-end devices */}
                 <div className="absolute inset-0 z-0">
-                  {index === 0 && (
-                    <LazyRender className="w-full h-full">
-                      <Squares 
-                        direction="diagonal"
-                        speed={0.3}
-                        borderColor="rgba(0, 255, 153, 0.15)"
-                        squareSize={50}
-                        hoverFillColor="rgba(0, 255, 153, 0.1)"
-                      />
-                    </LazyRender>
-                  )}
-                  {index === 1 && (
-                    <LazyRender className="w-full h-full">
-                      <Waves 
-                        lineColor="rgba(0, 255, 153, 0.3)"
-                        backgroundColor="transparent"
-                        waveSpeedX={0.02}
-                        waveSpeedY={0.01}
-                        waveAmpX={40}
-                        waveAmpY={20}
-                        friction={0.9}
-                        tension={0.01}
-                        maxCursorMove={120}
-                        xGap={12}
-                        yGap={36}
-                      />
-                    </LazyRender>
-                  )}
-                  {index === 2 && (
-                    <LazyRender className="w-full h-full">
-                      <Threads 
-                        color={[0, 1, 0.59]}
-                        amplitude={1}
-                        distance={0}
-                        enableMouseInteraction={true}
-                      />
-                    </LazyRender>
-                  )}
-                  {index === 3 && (
-                    <LazyRender className="w-full h-full">
-                      <Hyperspeed
-                        effectOptions={{
-                          onSpeedUp: () => {},
-                          onSlowDown: () => {},
-                          distortion: 'turbulentDistortion',
-                          length: 400,
-                          roadWidth: 10,
-                          islandWidth: 2,
-                          lanesPerRoad: 4,
-                          fov: 90,
-                          fovSpeedUp: 150,
-                          speedUp: 2,
-                          carLightsFade: 0.4,
-                          totalSideLightSticks: 20,
-                          lightPairsPerRoadWay: 40,
-                          shoulderLinesWidthPercentage: 0.05,
-                          brokenLinesWidthPercentage: 0.1,
-                          brokenLinesLengthPercentage: 0.5,
-                          lightStickWidth: [0.12, 0.5],
-                          lightStickHeight: [1.3, 1.7],
-                          movingAwaySpeed: [60, 80],
-                          movingCloserSpeed: [-120, -160],
-                          carLightsLength: [400 * 0.03, 400 * 0.2],
-                          carLightsRadius: [0.05, 0.14],
-                          carWidthPercentage: [0.3, 0.5],
-                          carShiftX: [-0.8, 0.8],
-                          carFloorSeparation: [0, 5],
-                          cameraY: 8,
-                          colors: {
-                            roadColor: 0x080808,
-                            islandColor: 0x0a0a0a,
-                            background: 0x000000,
-                            shoulderLines: 0x00ff99,
-                            brokenLines: 0x00ff99,
-                            leftCars: [0x00ff99, 0x00cc77, 0x00aa66],
-                            rightCars: [0x00ff99, 0x00cc77, 0x00aa66],
-                            sticks: 0x00ff99,
-                          },
-                        }}
-                      />
-                    </LazyRender>
-                  )}
-                  {index === 4 && (
-                    <LazyRender className="w-full h-full">
-                      <GridScan
-                        linesColor={accentColor}
-                        scanColor={accentColor}
-                        scanOpacity={0.6}
-                        gridScale={0.15}
-                        lineThickness={1.5}
-                        scanGlow={0.8}
-                        enableWebcam={false}
-                        showPreview={false}
-                        enablePost={false}
-                      />
-                    </LazyRender>
+                  {isLowEnd ? (
+                    // Simple gradient fallback for low-end devices
+                    <div className="w-full h-full bg-gradient-to-br from-UserAccent/10 via-transparent to-transparent" />
+                  ) : (
+                    <>
+                      {index === 0 && (
+                        <LazyRender className="w-full h-full">
+                          <Squares 
+                            direction="diagonal"
+                            speed={0.3}
+                            borderColor="rgba(0, 255, 153, 0.15)"
+                            squareSize={50}
+                            hoverFillColor="rgba(0, 255, 153, 0.1)"
+                          />
+                        </LazyRender>
+                      )}
+                      {index === 1 && (
+                        <LazyRender className="w-full h-full">
+                          <Waves 
+                            lineColor="rgba(0, 255, 153, 0.3)"
+                            backgroundColor="transparent"
+                            waveSpeedX={0.02}
+                            waveSpeedY={0.01}
+                            waveAmpX={40}
+                            waveAmpY={20}
+                            friction={0.9}
+                            tension={0.01}
+                            maxCursorMove={120}
+                            xGap={12}
+                            yGap={36}
+                          />
+                        </LazyRender>
+                      )}
+                      {index === 2 && (
+                        <LazyRender className="w-full h-full">
+                          <Threads 
+                            color={[0, 1, 0.59]}
+                            amplitude={1}
+                            distance={0}
+                            enableMouseInteraction={true}
+                          />
+                        </LazyRender>
+                      )}
+                      {index === 3 && (
+                        <LazyRender className="w-full h-full">
+                          <Hyperspeed
+                            effectOptions={{
+                              onSpeedUp: () => {},
+                              onSlowDown: () => {},
+                              distortion: 'turbulentDistortion',
+                              length: 400,
+                              roadWidth: 10,
+                              islandWidth: 2,
+                              lanesPerRoad: 4,
+                              fov: 90,
+                              fovSpeedUp: 150,
+                              speedUp: 2,
+                              carLightsFade: 0.4,
+                              totalSideLightSticks: 20,
+                              lightPairsPerRoadWay: 40,
+                              shoulderLinesWidthPercentage: 0.05,
+                              brokenLinesWidthPercentage: 0.1,
+                              brokenLinesLengthPercentage: 0.5,
+                              lightStickWidth: [0.12, 0.5],
+                              lightStickHeight: [1.3, 1.7],
+                              movingAwaySpeed: [60, 80],
+                              movingCloserSpeed: [-120, -160],
+                              carLightsLength: [400 * 0.03, 400 * 0.2],
+                              carLightsRadius: [0.05, 0.14],
+                              carWidthPercentage: [0.3, 0.5],
+                              carShiftX: [-0.8, 0.8],
+                              carFloorSeparation: [0, 5],
+                              cameraY: 8,
+                              colors: {
+                                roadColor: 0x080808,
+                                islandColor: 0x0a0a0a,
+                                background: 0x000000,
+                                shoulderLines: 0x00ff99,
+                                brokenLines: 0x00ff99,
+                                leftCars: [0x00ff99, 0x00cc77, 0x00aa66],
+                                rightCars: [0x00ff99, 0x00cc77, 0x00aa66],
+                                sticks: 0x00ff99,
+                              },
+                            }}
+                          />
+                        </LazyRender>
+                      )}
+                      {index === 4 && (
+                        <LazyRender className="w-full h-full">
+                          <GridScan
+                            linesColor={accentColor}
+                            scanColor={accentColor}
+                            scanOpacity={0.6}
+                            gridScale={0.15}
+                            lineThickness={1.5}
+                            scanGlow={0.8}
+                            enableWebcam={false}
+                            showPreview={false}
+                            enablePost={false}
+                          />
+                        </LazyRender>
+                      )}
+                    </>
                   )}
                 </div>
                 

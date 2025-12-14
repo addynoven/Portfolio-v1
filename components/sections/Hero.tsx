@@ -14,6 +14,7 @@ import ShinyText from "@/components/reactbits/TextAnimations/ShinyText";
 import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
 import { useAccentColor } from "@/lib/accentColor";
 import { LazyRender } from "@/components/LazyRender";
+import { usePerformance } from "@/hooks/usePerformance";
 
 // Lazy load heavy Three.js and animation components
 const ParticleBackground = dynamic(
@@ -27,15 +28,18 @@ const FloatingCodeSymbols = dynamic(
 
 const Hero = memo(function Hero() {
   const accentColor = useAccentColor();
+  const { isLowEnd } = usePerformance();
   
   // Delay heavy visual effects until after LCP (~1.5s)
   // This ensures the hero text renders immediately for Lighthouse
+  // On low-end devices, skip these effects entirely
   const [showEffects, setShowEffects] = useState(false);
   
   useEffect(() => {
+    if (isLowEnd) return; // Skip on low-end devices
     const timer = setTimeout(() => setShowEffects(true), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [isLowEnd]);
   
   return (
     <section id="home" className="min-h-[calc(100vh-80px)] flex flex-col justify-center pt-4 pb-2 xl:pt-6 xl:pb-4 relative">
