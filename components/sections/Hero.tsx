@@ -138,7 +138,7 @@ const Hero = memo(function Hero() {
             <ClickSpark sparkColor={accentColor} sparks={15} sparkSize={8}>
               <motion.a 
                 href="/resume.pdf" 
-                download="Aditya_Sahu_Resume.pdf"
+                download="Neon_Stain_Resume.pdf"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

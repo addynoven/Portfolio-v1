@@ -116,7 +116,7 @@ export default function Terminal() {
     if (command === "about")
       return [
         { type: "output", color: "green", text: "╭─────────────────────────────╮" },
-        { type: "output", color: "green", text: "│  👨‍💻 Aditya Sahu (Neon Stain) │" },
+        { type: "output", color: "green", text: "│       👨‍💻 Neon Stain       │" },
         { type: "output", color: "green", text: "╰─────────────────────────────╯" },
         { type: "output", color: "blue", text: "Full Stack Developer" },
         { type: "output", color: "blue", text: "Passionate about building elegant digital experiences" },
@@ -312,7 +312,7 @@ export default function Terminal() {
 
     // Whoami
     if (command === "whoami") {
-      return [{ type: "output", color: "green", text: "neon_stain (Aditya Sahu)" }];
+      return [{ type: "output", color: "green", text: "neon_stain" }];
     }
 
     // Date

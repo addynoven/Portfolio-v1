@@ -39,7 +39,7 @@ const Home = () => {
         </div>
         <div className="content-auto">
           <div className="border-b border-slate-200 dark:border-white/10" />
-          <InteractiveBadge name="Aditya Sahu" title="Full Stack Developer" handle="neonstain" status="Available" contactText="Contact Me" avatarUrl="photo.jpg" />
+          <InteractiveBadge name="Neon Stain" title="Full Stack Developer" handle="neonstain" status="Available" contactText="Contact Me" avatarUrl="photo.jpg" />
         </div>
       </div>
     </section>

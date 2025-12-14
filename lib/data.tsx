@@ -40,7 +40,7 @@ export const About: AboutData = {
     info: [
         {
             fieldName: "Name",
-            fieldValue: "Aditya Sahu",
+            fieldValue: "Neon Stain",
         },
         {
             fieldName: "Phone",

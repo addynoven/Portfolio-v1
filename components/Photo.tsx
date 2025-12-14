@@ -40,7 +40,7 @@ const Photo = () => {
           >
             <RGBDistortionImage
               src="/photo.jpg"
-              alt="Aditya Sahu - Profile Photo"
+              alt="Neon Stain - Profile Photo"
               intensity={1.2}
               waveFrequency={8.0}
               className="w-full h-full"
