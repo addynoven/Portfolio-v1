@@ -1,31 +1,49 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 
 interface RetroGridProps {
   className?: string;
   angle?: number;
+  cellSize?: number;
+  opacity?: number;
+  lightLineColor?: string;
+  darkLineColor?: string;
 }
 
-export default function RetroGrid({ className, angle = 60 }: RetroGridProps) {
+export function RetroGrid({
+  className,
+  angle = 65,
+  cellSize = 60,
+  opacity = 0.5,
+  lightLineColor = "gray",
+  darkLineColor = "gray",
+  ...props
+}: RetroGridProps) {
+  const gridStyles = {
+    "--grid-angle": `${angle}deg`,
+    "--cell-size": `${cellSize}px`,
+    "--opacity": opacity,
+    "--light-line": lightLineColor,
+    "--dark-line": darkLineColor,
+  } as React.CSSProperties;
+
   return (
     <div
       className={cn(
-        "pointer-events-none absolute w-full h-full overflow-hidden opacity-60 [perspective:200px]",
+        "pointer-events-none fixed inset-0 size-full overflow-hidden [perspective:200px]",
+        `opacity-[var(--opacity)]`,
         className
       )}
-      style={{
-        "--grid-angle": `${angle}deg`,
-      } as React.CSSProperties}
+      style={gridStyles}
+      {...props}
     >
       <div className="absolute inset-0 [transform:rotateX(var(--grid-angle))]">
-        <div
-          className={cn(
-            "animate-grid",
-            "[background-repeat:repeat] [background-size:60px_60px] lg:[background-size:120px_120px] [height:300vh] [width:600vw] [transform-origin:100%_0_0]",
-            "[background-image:linear-gradient(to_right,rgba(0,0,0,0.2)_1px,transparent_0),linear-gradient(to_bottom,rgba(0,0,0,0.2)_1px,transparent_0)] dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_0),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_0)]"
-          )}
-        />
+        <div className="animate-grid [background-image:linear-gradient(to_right,var(--light-line)_1px,transparent_0),linear-gradient(to_bottom,var(--light-line)_1px,transparent_0)] [background-repeat:repeat] [background-size:var(--cell-size)_var(--cell-size)] [height:300vh] [inset:0%_0px] [margin-left:-200%] [transform-origin:100%_0_0] [width:600vw] dark:[background-image:linear-gradient(to_right,var(--dark-line)_1px,transparent_0),linear-gradient(to_bottom,var(--dark-line)_1px,transparent_0)]" />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t to-transparent to-90% from-white dark:from-black" />
+      <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent to-90% dark:from-black" />
     </div>
   );
 }
+
+export default RetroGrid;

@@ -1,7 +1,6 @@
 "use client";
 
 import { memo } from "react";
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { BsArrowUpRight, BsGithub, BsArrowRight } from "react-icons/bs";
 import {
@@ -12,385 +11,199 @@ import {
 } from "@/components/ui/tooltip";
 import Link from "next/link";
 import Image from "next/image";
-import ScrollStack, { ScrollStackItem } from "@/components/reactbits/Components/ScrollStack";
 import { projects } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import QrCodePopup from "@/components/QrCodePopup";
-import { LazyRender } from "@/components/LazyRender";
-import { useAccentColor } from "@/lib/accentColor";
-import { usePerformance } from "@/hooks/usePerformance";
-
-// Lazy load ALL heavy background components to prevent loading them simultaneously
-const Aurora = dynamic(() => import("@/components/reactbits/Backgrounds/Aurora"), { ssr: false });
-const Squares = dynamic(() => import("@/components/reactbits/Backgrounds/Squares"), { ssr: false });
-const Waves = dynamic(() => import("@/components/reactbits/Backgrounds/Waves"), { ssr: false });
-const Threads = dynamic(() => import("@/components/reactbits/Backgrounds/Threads"), { ssr: false });
-const Hyperspeed = dynamic(() => import("@/components/reactbits/Backgrounds/Hyperspeed"), { ssr: false });
-const GridPulse = dynamic(() => import("@/components/reactbits/Backgrounds/GridPulse"), { ssr: false });
-const GridScan = dynamic(() => import("@/components/reactbits/Backgrounds/GridScan"), { ssr: false });
-
-// Memoized title component - renders instantly for LCP optimization
-const AnimatedTitle = memo(function AnimatedTitle({ text }: { text: string }) {
-  return <>{text}</>;
-});
 
 interface WorkProps {
   limit?: number;
   isPage?: boolean;
 }
 
+// Simple project card - no heavy effects, just clean CSS
+const ProjectCard = memo(function ProjectCard({ 
+  project, 
+  index, 
+  isEven 
+}: { 
+  project: typeof projects[0]; 
+  index: number; 
+  isEven: boolean;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      className="relative bg-white/90 dark:bg-black/85 backdrop-blur-md border border-white/20 rounded-[40px] p-6 xl:p-10 shadow-xl mb-8"
+    >
+      {/* Simple gradient background */}
+      <div className="absolute inset-0 z-0 rounded-[40px] overflow-hidden">
+        <div className={`w-full h-full bg-gradient-to-br ${
+          index % 3 === 0 ? 'from-UserAccent/5 via-transparent to-cyan-500/5' :
+          index % 3 === 1 ? 'from-purple-500/5 via-transparent to-UserAccent/5' :
+          'from-cyan-500/5 via-transparent to-UserAccent/5'
+        }`} />
+      </div>
+
+      <div className={`flex flex-col xl:flex-row items-center gap-8 xl:gap-12 relative z-10 ${
+        isEven ? "" : "xl:flex-row-reverse"
+      }`}>
+        
+        {/* Image Container */}
+        <div className="w-full xl:w-[45%] relative">
+          <div className="relative h-[200px] sm:h-[280px] xl:h-[320px] rounded-xl overflow-hidden group shadow-2xl">
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* Project Number Badge */}
+            <div className="absolute top-4 left-4 z-20 w-12 h-12 rounded-full bg-UserAccent flex items-center justify-center shadow-lg">
+              <span className="text-lg font-bold text-black">{project.num}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className={`w-full xl:w-[50%] ${isEven ? "xl:text-left" : "xl:text-right"}`}>
+          <div className="backdrop-blur-md bg-white/40 dark:bg-black/30 rounded-2xl p-5 xl:p-6 border border-slate-200/30 dark:border-white/10">
+            <span className="inline-block px-3 py-1.5 rounded-full bg-UserAccent/10 text-UserAccent text-sm font-medium mb-3">
+              {project.category} Project
+            </span>
+
+            <h3 className="text-2xl xl:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+              {project.title}
+            </h3>
+
+            <p className={`text-slate-600 dark:text-white/60 text-base mb-4 ${isEven ? "" : "xl:ml-auto"}`} style={{ maxWidth: "380px" }}>
+              {project.description}
+            </p>
+
+            {/* Tech Stack */}
+            <div className={`flex flex-wrap gap-2 mb-5 ${isEven ? "" : "xl:justify-end"}`}>
+              {project.Stack.map((stack) => (
+                <span
+                  key={stack.name}
+                  className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white/80 text-xs font-medium border border-slate-200/50 dark:border-white/10 hover:border-UserAccent/30 transition-colors"
+                >
+                  {stack.name}
+                </span>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className={`flex gap-3 ${isEven ? "" : "xl:justify-end"}`}>
+              <Link href={project.live}>
+                <TooltipProvider delayDuration={100}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 flex justify-center items-center group cursor-pointer border border-slate-200/50 dark:border-white/10 hover:border-UserAccent/50 transition-all hover:scale-105">
+                        <BsArrowUpRight className="text-slate-700 dark:text-white text-lg group-hover:text-UserAccent transition-colors duration-300" />
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="text-sm">Live Project</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </Link>
+
+              <Link href={project.github}>
+                <TooltipProvider delayDuration={100}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 flex justify-center items-center group cursor-pointer border border-slate-200/50 dark:border-white/10 hover:border-UserAccent/50 transition-all hover:scale-105">
+                        <BsGithub className="text-slate-700 dark:text-white text-lg group-hover:text-UserAccent transition-colors duration-300" />
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="text-sm">GitHub Repo</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </Link>
+
+              <QrCodePopup url={project.live} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+});
+
 const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
-  const accentColor = useAccentColor();
-  const { isLowEnd } = usePerformance();
   const displayedProjects = limit ? projects.slice(0, limit) : projects;
 
   return (
-    <motion.section
+    <section
       id="work"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.3 }}
-      className="relative py-16 xl:py-24 min-h-screen"
+      className="relative py-16 xl:py-24"
     >
-      {/* Aurora Background for entire section - disabled on low-end devices */}
-      <div className="absolute inset-0 z-0">
-        {isLowEnd ? (
-          // Simple gradient fallback for low-end devices
-          <div className="w-full h-full bg-gradient-to-br from-UserAccent/5 via-transparent to-cyan-500/5" />
-        ) : (
-          <LazyRender className="w-full h-full" keepMounted={false}>
-            <Aurora 
-              colorStops={[accentColor, "#0a2a1a", "#00d4aa", "#1a1a2e"]}
-              speed={2}
-              blur={120}
-            />
-          </LazyRender>
-        )}
-      </div>
-
-      <div className="container mx-auto relative z-10">
-        {/* Section Header - renders instantly */}
-        <motion.div
-          className="-mb-32"
-          initial={{ opacity: 1, y: 0 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
+      <div className="container mx-auto px-4">
+        {/* Section Header */}
+        <div className="mb-12">
           <h2 className="text-4xl xl:text-5xl font-bold mb-4">
-            <AnimatedTitle text={isPage ? "All Projects" : "My Work"} />
+            {isPage ? "All Projects" : "My Work"}
           </h2>
-          <motion.div
+          <div
             className="h-1 bg-gradient-to-r from-UserAccent to-transparent rounded-full"
-            initial={{ scaleX: 1, originX: 0 }}
             style={{ maxWidth: "200px" }}
           />
-        </motion.div>
+        </div>
 
-        {/* ScrollStack Container - disable smooth scroll on low-end devices */}
-        <ScrollStack
-          itemDistance={80}
-          itemScale={0.02}
-          itemStackDistance={25}
-          stackPosition="15%"
-          scaleEndPosition="8%"
-          baseScale={0.88}
-          useWindowScroll={true}
-          blurAmount={0}
-          rotationAmount={0.3}
-          disableSmooth={isLowEnd}
-        >
-          {displayedProjects.map((project, index) => {
-            const isEven = index % 2 === 0;
-            
-            return (
-              <ScrollStackItem
-                key={project.num}
-                itemClassName="bg-white/90 dark:bg-black/85 backdrop-blur-md border border-white/20"
-              >
-                {/* Dynamic Background Effect - DISABLED on low-end devices */}
-                <div className="absolute inset-0 z-0">
-                  {isLowEnd ? (
-                    // Simple gradient fallback for low-end devices
-                    <div className="w-full h-full bg-gradient-to-br from-UserAccent/10 via-transparent to-transparent" />
-                  ) : (
-                    <>
-                      {index === 0 && (
-                        <LazyRender className="w-full h-full">
-                          <Squares 
-                            direction="diagonal"
-                            speed={0.3}
-                            borderColor="rgba(0, 255, 153, 0.15)"
-                            squareSize={50}
-                            hoverFillColor="rgba(0, 255, 153, 0.1)"
-                          />
-                        </LazyRender>
-                      )}
-                      {index === 1 && (
-                        <LazyRender className="w-full h-full">
-                          <Waves 
-                            lineColor="rgba(0, 255, 153, 0.3)"
-                            backgroundColor="transparent"
-                            waveSpeedX={0.02}
-                            waveSpeedY={0.01}
-                            waveAmpX={40}
-                            waveAmpY={20}
-                            friction={0.9}
-                            tension={0.01}
-                            maxCursorMove={120}
-                            xGap={12}
-                            yGap={36}
-                          />
-                        </LazyRender>
-                      )}
-                      {index === 2 && (
-                        <LazyRender className="w-full h-full">
-                          <Threads 
-                            color={[0, 1, 0.59]}
-                            amplitude={1}
-                            distance={0}
-                            enableMouseInteraction={true}
-                          />
-                        </LazyRender>
-                      )}
-                      {index === 3 && (
-                        <LazyRender className="w-full h-full">
-                          <Hyperspeed
-                            effectOptions={{
-                              onSpeedUp: () => {},
-                              onSlowDown: () => {},
-                              distortion: 'turbulentDistortion',
-                              length: 400,
-                              roadWidth: 10,
-                              islandWidth: 2,
-                              lanesPerRoad: 4,
-                              fov: 90,
-                              fovSpeedUp: 150,
-                              speedUp: 2,
-                              carLightsFade: 0.4,
-                              totalSideLightSticks: 20,
-                              lightPairsPerRoadWay: 40,
-                              shoulderLinesWidthPercentage: 0.05,
-                              brokenLinesWidthPercentage: 0.1,
-                              brokenLinesLengthPercentage: 0.5,
-                              lightStickWidth: [0.12, 0.5],
-                              lightStickHeight: [1.3, 1.7],
-                              movingAwaySpeed: [60, 80],
-                              movingCloserSpeed: [-120, -160],
-                              carLightsLength: [400 * 0.03, 400 * 0.2],
-                              carLightsRadius: [0.05, 0.14],
-                              carWidthPercentage: [0.3, 0.5],
-                              carShiftX: [-0.8, 0.8],
-                              carFloorSeparation: [0, 5],
-                              cameraY: 8,
-                              colors: {
-                                roadColor: 0x080808,
-                                islandColor: 0x0a0a0a,
-                                background: 0x000000,
-                                shoulderLines: 0x00ff99,
-                                brokenLines: 0x00ff99,
-                                leftCars: [0x00ff99, 0x00cc77, 0x00aa66],
-                                rightCars: [0x00ff99, 0x00cc77, 0x00aa66],
-                                sticks: 0x00ff99,
-                              },
-                            }}
-                          />
-                        </LazyRender>
-                      )}
-                      {index === 4 && (
-                        <LazyRender className="w-full h-full">
-                          <GridScan
-                            linesColor={accentColor}
-                            scanColor={accentColor}
-                            scanOpacity={0.6}
-                            gridScale={0.15}
-                            lineThickness={1.5}
-                            scanGlow={0.8}
-                            enableWebcam={false}
-                            showPreview={false}
-                            enablePost={false}
-                          />
-                        </LazyRender>
-                      )}
-                    </>
-                  )}
-                </div>
-                
-                <div className={`flex flex-col xl:flex-row items-center gap-8 xl:gap-16 h-full relative z-10 ${
-                  isEven ? "" : "xl:flex-row-reverse"
-                }`}>
-                  
-                  {/* Image Container */}
-                  <motion.div 
-                    className="w-full xl:w-[45%] relative"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="relative h-[200px] sm:h-[280px] xl:h-[320px] rounded-xl overflow-hidden group shadow-2xl">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        {/* Projects Grid - Simple vertical stack */}
+        <div className="space-y-8">
+          {displayedProjects.map((project, index) => (
+            <ProjectCard
+              key={project.num}
+              project={project}
+              index={index}
+              isEven={index % 2 === 0}
+            />
+          ))}
+        </div>
 
-                      {/* Project Number Badge */}
-                      <motion.div 
-                        className="absolute top-4 left-4 z-20 w-12 h-12 rounded-full bg-UserAccent backdrop-blur-sm flex items-center justify-center shadow-lg"
-                        whileHover={{ scale: 1.1, rotate: 10 }}
-                      >
-                        <span className="text-lg font-bold text-black">{project.num}</span>
-                      </motion.div>
-                    </div>
-                  </motion.div>
+        {/* View All Projects CTA */}
+        {!isPage && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-12 text-center"
+          >
+            <a href="/work" onClick={(e) => { e.preventDefault(); window.location.href = '/work'; }}>
+              <Button variant="outline" size="lg" className="group text-lg px-10 py-6 border-UserAccent text-UserAccent hover:bg-UserAccent hover:text-primary">
+                View All Projects
+                <BsArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </a>
+          </motion.div>
+        )}
 
-                  <motion.div 
-                    className={`w-full xl:w-[50%] ${isEven ? "xl:text-left" : "xl:text-right"}`}
-                    initial={{ opacity: 1, x: 0 }}
-                    animate={{ opacity: 1, x: 0 }}
-                  >
-                    {/* Glassmorphic Container */}
-                    <div className="backdrop-blur-md bg-white/60 dark:bg-black/40 rounded-2xl p-5 xl:p-6 border border-slate-200/50 dark:border-white/10 shadow-xl">
-                      <motion.span 
-                        className="inline-block px-3 py-1.5 rounded-full bg-UserAccent/10 text-UserAccent text-sm font-medium mb-3"
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        {project.category} Project
-                      </motion.span>
-
-                      {/* Title */}
-                      <h3 className="text-2xl xl:text-3xl font-bold text-slate-900 dark:text-white mb-3">
-                        {project.title}
-                      </h3>
-
-                      {/* Description */}
-                      <p className={`text-slate-600 dark:text-white/60 text-base mb-4 ${isEven ? "" : "xl:ml-auto"}`} style={{ maxWidth: "380px" }}>
-                        {project.description}
-                      </p>
-
-                      {/* Tech Stack */}
-                      <div className={`flex flex-wrap gap-2 mb-5 ${isEven ? "" : "xl:justify-end"}`}>
-                        {project.Stack.map((stack, stackIndex) => (
-                          <motion.span
-                            key={stack.name}
-                            className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white/80 text-xs font-medium border border-slate-200/50 dark:border-white/10"
-                            whileHover={{ 
-                              scale: 1.05, 
-                              backgroundColor: "rgba(0, 255, 153, 0.1)",
-                              borderColor: "rgba(0, 255, 153, 0.3)"
-                            }}
-                          >
-                            {stack.name}
-                          </motion.span>
-                        ))}
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className={`flex gap-3 ${isEven ? "" : "xl:justify-end"}`}>
-                        <Link href={project.live}>
-                          <TooltipProvider delayDuration={100}>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <motion.div 
-                                  className="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 flex justify-center items-center group cursor-pointer border border-slate-200/50 dark:border-white/10"
-                                  whileHover={{ 
-                                    scale: 1.1, 
-                                    rotate: 5,
-                                    borderColor: "rgba(0, 255, 153, 0.5)"
-                                  }}
-                                  whileTap={{ scale: 0.95 }}
-                                >
-                                  <BsArrowUpRight className="text-slate-700 dark:text-white text-lg group-hover:text-UserAccent transition-colors duration-300" />
-                                </motion.div>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p className="text-sm">Live Project</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </Link>
-
-                        <Link href={project.github}>
-                          <TooltipProvider delayDuration={100}>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <motion.div 
-                                  className="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 flex justify-center items-center group cursor-pointer border border-slate-200/50 dark:border-white/10"
-                                  whileHover={{ 
-                                    scale: 1.1, 
-                                    rotate: -5,
-                                    borderColor: "rgba(0, 255, 153, 0.5)"
-                                  }}
-                                  whileTap={{ scale: 0.95 }}
-                                >
-                                  <BsGithub className="text-slate-700 dark:text-white text-lg group-hover:text-UserAccent transition-colors duration-300" />
-                                </motion.div>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p className="text-sm">GitHub Repo</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </Link>
-
-                        {/* QR Code for mobile scanning */}
-                        <QrCodePopup url={project.live} />
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              </ScrollStackItem>
-            );
-          })}
-          
-          {/* View All Projects Card - Inside ScrollStack */}
-          {!isPage && (
-            <ScrollStackItem
-              itemClassName="bg-white/90 dark:bg-black/85 backdrop-blur-md border border-white/20"
-            >
-              <div className="absolute inset-0 z-0">
-                <LazyRender className="w-full h-full" keepMounted={false}>
-                  <Aurora 
-                    colorStops={[accentColor, "#0a2a1a", "#00d4aa", "#1a1a2e"]}
-                    speed={2}
-                    blur={120}
-                  />
-                </LazyRender>
-              </div>
-              <div className="relative z-10 w-full h-full flex items-center justify-center p-12">
-                <div className="text-center">
-                  <h3 className="text-3xl xl:text-4xl font-bold text-slate-900 dark:text-white mb-4">Want to see more?</h3>
-                  <p className="text-slate-600 dark:text-white/60 text-lg mb-8">Explore all my projects and creative work</p>
-                  <a href="/work" onClick={(e) => { e.preventDefault(); window.location.href = '/work'; }}>
-                    <Button variant="outline" size="lg" className="group text-lg px-10 py-6 border-UserAccent text-UserAccent hover:bg-UserAccent hover:text-primary">
-                       View All Projects
-                       <BsArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </a>
-                </div>
-              </div>
-            </ScrollStackItem>
-          )}
-        </ScrollStack>
-
-          {/* Back to Home Button (if on dedicated page) */}
-          {isPage && (
-            <motion.div 
-                className="fixed bottom-8 right-8 z-50"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1 }}
-            >
-                <a href="/" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }}>
-                    <Button variant="default" size="lg" className="rounded-full shadow-2xl bg-UserAccent text-primary hover:bg-UserAccent/90">
-                        Back to Home
-                    </Button>
-                </a>
-            </motion.div>
-          )}
+        {/* Back to Home Button (if on dedicated page) */}
+        {isPage && (
+          <motion.div 
+            className="fixed bottom-8 right-8 z-50"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <a href="/" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }}>
+              <Button variant="default" size="lg" className="rounded-full shadow-2xl bg-UserAccent text-primary hover:bg-UserAccent/90">
+                Back to Home
+              </Button>
+            </a>
+          </motion.div>
+        )}
       </div>
-    </motion.section>
+    </section>
   );
 });
 

@@ -1,9 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import RetroGrid from "@/components/ui/retro-grid";
-import GridPattern from "@/components/ui/animated-grid-pattern";
-
 // Section Components - Direct imports
 import Hero from "@/components/sections/Hero";
 import AboutMe from "@/components/sections/AboutMe";
@@ -46,25 +42,6 @@ const Home = () => {
           <InteractiveBadge name="Aditya Sahu" title="Full Stack Developer" handle="neonstain" status="Available" contactText="Contact Me" avatarUrl="photo.jpg" />
         </div>
       </div>
-      
-      {/* Background */}
-      {/* <div className="fixed inset-0 -z-10 w-full h-full pointer-events-none"> */}
-        {/* <div className="hidden xl:block">
-          <RetroGrid />
-        </div> */}
-        {/* <div className="block xl:hidden">
-          <GridPattern
-            numSquares={30}
-            maxOpacity={0.2}
-            duration={3}
-            repeatDelay={1}
-            className={cn(
-              "[mask-image:radial-gradient(1000px_circle_at_center,white,transparent_60%)]",
-              "inset-x-0 inset-y-[-30%] h-[100%] skew-y-12"
-            )}
-          />
-        </div> */}
-      {/* </div> */}
     </section>
   );
 };

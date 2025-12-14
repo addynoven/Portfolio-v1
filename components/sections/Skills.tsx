@@ -10,18 +10,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-// Lazy load heavy animation components
-const Particles = dynamic(
-  () => import("@/components/reactbits/Backgrounds/Particles"),
-  { ssr: false }
-);
+// Lazy load heavy components
 const MagicBento = dynamic(
   () => import("@/components/reactbits/Components/MagicBento"),
   { ssr: false }
 );
 
-import { LazyRender } from "@/components/LazyRender";
-import { usePerformance } from "@/hooks/usePerformance";
+
 
 // CSS-based animated title - NO React re-renders, pure GPU animation
 const AnimatedTitle = memo(function AnimatedTitle({ text }: { text: string }) {
@@ -203,7 +198,6 @@ const skillCategories = [
 ];
 
 const Skills = memo(function Skills() {
-  const { isLowEnd } = usePerformance();
   // Sort categories by skill count (more skills first for better grid layout)
   const sortedCategories = [...skillCategories].sort((a, b) => b.skills.length - a.skills.length);
   
@@ -242,34 +236,7 @@ const Skills = memo(function Skills() {
 
   return (
     <section id="skills" className="relative py-20 xl:py-32 min-h-screen overflow-hidden">
-      {/* Particles Background - disabled on low-end devices */}
-      <div className="absolute inset-0 z-0">
-        {isLowEnd ? (
-          // Simple gradient fallback for low-end devices
-          <div className="w-full h-full bg-gradient-to-br from-UserAccent/5 via-transparent to-cyan-500/5" />
-        ) : (
-          <LazyRender className="w-full h-full" keepMounted={false}>
-            <Particles
-              particleCount={60}
-              particleSpread={12}
-              speed={0.08}
-              particleColors={["#00ff99", "#00d4aa", "#10b981", "#34d399", "#ffffff"]}
-              alphaParticles={false}
-              particleBaseSize={150}
-              sizeRandomness={1.2}
-              cameraDistance={18}
-              moveParticlesOnHover={false}
-              particleHoverFactor={0.8}
-              className=""
-            />
-          </LazyRender>
-        )}
-      </div>
-
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-background/20 to-background/80 pointer-events-none" />
-
-      <div className="container mx-auto relative z-10">
+      <div className="container mx-auto">
         <div className="mb-16 text-center">
           <h2 className="text-4xl xl:text-6xl font-bold mb-4">
             <AnimatedTitle text="Skills & Tech Stack" />

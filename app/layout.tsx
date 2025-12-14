@@ -12,6 +12,7 @@ import SectionStairTransition from "@/components/SectionStairTransition";
 import Oneko from "@/components/Oneko";
 import { CatProvider } from "@/components/CatContext";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
+import { RetroGrid } from "@/components/ui/retro-grid";
 
 import type { Metadata, Viewport } from "next";
 
@@ -95,6 +96,13 @@ export default function RootLayout({
 				>
 					<CatProvider>
 					<SectionTransitionProvider>
+					<RetroGrid 
+						angle={65}
+						cellSize={60}
+						opacity={0.4}
+						lightLineColor="rgba(0, 255, 153, 0.15)"
+						darkLineColor="rgba(0, 255, 153, 0.2)"
+					/>
 						<LoadingScreenWrapper />
 						<Header />
 						<StairTransition />

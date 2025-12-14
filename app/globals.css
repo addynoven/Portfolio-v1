@@ -59,6 +59,9 @@
         --user-accent: #00ff99;
         --user-accent-hover: #00e187;
     }
+  .theme {
+        --animate-grid: grid 15s linear infinite;
+    }
 }
 
 @layer base {
@@ -72,12 +75,12 @@
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* IE and Edge */
     }
-    
+
     /* Hide scrollbar for Chrome, Safari, Opera */
     html::-webkit-scrollbar {
         display: none;
     }
-    
+
     /* Base body styles for light mode */
     body {
         @apply font-primary bg-slate-50 text-slate-900 leading-loose transition-colors duration-300;
@@ -105,7 +108,7 @@
     .text-outline {
         -webkit-text-stroke: 1px #1e1e22;
     }
-    
+
     /* Text outline for dark mode */
     .dark .text-outline {
         -webkit-text-stroke: 1px #fff;
@@ -143,7 +146,7 @@
         backface-visibility: hidden;
         perspective: 1000px;
     }
-    
+
     /* Content visibility for off-screen optimization */
     .content-auto {
         content-visibility: auto;
@@ -163,7 +166,7 @@
             transition-duration: 0.01ms !important;
             scroll-behavior: auto !important;
         }
-        
+
         .floating-symbol,
         .wave-char,
         .grid-square,
@@ -171,7 +174,7 @@
             animation: none !important;
         }
     }
-    
+
     /* GPU optimization for common animated elements */
     canvas,
     .floating-symbol,
@@ -179,7 +182,7 @@
     .grid-square {
         will-change: transform, opacity;
     }
-    
+
     /* Optimize section rendering */
     section {
         contain: layout style;
@@ -190,4 +193,24 @@
 canvas {
     touch-action: none;
     -webkit-tap-highlight-color: transparent;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+}
+
+@theme inline {
+  @keyframes grid {
+  0% {
+    transform: translateY(-50%);
+        }
+  100% {
+    transform: translateY(0);
+        }
+    }
 }
