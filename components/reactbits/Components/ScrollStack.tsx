@@ -38,7 +38,8 @@ const ScrollStack = ({
   rotationAmount = 0,
   blurAmount = 0,
   useWindowScroll = false,
-  onStackComplete = undefined
+  onStackComplete = undefined,
+  disableSmooth = false  // Disable Lenis smooth scroll for low-end devices
 }) => {
   const scrollerRef = useRef(null);
   const stackCompletedRef = useRef(false);
@@ -203,17 +204,34 @@ const ScrollStack = ({
   }, [updateCardTransforms]);
 
   const setupLenis = useCallback(() => {
+    // Skip Lenis on low-end devices - use native scroll
+    if (disableSmooth) {
+      // Use native scroll listener instead
+      const scrollHandler = () => handleScroll();
+      if (useWindowScroll) {
+        window.addEventListener('scroll', scrollHandler, { passive: true });
+        return () => window.removeEventListener('scroll', scrollHandler);
+      } else {
+        const scroller = scrollerRef.current;
+        if (scroller) {
+          scroller.addEventListener('scroll', scrollHandler, { passive: true });
+          return () => scroller.removeEventListener('scroll', scrollHandler);
+        }
+      }
+      return;
+    }
+    
     if (useWindowScroll) {
       const lenis = new Lenis({
-        duration: 1.2,
+        duration: 1.0,  // Faster response
         easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         touchMultiplier: 2,
         infinite: false,
         wheelMultiplier: 1,
-        lerp: 0.1,
+        lerp: 0.15,  // Increased from 0.1 for snappier feel
         syncTouch: true,
-        syncTouchLerp: 0.075
+        syncTouchLerp: 0.1
       });
 
       lenis.on('scroll', handleScroll);
@@ -233,7 +251,7 @@ const ScrollStack = ({
       const lenis = new Lenis({
         wrapper: scroller,
         content: scroller.querySelector('.scroll-stack-inner'),
-        duration: 1.2,
+        duration: 1.0,  // Faster response
         easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         touchMultiplier: 2,
@@ -242,9 +260,9 @@ const ScrollStack = ({
         normalizeWheel: true,
         wheelMultiplier: 1,
         touchInertiaMultiplier: 35,
-        lerp: 0.1,
+        lerp: 0.15,  // Increased from 0.1 for snappier feel
         syncTouch: true,
-        syncTouchLerp: 0.075,
+        syncTouchLerp: 0.1,
         touchInertia: 0.6
       });
 
@@ -259,7 +277,7 @@ const ScrollStack = ({
       lenisRef.current = lenis;
       return lenis;
     }
-  }, [handleScroll, useWindowScroll]);
+  }, [handleScroll, useWindowScroll, disableSmooth]);
 
   useLayoutEffect(() => {
     const scroller = scrollerRef.current;

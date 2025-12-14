@@ -86,7 +86,7 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
           />
         </motion.div>
 
-        {/* ScrollStack Container */}
+        {/* ScrollStack Container - disable smooth scroll on low-end devices */}
         <ScrollStack
           itemDistance={80}
           itemScale={0.02}
@@ -96,7 +96,8 @@ const Work = memo(function Work({ limit, isPage = false }: WorkProps) {
           baseScale={0.88}
           useWindowScroll={true}
           blurAmount={0}
-          rotationAmount = {0.3}
+          rotationAmount={0.3}
+          disableSmooth={isLowEnd}
         >
           {displayedProjects.map((project, index) => {
             const isEven = index % 2 === 0;
