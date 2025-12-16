@@ -12,7 +12,7 @@ interface TerminalLine {
 const COMMANDS = [
   "help", "about", "neofetch", "skills", "projects", "contact", "social", "kitty", "clear",
   "reload", "exit", "color", "reset", "theme", "goto", "ls", "open", "whoami", "date",
-  "sudo", "matrix", "devtools", "tour", "loading", "cmatrix", "q"
+  "sudo", "matrix", "devtools", "tour", "loading", "cmatrix", "cat", "q"
 ];
 
 import { useCat } from "./CatContext";
@@ -424,6 +424,32 @@ export default function Terminal() {
           { type: "output", color: "blue", text: "   off   - Disable loading screen" },
           { type: "output", color: "pink", text: "   full  - Long cinematic version (~8s)" },
           { type: "output", color: "pink", text: "   fast  - Short snappy version (~3.5s)" },
+        ];
+      }
+    }
+
+    // Cat command
+    if (command === "cat") {
+      const arg = args[1];
+      if (arg === "off") {
+        localStorage.setItem("oneko-enabled", "false");
+        window.dispatchEvent(new CustomEvent("oneko-toggle", { detail: false }));
+        return [
+          { type: "output", color: "yellow", text: "😿 Cat disabled." },
+          { type: "output", color: "cyan", text: "   Bye bye, Neko!" },
+        ];
+      } else if (arg === "on") {
+        localStorage.setItem("oneko-enabled", "true");
+        window.dispatchEvent(new CustomEvent("oneko-toggle", { detail: true }));
+        return [
+          { type: "output", color: "green", text: "🐱 Cat enabled!" },
+          { type: "output", color: "cyan", text: "   Welcome back, Neko!" },
+        ];
+      } else {
+         const isEnabled = localStorage.getItem("oneko-enabled") !== "false";
+         return [
+          { type: "output", color: "yellow", text: `🐱 Cat is ${isEnabled ? "ON" : "OFF"}` },
+          { type: "output", color: "cyan", text: "   Usage: cat on | cat off" },
         ];
       }
     }
