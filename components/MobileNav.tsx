@@ -7,17 +7,19 @@ import { cn } from "@/lib/utils";
 import { useSectionTransition } from "./SectionTransitionContext";
 
 const links = [
-  { name: "Home", path: "#home", targetId: "home" },
-  { name: "Work", path: "#work", targetId: "work" },
-  { name: "Contact", path: "#contact", targetId: "contact" },
+  { name: "Home", path: "/#home", targetId: "home" },
+  { name: "Work", path: "/#work", targetId: "work" },
+  { name: "Contact", path: "/#contact", targetId: "contact" },
 ];
 
 const MobileNav = () => {
   const { activeSection, navigateToSection } = useSectionTransition();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-     e.preventDefault();
-     navigateToSection(targetId);
+     if (window.location.pathname === "/") {
+         e.preventDefault();
+         navigateToSection(targetId);
+     }
   };
 
 

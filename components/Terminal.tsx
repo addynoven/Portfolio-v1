@@ -397,11 +397,33 @@ export default function Terminal() {
           { type: "output", color: "yellow", text: "⏭️ Loading screen DISABLED" },
           { type: "output", color: "cyan", text: "   Site will skip the intro animation." },
         ];
+      } else if (arg === "full") {
+        localStorage.setItem('loading-screen-mode', 'full');
+        // Ensure it's enabled if we're setting mode
+        localStorage.removeItem('skip-loading-screen'); 
+        return [
+          { type: "output", color: "green", text: "🎬 Full " + "Loading Screen ENABLED" },
+          { type: "output", color: "cyan", text: "   Get ready for the full cinematic experience!" },
+          { type: "output", color: "yellow", text: "   Reload to watch (~8s sequence)." },
+        ];
+      } else if (arg === "small" || arg === "fast") {
+        localStorage.removeItem('loading-screen-mode'); // Default is fast
+        localStorage.removeItem('skip-loading-screen'); // Ensure enabled
+        return [
+          { type: "output", color: "green", text: "🚀 Fast " + "Loading Screen ENABLED" },
+          { type: "output", color: "cyan", text: "   Quick and snappy (~3.5s sequence)." },
+          { type: "output", color: "yellow", text: "   Reload to verify." },
+        ];
       } else {
         const isDisabled = localStorage.getItem('skip-loading-screen') === 'true';
+        const isFull = localStorage.getItem('loading-screen-mode') === 'full';
         return [
-          { type: "output", color: "yellow", text: `🎬 Loading screen: ${isDisabled ? 'OFF' : 'ON'}` },
-          { type: "output", color: "cyan", text: "   Usage: loading on | loading off" },
+          { type: "output", color: "yellow", text: `🎬 Status: ${isDisabled ? 'OFF' : 'ON'} | Mode: ${isFull ? 'FULL' : 'FAST'}` },
+          { type: "output", color: "cyan", text: "   Usage: loading <option>" },
+          { type: "output", color: "blue", text: "   on    - Enable loading screen" },
+          { type: "output", color: "blue", text: "   off   - Disable loading screen" },
+          { type: "output", color: "pink", text: "   full  - Long cinematic version (~8s)" },
+          { type: "output", color: "pink", text: "   fast  - Short snappy version (~3.5s)" },
         ];
       }
     }

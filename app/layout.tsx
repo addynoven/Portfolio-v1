@@ -1,7 +1,10 @@
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+// Header and Footer are now imported in LayoutWrapper, but we need to remove them from here if they are not used.
+// Actually, LayoutWrapper is a default export, let's import it.
+import LayoutWrapper from "@/components/LayoutWrapper";
+// import Header from "@/components/Header"; // Moved to LayoutWrapper
+// import Footer from "@/components/Footer"; // Moved to LayoutWrapper
 import TerminalButton from "@/components/TerminalButton";
 import LoadingScreenWrapper from "@/components/LoadingScreenWrapper";
 import PageTransition from "@/components/PageTransition";
@@ -104,11 +107,11 @@ export default function RootLayout({
 						darkLineColor="rgba(0, 255, 153, 0.2)"
 					/>
 						<LoadingScreenWrapper />
-						<Header />
-						<StairTransition />
-						<SectionStairTransition />
-						<PageTransition>{children}</PageTransition>
-						<Footer />
+						<LayoutWrapper>
+							<StairTransition />
+							<SectionStairTransition />
+							<PageTransition>{children}</PageTransition>
+						</LayoutWrapper>
 						<TerminalButton />
 						<Oneko />
 					</SectionTransitionProvider>

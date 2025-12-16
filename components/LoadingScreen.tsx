@@ -38,20 +38,28 @@ const LoadingScreen = () => {
 	// FAST_MODE: Shorter animation - skips letterChange and greeting phases
 	// chaos -> NEONVERSE -> NEON -> Neon. (with quick fade)
 	// Total time: ~3.5s instead of ~8s
-	const FAST_MODE = true;
+	// Default is TRUE (Fast), unless 'loading-screen-mode' is 'full'
+	const fastModeRef = useRef(true); 
+
 	const { theme } = useTheme();
 	const [phase, setPhase] = useState<Phase>("chaos");
 	const [displayText, setDisplayText] = useState("");
 	const scramblerRef = useRef<Scrambler | null>(null);
 	const [skipLoading, setSkipLoading] = useState(false);
 
-	// Check if loading screen is disabled via terminal command
+	// Check if loading screen is disabled via terminal command or set to full mode
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			const shouldSkip = localStorage.getItem('skip-loading-screen') === 'true';
 			if (shouldSkip) {
 				setSkipLoading(true);
 				setPhase('done');
+			}
+			
+			// Check for full mode preference
+			const mode = localStorage.getItem('loading-screen-mode');
+			if (mode === 'full') {
+				fastModeRef.current = false;
 			}
 		}
 	}, []);
@@ -75,8 +83,8 @@ const LoadingScreen = () => {
 					// 200ms breathing room - blank screen before site reveals
 					setTimeout(() => setPhase("done"), 200);
 				}
-			}, FAST_MODE ? 500 : 1000);
-		}, FAST_MODE ? 300 : 600);
+			}, fastModeRef.current ? 500 : 1000);
+		}, fastModeRef.current ? 300 : 600);
 	};
 
 	// Fast mode: Direct transition from NEON to Neon. (skip letter struggle)
@@ -97,7 +105,18 @@ const LoadingScreen = () => {
 		// Initialize Scrambler
 		scramblerRef.current = new Scrambler((text) => setDisplayText(text));
 
-		if (FAST_MODE) {
+		// Use a small timeout to let the first useEffect run and set the ref
+		// purely to be safe, though refs update synchronously. 
+		// Actually, we can just read the ref here since the other effect runs on mount too.
+		// To be absolutely safe regarding order, we can read localStorage again here or rely on the other effect having run? 
+		// React 18 effects run twice in strict mode, but order between different effects in same component is sequential.
+		// Let's just read localStorage here too to be safe for the animation logic.
+		
+		const isFast = typeof window !== 'undefined' ? localStorage.getItem('loading-screen-mode') !== 'full' : true;
+		// Update ref just in case
+		fastModeRef.current = isFast;
+
+		if (isFast) {
 			// FAST TIMELINE - Total ~3.5s
 			// 0s: Chaos starts
 			
