@@ -14,6 +14,7 @@ interface WakaTimeStats {
 
 export async function GET() {
   if (!WAKATIME_API_KEY) {
+    console.error("❌ WakaTime API Error: API key not configured in environment variables");
     return NextResponse.json(
       { error: "WakaTime API key not configured" },
       { status: 500 }
@@ -34,7 +35,7 @@ export async function GET() {
 
     if (!statsRes.ok) {
       const errorText = await statsRes.text();
-      console.error("WakaTime API response:", statsRes.status, errorText);
+      console.error("❌ WakaTime API Error:", statsRes.status, errorText);
       throw new Error(`WakaTime API error: ${statsRes.status}`);
     }
 
@@ -51,9 +52,15 @@ export async function GET() {
       error: null,
     };
 
+    console.log("✅ WakaTime API Success:", {
+      totalHuman: result.totalHuman,
+      dailyAverage: result.dailyAverage,
+      topLanguage: result.topLanguage,
+    });
+
     return NextResponse.json(result);
   } catch (error) {
-    console.error("WakaTime API error:", error);
+    console.error("❌ WakaTime API Error:", error);
     return NextResponse.json(
       { 
         error: "Failed to fetch WakaTime stats",

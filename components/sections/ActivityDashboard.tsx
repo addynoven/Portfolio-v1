@@ -86,43 +86,98 @@ const LocalTime = () => {
   );
 };
 
-// Coding Stats Widget (LIVE from WakaTime API)
+// Coding Stats Widget (LIVE from WakaTime API + GitHub API)
 const CodingStats = () => {
-  const [stats, setStats] = useState({
+  const [wakatimeStats, setWakatimeStats] = useState({
     totalHuman: "20+ hrs",
     topLanguage: "TypeScript",
-    topLanguagePercent: 82,
+    isLoading: true,
+  });
+
+  const [githubStats, setGithubStats] = useState({
+    totalContributions: 0,
+    totalCommits: 0,
+    totalRepos: 0,
+    totalStars: 0,
+    currentStreak: 0,
+    year: new Date().getFullYear(),
     isLoading: true,
   });
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const fetchWakatime = async () => {
       try {
         const res = await fetch("/api/wakatime");
         const data = await res.json();
-        setStats({
+        setWakatimeStats({
           totalHuman: data.totalHuman || "20+ hrs",
           topLanguage: data.topLanguage || "TypeScript",
-          topLanguagePercent: data.topLanguagePercent || 82,
           isLoading: false,
         });
       } catch {
-        setStats(prev => ({ ...prev, isLoading: false }));
+        setWakatimeStats(prev => ({ ...prev, isLoading: false }));
       }
     };
 
-    fetchStats();
+    const fetchGithub = async () => {
+      try {
+        const res = await fetch("/api/github-stats");
+        const data = await res.json();
+        console.log("GitHub Stats received:", data);
+        setGithubStats({
+          totalContributions: data.totalContributions || 0,
+          totalCommits: data.totalCommits || 0,
+          totalRepos: data.totalRepos || 0,
+          totalStars: data.totalStars || 0,
+          currentStreak: data.currentStreak || 0,
+          year: data.year || new Date().getFullYear(),
+          isLoading: false,
+        });
+      } catch (error) {
+        console.error("Failed to fetch GitHub stats:", error);
+        setGithubStats(prev => ({ ...prev, isLoading: false }));
+      }
+    };
+
+    fetchWakatime();
+    fetchGithub();
   }, []);
 
   const displayStats = [
-    { label: "This Week", value: stats.isLoading ? "..." : stats.totalHuman, icon: "⌨️" },
-    { label: "Top Language", value: stats.topLanguage, icon: "💙" },
-    { label: "2025 Commits", value: "699+", icon: "🔥" },
-    { label: "Lines Written", value: "6.2M+", icon: "📝" },
+    { 
+      label: "This Week", 
+      value: wakatimeStats.isLoading ? "..." : wakatimeStats.totalHuman, 
+      icon: "⌨️" 
+    },
+    { 
+      label: "Top Language", 
+      value: wakatimeStats.topLanguage, 
+      icon: "💙" 
+    },
+    { 
+      label: `${githubStats.year} Contributions`, 
+      value: githubStats.isLoading ? "..." : `${githubStats.totalContributions}+`, 
+      icon: "🔥" 
+    },
+    { 
+      label: "Projects Built", 
+      value: githubStats.isLoading ? "..." : `${githubStats.totalRepos}`, 
+      icon: "🏗️" 
+    },
+    { 
+      label: "Repositories", 
+      value: githubStats.isLoading ? "..." : `${githubStats.totalRepos}`, 
+      icon: "📁" 
+    },
+    { 
+      label: "Total Stars", 
+      value: githubStats.isLoading ? "..." : `${githubStats.totalStars}`, 
+      icon: "⭐" 
+    },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
       {displayStats.map((stat, i) => (
         <div key={i} className="flex flex-col">
           <span className="text-lg">{stat.icon}</span>
@@ -134,7 +189,79 @@ const CodingStats = () => {
   );
 };
 
-// Oneko Toggle (SNAPPY version)
+// Languages Breakdown Widget (LIVE from GitHub API)
+interface LanguageData {
+  name: string;
+  percentage: number;
+  color: string;
+}
+
+const LanguagesBreakdown = () => {
+  const [languages, setLanguages] = useState<LanguageData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLanguages = async () => {
+      try {
+        const res = await fetch("/api/github-stats");
+        const data = await res.json();
+        if (data.languageBreakdown) {
+          setLanguages(data.languageBreakdown);
+        }
+        setIsLoading(false);
+      } catch {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLanguages();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-24 text-slate-500 dark:text-white/40">
+        Loading languages...
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      {/* Stacked Bar */}
+      <div className="h-4 rounded-full overflow-hidden flex bg-slate-200 dark:bg-white/10">
+        {languages.map((lang, i) => (
+          <div
+            key={i}
+            className="h-full transition-all duration-500"
+            style={{
+              width: `${lang.percentage}%`,
+              backgroundColor: lang.color,
+            }}
+            title={`${lang.name}: ${lang.percentage}%`}
+          />
+        ))}
+      </div>
+      
+      {/* Legend */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+        {languages.slice(0, 8).map((lang, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <div
+              className="w-3 h-3 rounded-full flex-shrink-0"
+              style={{ backgroundColor: lang.color }}
+            />
+            <span className="text-xs text-slate-600 dark:text-white/60 truncate">
+              {lang.name}
+            </span>
+            <span className="text-xs font-medium text-slate-900 dark:text-white ml-auto">
+              {lang.percentage}%
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 const OnekoToggle = () => {
   const [catEnabled, setCatEnabled] = useState(true);
 
@@ -275,6 +402,14 @@ const ActivityDashboard = memo(function ActivityDashboard() {
           {/* Dev Identity */}
           <BentoCard className="md:col-span-1 lg:col-span-2" delay={0.6}>
             <DevIdentity />
+          </BentoCard>
+
+          {/* Languages Breakdown - Full Width */}
+          <BentoCard className="md:col-span-2 lg:col-span-4" delay={0.7}>
+            <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-3 block">
+              Languages Breakdown
+            </span>
+            <LanguagesBreakdown />
           </BentoCard>
         </div>
       </div>
