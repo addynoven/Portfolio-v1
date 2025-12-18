@@ -95,8 +95,8 @@ const ProjectContent = memo(function ProjectContent({
                   <BsArrowUpRight className="text-slate-700 dark:text-white text-lg" />
                 </div>
               </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-xs">Live Project</p>
+              <TooltipContent className="p-0 bg-transparent border-none shadow-none rounded-md">
+                <p className="text-xs m-0 bg-slate-100 dark:bg-slate-800 p-2">Live Project</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -110,8 +110,8 @@ const ProjectContent = memo(function ProjectContent({
                   <BsGithub className="text-slate-700 dark:text-white text-lg" />
                 </div>
               </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-xs">GitHub Repo</p>
+              <TooltipContent className="p-0 bg-transparent border-none shadow-none rounded-md">
+                <p className="text-xs m-0 bg-slate-100 dark:bg-slate-800 p-2">GitHub Repo</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
