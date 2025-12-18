@@ -91,8 +91,8 @@ const ProjectContent = memo(function ProjectContent({
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-white/10 flex justify-center items-center cursor-pointer border border-slate-200/50 dark:border-white/10 hover:border-UserAccent/50 hover:bg-UserAccent/10 transition-all">
-                  <BsArrowUpRight className="text-slate-700 dark:text-white text-sm" />
+                <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 flex justify-center items-center cursor-pointer border border-slate-200/50 dark:border-white/10 hover:border-UserAccent/50 hover:bg-UserAccent/10 transition-all">
+                  <BsArrowUpRight className="text-slate-700 dark:text-white text-lg" />
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -106,8 +106,8 @@ const ProjectContent = memo(function ProjectContent({
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-white/10 flex justify-center items-center cursor-pointer border border-slate-200/50 dark:border-white/10 hover:border-UserAccent/50 hover:bg-UserAccent/10 transition-all">
-                  <BsGithub className="text-slate-700 dark:text-white text-sm" />
+                <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 flex justify-center items-center cursor-pointer border border-slate-200/50 dark:border-white/10 hover:border-UserAccent/50 hover:bg-UserAccent/10 transition-all">
+                  <BsGithub className="text-slate-700 dark:text-white text-lg" />
                 </div>
               </TooltipTrigger>
               <TooltipContent>
