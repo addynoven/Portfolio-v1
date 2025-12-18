@@ -87,7 +87,7 @@ const ProjectContent = memo(function ProjectContent({
 
       {/* Action Buttons */}
       <div className="flex gap-2">
-        <Link href={project.live}>
+        <Link href={project.live} target="_blank">
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -102,7 +102,7 @@ const ProjectContent = memo(function ProjectContent({
           </TooltipProvider>
         </Link>
 
-        <Link href={project.github}>
+        <Link href={project.github} target="_blank">
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>

@@ -110,89 +110,89 @@ const skillCategories = [
     name: "Languages",
     description: "Core programming languages",
     skills: [
-      { name: "Java", icon: <FaJava /> },
-      { name: "Python", icon: <SiPython /> },
-      { name: "C++", icon: <SiCplusplus /> },
-      { name: "C", icon: <SiC /> },
-      { name: "TypeScript", icon: <SiTypescript /> },
-      { name: "JavaScript", icon: <FaJs /> },
+      { name: "Java", icon: <FaJava />, url: "https://dev.java/" },
+      { name: "Python", icon: <SiPython />, url: "https://www.python.org/" },
+      { name: "C++", icon: <SiCplusplus />, url: "https://isocpp.org/" },
+      { name: "C", icon: <SiC />, url: "https://en.wikipedia.org/wiki/C_(programming_language)" },
+      { name: "TypeScript", icon: <SiTypescript />, url: "https://www.typescriptlang.org/" },
+      { name: "JavaScript", icon: <FaJs />, url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
     ],
   },
   {
     name: "Frontend",
     description: "Building beautiful interfaces",
     skills: [
-      { name: "React", icon: <FaReact /> },
-      { name: "Next.js", icon: <SiNextdotjs /> },
-      { name: "HTML", icon: <FaHtml5 /> },
-      { name: "CSS", icon: <FaCss3Alt /> },
-      { name: "Tailwind", icon: <SiTailwindcss /> },
-      { name: "TypeScript", icon: <SiTypescript /> },
+      { name: "React", icon: <FaReact />, url: "https://react.dev/" },
+      { name: "Next.js", icon: <SiNextdotjs />, url: "https://nextjs.org/" },
+      { name: "HTML", icon: <FaHtml5 />, url: "https://developer.mozilla.org/en-US/docs/Web/HTML" },
+      { name: "CSS", icon: <FaCss3Alt />, url: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
+      { name: "Tailwind", icon: <SiTailwindcss />, url: "https://tailwindcss.com/" },
+      { name: "TypeScript", icon: <SiTypescript />, url: "https://www.typescriptlang.org/" },
     ],
   },
   {
     name: "Backend",
     description: "Server-side & APIs",
     skills: [
-      { name: "Node.js", icon: <FaNode /> },
-      { name: "Express", icon: <SiExpress /> },
-      { name: "GraphQL", icon: <SiGraphql /> },
-      { name: "Socket.io", icon: <SiSocketdotio /> },
+      { name: "Node.js", icon: <FaNode />, url: "https://nodejs.org/" },
+      { name: "Express", icon: <SiExpress />, url: "https://expressjs.com/" },
+      { name: "GraphQL", icon: <SiGraphql />, url: "https://graphql.org/" },
+      { name: "Socket.io", icon: <SiSocketdotio />, url: "https://socket.io/" },
     ],
   },
   {
     name: "Database",
     description: "Data storage solutions",
     skills: [
-      { name: "MongoDB", icon: <SiMongodb /> },
-      { name: "PostgreSQL", icon: <SiPostgresql /> },
-      { name: "Redis", icon: <SiRedis /> },
-      { name: "Firebase", icon: <SiFirebase /> },
+      { name: "MongoDB", icon: <SiMongodb />, url: "https://www.mongodb.com/" },
+      { name: "PostgreSQL", icon: <SiPostgresql />, url: "https://www.postgresql.org/" },
+      { name: "Redis", icon: <SiRedis />, url: "https://redis.io/" },
+      { name: "Firebase", icon: <SiFirebase />, url: "https://firebase.google.com/" },
     ],
   },
   {
     name: "Cloud & DevOps",
     description: "Infrastructure & deployment",
     skills: [
-      { name: "AWS", icon: <FaAws /> },
-      { name: "Google Cloud", icon: <SiGooglecloud /> },
-      { name: "Docker", icon: <FaDocker /> },
-      { name: "Kubernetes", icon: <SiKubernetes /> },
-      { name: "Vercel", icon: <SiVercel /> },
-      { name: "Nginx", icon: <SiNginx /> },
+      { name: "AWS", icon: <FaAws />, url: "https://aws.amazon.com/" },
+      { name: "Google Cloud", icon: <SiGooglecloud />, url: "https://cloud.google.com/" },
+      { name: "Docker", icon: <FaDocker />, url: "https://www.docker.com/" },
+      { name: "Kubernetes", icon: <SiKubernetes />, url: "https://kubernetes.io/" },
+      { name: "Vercel", icon: <SiVercel />, url: "https://vercel.com/" },
+      { name: "Nginx", icon: <SiNginx />, url: "https://nginx.org/" },
     ],
   },
   {
     name: "CI/CD & Tools",
     description: "Automation & workflows",
     skills: [
-      { name: "GitHub Actions", icon: <SiGithubactions /> },
-      { name: "Jenkins", icon: <SiJenkins /> },
-      { name: "Git", icon: <FaGitAlt /> },
-      { name: "Linux", icon: <FaLinux /> },
-      { name: "Terminal", icon: <FaTerminal /> },
+      { name: "GitHub Actions", icon: <SiGithubactions />, url: "https://github.com/features/actions" },
+      { name: "Jenkins", icon: <SiJenkins />, url: "https://www.jenkins.io/" },
+      { name: "Git", icon: <FaGitAlt />, url: "https://git-scm.com/" },
+      { name: "Linux", icon: <FaLinux />, url: "https://www.linux.org/" },
+      { name: "Terminal", icon: <FaTerminal />, url: "https://en.wikipedia.org/wiki/Terminal_emulator" },
     ],
   },
   {
     name: "Game Dev",
     description: "Interactive experiences",
     skills: [
-      { name: "Unity", icon: <SiUnity /> },
-      { name: "Unreal", icon: <SiUnrealengine /> },
-      { name: "C++", icon: <SiCplusplus /> },
-      { name: "Gaming", icon: <FaGamepad /> },
+      { name: "Unity", icon: <SiUnity />, url: "https://unity.com/" },
+      { name: "Unreal", icon: <SiUnrealengine />, url: "https://www.unrealengine.com/" },
+      { name: "C++", icon: <SiCplusplus />, url: "https://isocpp.org/" },
+      { name: "Gaming", icon: <FaGamepad />, url: "https://en.wikipedia.org/wiki/Video_game_development" },
     ],
   },
   {
     name: "Productivity",
     description: "Design & collaboration",
     skills: [
-      { name: "Figma", icon: <FaFigma /> },
-      { name: "GitHub", icon: <FaGithub /> },
-      { name: "VS Code", icon: <FaCode /> },
-      { name: "Postman", icon: <SiPostman /> },
-      { name: "Notion", icon: <SiNotion /> },
-      { name: "Slack", icon: <SiSlack /> },
+      { name: "Figma", icon: <FaFigma />, url: "https://www.figma.com/" },
+      { name: "GitHub", icon: <FaGithub />, url: "https://github.com/" },
+      { name: "VS Code", icon: <FaCode />, url: "https://code.visualstudio.com/" },
+      { name: "Postman", icon: <SiPostman />, url: "https://www.postman.com/" },
+      { name: "Notion", icon: <SiNotion />, url: "https://www.notion.so/" },
+      { name: "Slack", icon: <SiSlack />, url: "https://slack.com/" },
     ],
   },
 ];
@@ -219,9 +219,14 @@ const Skills = memo(function Skills() {
                   <TooltipProvider key={idx} delayDuration={100}>
                       <Tooltip>
                           <TooltipTrigger asChild>
-                              <div className="text-4xl xl:text-5xl hover:text-UserAccent transition-all cursor-pointer text-slate-200 hover:scale-125 duration-300">
+                              <a 
+                                  href={skill.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-4xl xl:text-5xl hover:text-UserAccent transition-all cursor-pointer text-slate-200 hover:scale-125 duration-300 block"
+                              >
                                   {skill.icon}
-                              </div>
+                              </a>
                           </TooltipTrigger>
                           <TooltipContent>
                               <p className="font-semibold text-base">{skill.name}</p>
