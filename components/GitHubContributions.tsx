@@ -1,40 +1,28 @@
 "use client";
 
-import { GitHubCalendar } from "react-github-calendar";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-
 interface GitHubContributionsProps {
   username?: string;
 }
 
 const GitHubContributions = ({ username = "addynoven" }: GitHubContributionsProps) => {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Custom theme matching the UserAccent color
-  const customTheme = {
-    dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
-    light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
-  };
-
-  // During SSR or before mount, use dark theme as default
-  const colorScheme = mounted ? (resolvedTheme === "light" ? "light" : "dark") : "dark";
-
   return (
-    <div className="w-full overflow-x-auto">
-      <GitHubCalendar
-        username={username}
-        colorScheme={colorScheme}
-        theme={customTheme}
-        fontSize={15}
-        blockSize={17}
-        blockMargin={4}
-      />
+    <div className="w-full">
+      <picture className="w-full">
+        <source 
+          media="(prefers-color-scheme: dark)" 
+          srcSet={`https://raw.githubusercontent.com/${username}/${username}/output/pacman-contribution-graph-dark.svg`} 
+        />
+        <source 
+          media="(prefers-color-scheme: light)" 
+          srcSet={`https://raw.githubusercontent.com/${username}/${username}/output/pacman-contribution-graph.svg`} 
+        />
+        <img 
+          alt="Pac-Man contribution graph" 
+          src={`https://raw.githubusercontent.com/${username}/${username}/output/pacman-contribution-graph.svg`}
+          className="w-full h-auto rounded-lg shadow-sm"
+          loading="lazy"
+        />
+      </picture>
     </div>
   );
 };

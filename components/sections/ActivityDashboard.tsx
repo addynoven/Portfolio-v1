@@ -257,8 +257,8 @@ const ActivityDashboard = memo(function ActivityDashboard() {
           </BentoCard>
 
           {/* GitHub Calendar - Full Width */}
-          <BentoCard className="md:col-span-2 lg:col-span-4" delay={0.4}>
-            <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-3 block">
+          <BentoCard className="md:col-span-2 lg:col-span-4 p-4" delay={0.4}>
+            <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-2 block">
               GitHub Contributions
             </span>
             <GitHubContributions username="addynoven" />
