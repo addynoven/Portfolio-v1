@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getCachedData } from "@/lib/redis";
 
 const WAKATIME_API_KEY = process.env.WAKATIME_API_KEY;
 
@@ -12,13 +13,21 @@ interface WakaTimeStats {
   error: string | null;
 }
 
-export async function GET() {
+// Fallback data when API key is missing or API fails
+const FALLBACK_DATA: WakaTimeStats = {
+  totalSeconds: 0,
+  totalHuman: "20+ hrs",
+  dailyAverage: "3+ hrs",
+  topLanguage: "TypeScript",
+  topLanguagePercent: 82,
+  isLoading: false,
+  error: null,
+};
+
+async function fetchWakaTimeStats(): Promise<WakaTimeStats> {
   if (!WAKATIME_API_KEY) {
     console.error("❌ WakaTime API Error: API key not configured in environment variables");
-    return NextResponse.json(
-      { error: "WakaTime API key not configured" },
-      { status: 500 }
-    );
+    return { ...FALLBACK_DATA, error: "WakaTime API key not configured" };
   }
 
   try {
@@ -29,7 +38,6 @@ export async function GET() {
         headers: {
           Authorization: `Basic ${Buffer.from(WAKATIME_API_KEY).toString("base64")}`,
         },
-        next: { revalidate: 3600 }, // Cache for 1 hour
       }
     );
 
@@ -58,20 +66,14 @@ export async function GET() {
       topLanguage: result.topLanguage,
     });
 
-    return NextResponse.json(result);
+    return result;
   } catch (error) {
     console.error("❌ WakaTime API Error:", error);
-    return NextResponse.json(
-      { 
-        error: "Failed to fetch WakaTime stats",
-        // Fallback data
-        totalHuman: "20+ hrs",
-        dailyAverage: "3+ hrs",
-        topLanguage: "TypeScript",
-        topLanguagePercent: 82,
-        isLoading: false,
-      },
-      { status: 200 } // Return 200 with fallback data
-    );
+    return FALLBACK_DATA;
   }
+}
+
+export async function GET() {
+  const data = await getCachedData("wakatime-stats", fetchWakaTimeStats, 3600);
+  return NextResponse.json(data);
 }

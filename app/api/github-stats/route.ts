@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getCachedData } from "@/lib/redis";
 
 const GITHUB_USERNAME = "addynoven";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -79,23 +80,33 @@ interface GitHubGraphQLResponse {
   };
 }
 
-export async function GET() {
+// Fallback data when token is missing or API fails
+const FALLBACK_DATA = {
+  totalContributions: 699,
+  totalCommits: 650,
+  totalPRs: 30,
+  totalIssues: 19,
+  totalRepos: 30,
+  totalStars: 15,
+  followers: 50,
+  currentStreak: 7,
+  year: new Date().getFullYear(),
+  topLanguages: ["TypeScript", "JavaScript", "Python"],
+  languageBreakdown: [
+    { name: "TypeScript", percentage: 45, color: "#3178c6" },
+    { name: "JavaScript", percentage: 25, color: "#f1e05a" },
+    { name: "Python", percentage: 15, color: "#3572A5" },
+    { name: "CSS", percentage: 10, color: "#563d7c" },
+    { name: "HTML", percentage: 5, color: "#e34c26" },
+  ],
+  isLoading: false,
+  error: null as string | null,
+};
+
+async function fetchGitHubStats() {
   if (!GITHUB_TOKEN) {
     console.error("❌ GitHub API Error: GITHUB_TOKEN not configured");
-    // Return fallback data without the token
-    return NextResponse.json({
-      totalContributions: 699,
-      totalCommits: 650,
-      totalPRs: 30,
-      totalIssues: 19,
-      totalRepos: 30,
-      totalStars: 15,
-      followers: 50,
-      year: new Date().getFullYear(),
-      topLanguages: ["TypeScript", "JavaScript", "Python"],
-      isLoading: false,
-      error: "Token not configured - showing fallback data",
-    });
+    return { ...FALLBACK_DATA, error: "Token not configured - showing fallback data" };
   }
 
   try {
@@ -153,7 +164,6 @@ export async function GET() {
           to: endOfYear,
         },
       }),
-      next: { revalidate: 3600 }, // Cache for 1 hour
     });
 
     if (!graphqlRes.ok) {
@@ -169,10 +179,10 @@ export async function GET() {
 
     // Calculate top languages with percentages using REST API for bytes
     const languageBytes: Record<string, number> = {};
-    
+
     // Fetch language stats for each repo (limit to top 30 repos to avoid rate limits)
     const reposToFetch = repos.nodes.slice(0, 30);
-    
+
     await Promise.all(
       reposToFetch.map(async (repo) => {
         try {
@@ -185,7 +195,7 @@ export async function GET() {
               },
             }
           );
-          
+
           if (langRes.ok) {
             const langs = await langRes.json();
             Object.entries(langs).forEach(([lang, bytes]) => {
@@ -200,7 +210,7 @@ export async function GET() {
 
     // Calculate total bytes and percentages
     const totalBytes = Object.values(languageBytes).reduce((sum, bytes) => sum + bytes, 0);
-    
+
     const languageBreakdown = Object.entries(languageBytes)
       .map(([name, bytes]) => ({
         name,
@@ -211,7 +221,7 @@ export async function GET() {
       .sort((a, b) => b.bytes - a.bytes)
       .slice(0, 8); // Top 8 languages
 
-    const topLanguages = languageBreakdown.map(l => l.name);
+    const topLanguages = languageBreakdown.map((l) => l.name);
 
     // Calculate total stars
     const totalStars = repos.nodes.reduce((sum, repo) => sum + repo.stargazerCount, 0);
@@ -220,7 +230,7 @@ export async function GET() {
     const allDays = contributions.contributionCalendar.weeks
       .flatMap((week) => week.contributionDays)
       .reverse();
-    
+
     let currentStreak = 0;
     for (const day of allDays) {
       if (day.contributionCount > 0) {
@@ -254,32 +264,14 @@ export async function GET() {
       year: result.year,
     });
 
-    return NextResponse.json(result);
+    return result;
   } catch (error) {
     console.error("❌ GitHub Stats Error:", error);
-    return NextResponse.json(
-      {
-        error: "Failed to fetch GitHub stats",
-        totalContributions: 699,
-        totalCommits: 650,
-        totalPRs: 30,
-        totalIssues: 19,
-        totalRepos: 30,
-        totalStars: 15,
-        followers: 50,
-        currentStreak: 7,
-        year: new Date().getFullYear(),
-        topLanguages: ["TypeScript", "JavaScript", "Python"],
-        languageBreakdown: [
-          { name: "TypeScript", percentage: 45, color: "#3178c6" },
-          { name: "JavaScript", percentage: 25, color: "#f1e05a" },
-          { name: "Python", percentage: 15, color: "#3572A5" },
-          { name: "CSS", percentage: 10, color: "#563d7c" },
-          { name: "HTML", percentage: 5, color: "#e34c26" }
-        ],
-        isLoading: false,
-      },
-      { status: 200 }
-    );
+    return FALLBACK_DATA;
   }
+}
+
+export async function GET() {
+  const data = await getCachedData("github-stats", fetchGitHubStats, 3600);
+  return NextResponse.json(data);
 }

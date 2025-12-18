@@ -87,20 +87,25 @@ const LocalTime = () => {
 };
 
 // Coding Stats Widget (LIVE from WakaTime API + GitHub API)
-const CodingStats = () => {
+interface GithubStatsData {
+  totalContributions: number;
+  totalCommits: number;
+  totalRepos: number;
+  totalStars: number;
+  currentStreak: number;
+  year: number;
+  languageBreakdown?: LanguageData[];
+  isLoading: boolean;
+}
+
+interface CodingStatsProps {
+  githubStats: GithubStatsData;
+}
+
+const CodingStats = ({ githubStats }: CodingStatsProps) => {
   const [wakatimeStats, setWakatimeStats] = useState({
     totalHuman: "20+ hrs",
     topLanguage: "TypeScript",
-    isLoading: true,
-  });
-
-  const [githubStats, setGithubStats] = useState({
-    totalContributions: 0,
-    totalCommits: 0,
-    totalRepos: 0,
-    totalStars: 0,
-    currentStreak: 0,
-    year: new Date().getFullYear(),
     isLoading: true,
   });
 
@@ -119,28 +124,7 @@ const CodingStats = () => {
       }
     };
 
-    const fetchGithub = async () => {
-      try {
-        const res = await fetch("/api/github-stats");
-        const data = await res.json();
-        console.log("GitHub Stats received:", data);
-        setGithubStats({
-          totalContributions: data.totalContributions || 0,
-          totalCommits: data.totalCommits || 0,
-          totalRepos: data.totalRepos || 0,
-          totalStars: data.totalStars || 0,
-          currentStreak: data.currentStreak || 0,
-          year: data.year || new Date().getFullYear(),
-          isLoading: false,
-        });
-      } catch (error) {
-        console.error("Failed to fetch GitHub stats:", error);
-        setGithubStats(prev => ({ ...prev, isLoading: false }));
-      }
-    };
-
     fetchWakatime();
-    fetchGithub();
   }, []);
 
   const displayStats = [
@@ -189,34 +173,19 @@ const CodingStats = () => {
   );
 };
 
-// Languages Breakdown Widget (LIVE from GitHub API)
+// Languages Breakdown Widget (receives data from parent)
 interface LanguageData {
   name: string;
   percentage: number;
   color: string;
 }
 
-const LanguagesBreakdown = () => {
-  const [languages, setLanguages] = useState<LanguageData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+interface LanguagesBreakdownProps {
+  languages: LanguageData[];
+  isLoading: boolean;
+}
 
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        const res = await fetch("/api/github-stats");
-        const data = await res.json();
-        if (data.languageBreakdown) {
-          setLanguages(data.languageBreakdown);
-        }
-        setIsLoading(false);
-      } catch {
-        setIsLoading(false);
-      }
-    };
-
-    fetchLanguages();
-  }, []);
-
+const LanguagesBreakdown = ({ languages, isLoading }: LanguagesBreakdownProps) => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-24 text-slate-500 dark:text-white/40">
@@ -346,6 +315,42 @@ const DevIdentity = () => {
 };
 
 const ActivityDashboard = memo(function ActivityDashboard() {
+  const [githubStats, setGithubStats] = useState<GithubStatsData>({
+    totalContributions: 0,
+    totalCommits: 0,
+    totalRepos: 0,
+    totalStars: 0,
+    currentStreak: 0,
+    year: new Date().getFullYear(),
+    languageBreakdown: [],
+    isLoading: true,
+  });
+
+  useEffect(() => {
+    const fetchGithub = async () => {
+      try {
+        const res = await fetch("/api/github-stats");
+        const data = await res.json();
+        console.log("GitHub Stats received:", data);
+        setGithubStats({
+          totalContributions: data.totalContributions || 0,
+          totalCommits: data.totalCommits || 0,
+          totalRepos: data.totalRepos || 0,
+          totalStars: data.totalStars || 0,
+          currentStreak: data.currentStreak || 0,
+          year: data.year || new Date().getFullYear(),
+          languageBreakdown: data.languageBreakdown || [],
+          isLoading: false,
+        });
+      } catch (error) {
+        console.error("Failed to fetch GitHub stats:", error);
+        setGithubStats(prev => ({ ...prev, isLoading: false }));
+      }
+    };
+
+    fetchGithub();
+  }, []);
+
   return (
     <section className="py-20 xl:py-32 relative z-20">
       <div className="container mx-auto px-4">
@@ -396,7 +401,7 @@ const ActivityDashboard = memo(function ActivityDashboard() {
             <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-3 block">
               Coding Stats
             </span>
-            <CodingStats />
+            <CodingStats githubStats={githubStats} />
           </BentoCard>
 
           {/* Dev Identity */}
@@ -409,7 +414,7 @@ const ActivityDashboard = memo(function ActivityDashboard() {
             <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-3 block">
               Languages Breakdown
             </span>
-            <LanguagesBreakdown />
+            <LanguagesBreakdown languages={githubStats.languageBreakdown || []} isLoading={githubStats.isLoading} />
           </BentoCard>
         </div>
       </div>
