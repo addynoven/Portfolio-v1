@@ -144,9 +144,9 @@ const CodingStats = ({ githubStats }: CodingStatsProps) => {
       icon: "🔥" 
     },
     { 
-      label: "Projects Built", 
-      value: githubStats.isLoading ? "..." : `${githubStats.totalRepos}`, 
-      icon: "🏗️" 
+      label: "Current Streak", 
+      value: githubStats.isLoading ? "..." : `${githubStats.currentStreak} days`, 
+      icon: "🔥" 
     },
     { 
       label: "Repositories", 
