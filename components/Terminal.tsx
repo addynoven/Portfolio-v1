@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 
 interface TerminalLine {
@@ -21,6 +22,7 @@ export default function Terminal() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const { startTour, setIsMatrixActive } = useCat();
+  const { resolvedTheme, setTheme } = useTheme();
 
   const rotateX = useTransform(y, [-100, 100], [8, -8]);
   const rotateY = useTransform(x, [-100, 100], [-8, 8]);
@@ -250,15 +252,13 @@ export default function Terminal() {
 
     // Theme toggle
     if (command === "theme") {
-      const html = document.documentElement;
-      const isDark = html.classList.contains('dark');
-      if (isDark) {
-        html.classList.remove('dark');
-        return [{ type: "output", color: "yellow", text: "☀️ Switched to light mode" }];
-      } else {
-        html.classList.add('dark');
-        return [{ type: "output", color: "cyan", text: "🌙 Switched to dark mode" }];
-      }
+      const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+      return [{ 
+        type: "output", 
+        color: newTheme === 'light' ? "yellow" : "cyan", 
+        text: newTheme === 'light' ? "☀️ Switched to light mode" : "🌙 Switched to dark mode" 
+      }];
     }
 
     // List sections
