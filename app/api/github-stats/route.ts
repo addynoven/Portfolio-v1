@@ -227,19 +227,22 @@ async function fetchGitHubStats() {
     const totalStars = repos.nodes.reduce((sum, repo) => sum + repo.stargazerCount, 0);
 
     // Calculate current streak
+    const today = new Date();
     const allDays = contributions.contributionCalendar.weeks
       .flatMap((week) => week.contributionDays)
+      .filter((day) => new Date(day.date) <= today) // Filter out future dates
       .reverse();
 
-    let currentStreak = 0;
+    // Check if today (element 0) has contributions
+    const latestDay = allDays[0];
+    const createdToday = latestDay?.contributionCount > 0;
     
-    // Check if today has contributions
-    const today = allDays[0];
-    const createdToday = today.contributionCount > 0;
-    
-    // If no contributions today, start checking from yesterday
+    // If no contributions today, start checking from yesterday (index 1) which is effectively "previous active day" candidate
+    // Actually, following the logic: if we didn't contribute today, we shouldn't punish the streak yet.
+    // So we assume the streak is valid up to yesterday.
     const daysToCheck = createdToday ? allDays : allDays.slice(1);
     
+    let currentStreak = 0;
     for (const day of daysToCheck) {
       if (day.contributionCount > 0) {
         currentStreak++;
@@ -266,10 +269,7 @@ async function fetchGitHubStats() {
 
     console.log("✅ GitHub Stats Success:", {
       totalContributions: result.totalContributions,
-      totalCommits: result.totalCommits,
-      totalRepos: result.totalRepos,
       currentStreak: result.currentStreak,
-      year: result.year,
     });
 
     return result;
@@ -279,7 +279,15 @@ async function fetchGitHubStats() {
   }
 }
 
+// Set to false to disable caching for debugging
+const CACHE_ENABLED = true;
+
 export async function GET() {
-  const data = await getCachedData("github-stats", fetchGitHubStats, 3600);
+  if (!CACHE_ENABLED) {
+    const data = await fetchGitHubStats();
+    return NextResponse.json(data);
+  }
+
+  const data = await getCachedData("github-stats-v1", fetchGitHubStats, 3600);
   return NextResponse.json(data);
 }
