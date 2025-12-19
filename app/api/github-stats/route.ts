@@ -232,7 +232,15 @@ async function fetchGitHubStats() {
       .reverse();
 
     let currentStreak = 0;
-    for (const day of allDays) {
+    
+    // Check if today has contributions
+    const today = allDays[0];
+    const createdToday = today.contributionCount > 0;
+    
+    // If no contributions today, start checking from yesterday
+    const daysToCheck = createdToday ? allDays : allDays.slice(1);
+    
+    for (const day of daysToCheck) {
       if (day.contributionCount > 0) {
         currentStreak++;
       } else {

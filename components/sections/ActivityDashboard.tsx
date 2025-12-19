@@ -146,7 +146,7 @@ const CodingStats = ({ githubStats }: CodingStatsProps) => {
     { 
       label: "Current Streak", 
       value: githubStats.isLoading ? "..." : `${githubStats.currentStreak} days`, 
-      icon: "🔥" 
+      icon: "⚡" 
     },
     { 
       label: "Repositories", 
