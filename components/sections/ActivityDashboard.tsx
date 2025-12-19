@@ -131,7 +131,7 @@ const CodingStats = ({ githubStats }: CodingStatsProps) => {
     { 
       label: "This Week", 
       value: wakatimeStats.isLoading ? "..." : wakatimeStats.totalHuman, 
-      icon: "⌨️" 
+      icon: "⏱️"
     },
     { 
       label: "Top Language", 
