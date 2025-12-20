@@ -89,12 +89,24 @@ creating seamless user experiences that just work."
 **Fix**: Update each project with the actual repository URL:
 ```typescript
 // Instead of:
-github: "https://github.com/addynoven",
+{
+  title: "NeonFlix",
+  github: "https://github.com/addynoven",
+}
 
-// Use:
-github: "https://github.com/addynoven/neonflix",
-github: "https://github.com/addynoven/dog-lab",
-github: "https://github.com/addynoven/secureshare",
+// Use specific repo URLs:
+{
+  title: "NeonFlix",
+  github: "https://github.com/addynoven/neonflix",
+}
+{
+  title: "Dog Lab",
+  github: "https://github.com/addynoven/dog-lab",
+}
+{
+  title: "SecureShare",
+  github: "https://github.com/addynoven/secureshare",
+}
 // etc.
 ```
 
