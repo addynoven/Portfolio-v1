@@ -69,7 +69,7 @@ Current: "I build things that actually work in the real world — sharp, fast, a
 - What makes your approach unique?
 - Add a personal touch (beyond just technical skills)
 
-**Example Enhancement**:
+**Example Enhancement** (suggested replacement text):
 ```
 "As a Full Stack Developer from Bhopal, India, I'm passionate about transforming ideas 
 into production-ready applications. My journey started with curiosity about how things 
@@ -207,9 +207,9 @@ export const metadata: Metadata = {
 
 **Fix**: Update these to match your actual profiles:
 ```tsx
-<link href="https://www.linkedin.com/in/aditya-sahu-34350b193/">LinkedIn</link>
-<link href="https://github.com/addynoven">GitHub</link>
-<link href="https://x.com/addynoven">Twitter</link>
+<a href="https://www.linkedin.com/in/aditya-sahu-34350b193/">LinkedIn</a>
+<a href="https://github.com/addynoven">GitHub</a>
+<a href="https://x.com/addynoven">Twitter</a>
 ```
 
 ### Lower Priority (Polish)

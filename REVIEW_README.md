@@ -170,8 +170,8 @@ If you want long-term growth:
 **Problem**: Recruiters can't see your specific project code  
 **Impact**: Missing out on interview opportunities  
 **Fix Time**: 5 minutes  
-
-Open `lib/data.tsx` and update lines: 176, 194, 213, 229, 246, 263
+**File to Edit**: `lib/data.tsx`  
+**Lines to Update**: 176, 194, 213, 229, 246, 263
 
 This single fix will make the biggest difference to your portfolio's effectiveness.
 

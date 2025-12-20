@@ -96,7 +96,7 @@ I build things that actually work in the real world — sharp, fast,
 and user-friendly. Mostly focused on AI now...
 ```
 
-**Suggested** (More engaging):
+**Suggested** (More engaging - example replacement text):
 ```
 I build things that actually work in the real world — sharp, fast, 
 and user-friendly. My journey started with a curiosity about how 
@@ -107,8 +107,8 @@ Currently focused on AI/ML engineering, my Dog Lab project achieved
 cutting-edge tech and real-world usability, whether it's streaming 
 platforms, secure file-sharing, or developer tools.
 
-Based in Bhopal, India, I've worked with startups, published packages 
-on NPM and PyPI, and I'm always excited about the next challenge.
+Based in Bhopal, India, working with startups, published packages 
+on NPM and PyPI, and always excited about the next challenge.
 ```
 
 ### Project Descriptions

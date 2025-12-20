@@ -15,7 +15,7 @@ A prioritized list of actionable improvements for your portfolio.
 
 - [ ] **Add Resume PDF**
   - Upload your resume as `/public/resume.pdf`
-  - Ensure download name matches: "Neon_Stain_Resume.pdf"
+  - Ensure download name matches: "Neon_Stain_Resume.pdf" (as specified in Hero.tsx line 141)
 
 - [ ] **Fix Metadata Base URL** (`app/layout.tsx`)
   ```typescript
