@@ -159,6 +159,25 @@ export const Skills: SkillsData = {
 export const projects: ProjectItem[] = [
     {
         num: "01",
+        category: "E-Commerce",
+        title: "RI Store",
+        description:
+            "Premium jewelry e-commerce platform with Razorpay payments, wishlist, multi-step checkout, and real-time search. A year-long project featuring modern UI with Next.js 16 and React 19.",
+        href: "",
+        image: "/assets/work/ristore.png",
+        Stack: [
+            { name: "Next.js" },
+            { name: "React" },
+            { name: "TypeScript" },
+            { name: "Tailwind CSS" },
+            { name: "Razorpay" },
+            { name: "NextAuth.js" },
+        ],
+        live: "https://ristore.abstergo.me/",
+        github: "https://github.com/addynoven/RI_store",
+    },
+    {
+        num: "02",
         category: "Full Stack",
         title: "NeonFlix",
         description:
@@ -176,7 +195,7 @@ export const projects: ProjectItem[] = [
         github: "https://github.com/addynoven",
     },
     {
-        num: "02",
+        num: "03",
         category: "AI/ML",
         title: "Dog Lab",
         description:
@@ -194,7 +213,7 @@ export const projects: ProjectItem[] = [
         github: "https://github.com/addynoven",
     },
     {
-        num: "03",
+        num: "04",
         category: "Full Stack",
         title: "SecureShare",
         description:
@@ -212,7 +231,7 @@ export const projects: ProjectItem[] = [
         github: "https://github.com/addynoven",
     },
     {
-        num: "04",
+        num: "05",
         category: "NPM Package",
         title: "ReactBits Installer",
         description:
@@ -229,7 +248,7 @@ export const projects: ProjectItem[] = [
         github: "https://github.com/addynoven",
     },
     {
-        num: "05",
+        num: "06",
         category: "Python Package",
         title: "NeetCode RPG",
         description:
@@ -246,7 +265,7 @@ export const projects: ProjectItem[] = [
         github: "https://github.com/addynoven",
     },
     {
-        num: "06",
+        num: "07",
         category: "Mobile",
         title: "Devotional App",
         description:
