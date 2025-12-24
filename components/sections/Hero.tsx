@@ -15,6 +15,7 @@ import ClickSpark from "@/components/reactbits/Animations/ClickSpark";
 import { useAccentColor } from "@/lib/accentColor";
 import { LazyRender } from "@/components/LazyRender";
 import { usePerformance } from "@/hooks/usePerformance";
+import { useSiteName } from "@/hooks/useSiteName";
 
 // Lazy load heavy Three.js and animation components
 const ParticleBackground = dynamic(
@@ -29,6 +30,7 @@ const FloatingCodeSymbols = dynamic(
 const Hero = memo(function Hero() {
   const accentColor = useAccentColor();
   const { isLowEnd } = usePerformance();
+  const siteName = useSiteName(true); // Get full name for hero
   
   // Delay heavy visual effects until after LCP (~1.5s)
   // This ensures the hero text renders immediately for Lighthouse
@@ -115,7 +117,7 @@ const Hero = memo(function Hero() {
                 textShadow: "0 0 60px rgba(34, 197, 94, 0.8), 0 0 120px rgba(34, 197, 94, 0.5)",
               }}
             >
-              Neon Stain
+              {siteName}
             </motion.span>
           </motion.h1>
 

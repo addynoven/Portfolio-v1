@@ -13,8 +13,21 @@ interface TerminalLine {
 const COMMANDS = [
   "help", "about", "neofetch", "skills", "projects", "contact", "social", "kitty", "clear",
   "reload", "exit", "color", "reset", "theme", "goto", "ls", "open", "whoami", "date",
-  "sudo", "matrix", "devtools", "tour", "loading", "cmatrix", "cat", "q"
+  "sudo", "matrix", "devtools", "tour", "loading", "cmatrix", "cat", "q", "name"
 ];
+
+// Helper to update site name
+const updateSiteName = (name: string) => {
+  // Capitalize first letter of each word
+  const formattedName = name
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+  localStorage.setItem('portfolio-site-name', formattedName);
+  // Dispatch custom event for components listening for name change
+  window.dispatchEvent(new CustomEvent('site-name-change', { detail: formattedName }));
+  return formattedName;
+};
 
 import { useCat } from "./CatContext";
 
@@ -109,6 +122,7 @@ export default function Terminal() {
         { type: "output", color: "green", text: "  ⚙️  System:" },
         { type: "output", color: "cyan", text: "    reload, exit, clear, date, whoami" },
         { type: "output", color: "cyan", text: "    loading        - toggle loading screen on/off" },
+        { type: "output", color: "cyan", text: "    name <name>    - change the site name (try your name!)" },
         { type: "output", color: "green", text: "  🎮  Fun:" },
         { type: "output", color: "cyan", text: "    kitty, sudo, matrix, tour, cmatrix" },
         { type: "output", color: "cyan", text: "    tour           - restart the guided tour" },
@@ -452,6 +466,33 @@ export default function Terminal() {
           { type: "output", color: "cyan", text: "   Usage: cat on | cat off" },
         ];
       }
+    }
+
+    // Name command - change the site name
+    if (command === "name") {
+      const nameArg = args.slice(1).join(' ');
+      if (!nameArg) {
+        const currentName = localStorage.getItem('portfolio-site-name') || 'Neon Stain';
+        return [
+          { type: "output", color: "yellow", text: `👤 Current name: ${currentName}` },
+          { type: "output", color: "cyan", text: "   Usage: name <your name>" },
+          { type: "output", color: "cyan", text: "   Example: name Aditya" },
+          { type: "output", color: "pink", text: "   Tip: Use 'name reset' to restore default" },
+        ];
+      }
+      if (nameArg === "reset") {
+        localStorage.removeItem('portfolio-site-name');
+        window.dispatchEvent(new CustomEvent('site-name-change', { detail: 'Neon Stain' }));
+        return [
+          { type: "output", color: "green", text: "👤 Name reset to default: Neon Stain" },
+        ];
+      }
+      const formattedName = updateSiteName(nameArg);
+      return [
+        { type: "output", color: "green", text: `👤 Site name changed to: ${formattedName}` },
+        { type: "output", color: "cyan", text: "   Look at the hero section! 🎉" },
+        { type: "output", color: "pink", text: "   Use 'name reset' to restore default." },
+      ];
     }
 
     // Empty command

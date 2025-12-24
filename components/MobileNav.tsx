@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CiMenuFries } from "react-icons/ci";
 import { cn } from "@/lib/utils";
 import { useSectionTransition } from "./SectionTransitionContext";
+import { useSiteName } from "@/hooks/useSiteName";
 
 const links = [
   { name: "Home", path: "/v1/#home", targetId: "home" },
@@ -14,6 +15,7 @@ const links = [
 
 const MobileNav = () => {
   const { activeSection, navigateToSection } = useSectionTransition();
+  const siteName = useSiteName(false); // Get first name only for logo
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
      if (window.location.pathname === "/v1") {
@@ -33,7 +35,7 @@ const MobileNav = () => {
         <div className="mt-24 mb-16 flex justify-center text-2xl">
           <Link href="/v1">
             <h1 className="text-4xl font-semibold">
-              Neon<span className="text-UserAccent">.</span>
+              {siteName}<span className="text-UserAccent">.</span>
             </h1>
           </Link>
         </div>

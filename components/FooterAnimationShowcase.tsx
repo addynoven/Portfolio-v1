@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { useSiteName } from "@/hooks/useSiteName";
 
 // Animation phases for the mini showcase
 type MiniPhase = "scramble" | "neonverse" | "neon" | "letterChange" | "final" | "pause";
@@ -10,6 +11,7 @@ type MiniPhase = "scramble" | "neonverse" | "neon" | "letterChange" | "final" | 
 const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*んñнν";
 
 const FooterAnimationShowcase = () => {
+  const siteName = useSiteName(false); // Get first name only
   const [phase, setPhase] = useState<MiniPhase>("scramble");
   const [displayText, setDisplayText] = useState("");
   const [letterStep, setLetterStep] = useState(0);
@@ -39,33 +41,34 @@ const FooterAnimationShowcase = () => {
       if (!mounted) return;
       if (scrambleIntervalRef.current) clearInterval(scrambleIntervalRef.current);
 
-      // Phase 2: NEONVERSE (1s)
+      // Phase 2: NAMEVERSE (1s)
       setPhase("neonverse");
-      setDisplayText("NEONVERSE");
+      setDisplayText(siteName.toUpperCase() + "VERSE");
 
       await new Promise((r) => setTimeout(r, 1000));
       if (!mounted) return;
 
-      // Phase 3: NEON (0.8s)
+      // Phase 3: NAME uppercase (0.8s)
       setPhase("neon");
-      setDisplayText("NEON");
+      setDisplayText(siteName.toUpperCase());
 
       await new Promise((r) => setTimeout(r, 800));
       if (!mounted) return;
 
-      // Phase 4: Letter-by-letter change (1.2s total)
+      // Phase 4: Letter-by-letter change
       setPhase("letterChange");
       setLetterStep(0);
 
-      for (let i = 1; i <= 4; i++) {
+      // Animate each letter of the name
+      for (let i = 1; i <= siteName.length; i++) {
         await new Promise((r) => setTimeout(r, 300));
         if (!mounted) return;
         setLetterStep(i);
       }
 
-      // Phase 5: Final Neon. (1s)
+      // Phase 5: Final name (1s)
       setPhase("final");
-      setDisplayText("Neon");
+      setDisplayText(siteName);
 
       await new Promise((r) => setTimeout(r, 1000));
       if (!mounted) return;
@@ -86,7 +89,7 @@ const FooterAnimationShowcase = () => {
       mounted = false;
       if (scrambleIntervalRef.current) clearInterval(scrambleIntervalRef.current);
     };
-  }, []);
+  }, [siteName]); // Re-run when siteName changes
 
   // Render the appropriate phase
   const renderContent = () => {
@@ -131,14 +134,17 @@ const FooterAnimationShowcase = () => {
         );
 
       case "letterChange":
-        const letters = ["N", "E", "O", "N"];
-        const lowercased = ["N", "e", "o", "n"];
+        // Generate uppercase and formatted versions dynamically
+        const upperLetters = siteName.toUpperCase().split('');
+        const formattedLetters = siteName.split('').map((c, i) => 
+          i === 0 ? c.toUpperCase() : c.toLowerCase()
+        );
         return (
           <motion.span
             key="letterChange"
             className="font-black tracking-tight"
           >
-            {letters.map((letter, i) => (
+            {upperLetters.map((letter, i) => (
               <motion.span
                 key={i}
                 className={
@@ -155,7 +161,7 @@ const FooterAnimationShowcase = () => {
                 }
                 transition={{ duration: 0.2 }}
               >
-                {i < letterStep ? lowercased[i] : letter}
+                {i < letterStep ? formattedLetters[i] : letter}
               </motion.span>
             ))}
             <span className="text-UserAccent">.</span>
@@ -172,7 +178,7 @@ const FooterAnimationShowcase = () => {
             transition={phase === "pause" ? { duration: 1.5, repeat: Infinity } : {}}
             className="font-black tracking-tight text-slate-700 dark:text-white"
           >
-            Neon<span className="text-UserAccent">.</span>
+            {siteName}<span className="text-UserAccent">.</span>
           </motion.span>
         );
 
