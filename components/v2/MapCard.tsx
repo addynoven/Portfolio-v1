@@ -2,11 +2,33 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { FaMapMarkerAlt, FaPaperPlane } from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const MapCard = () => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
+  const [time, setTime] = useState<string>("00:00:00 IST");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    
+    const updateClock = () => {
+      const now = new Date();
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      };
+      setTime(now.toLocaleTimeString("en-US", options) + " IST");
+    };
+
+    updateClock();
+    const interval = setInterval(updateClock, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined" || !mapRef.current || mapInstanceRef.current) return;
@@ -79,9 +101,14 @@ const MapCard = () => {
         style={{ background: "#1a1a1a", minHeight: "100%" }}
       />
 
-      {/* Plane Icon */}
-      <div className="absolute z-10 top-3 left-3 pointer-events-none animate-pulse">
-        <FaPaperPlane className="w-4 h-4 text-white/50 rotate-45" />
+      {/* Live Time Widget */}
+      <div className="absolute z-20 top-3 right-3 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-lg">
+        <div className="flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-UserAccent animate-pulse" />
+          <span className="text-[10px] font-mono font-bold text-white whitespace-nowrap">
+            {mounted ? time : "00:00:00 IST"}
+          </span>
+        </div>
       </div>
 
       {/* Gradient */}
@@ -92,7 +119,7 @@ const MapCard = () => {
         <p className="text-[9px] text-gray-400 font-mono uppercase tracking-widest mb-0.5">Current Location</p>
         <div className="flex items-center gap-1.5 text-base font-bold text-white">
           <FaMapMarkerAlt className="w-4 h-4 text-UserAccent" />
-          Bhopal, MP
+          Bhopal, MP, India
         </div>
       </div>
     </motion.div>

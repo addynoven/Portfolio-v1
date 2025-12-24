@@ -16,11 +16,11 @@ const TechStackCard = () => {
       {techStack.map((tech) => (
         <div
           key={tech.label}
-          className="w-7 h-7 rounded-lg bg-slate-200 dark:bg-[#252525] flex items-center justify-center hover:scale-110 transition-transform"
+          className="w-6 h-6 rounded-lg bg-slate-200 dark:bg-[#252525] flex items-center justify-center hover:scale-110 transition-transform"
           title={tech.label}
         >
           <tech.icon 
-            className={`w-3.5 h-3.5 ${(tech as any).className || ''}`}
+            className={`w-3 h-3 ${(tech as any).className || ''}`}
             style={tech.color ? { color: tech.color } : undefined} 
           />
         </div>

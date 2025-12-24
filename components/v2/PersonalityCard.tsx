@@ -1,35 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 
 const PersonalityCard = () => {
-  const [time, setTime] = useState<string>("00:00:00 PM IST");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    
-    const updateClock = () => {
-      const now = new Date();
-      const options: Intl.DateTimeFormatOptions = {
-        timeZone: "Asia/Kolkata",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true,
-      };
-      const timeString = now.toLocaleTimeString("en-US", options) + " IST";
-      setTime(timeString);
-    };
-
-    updateClock();
-    const interval = setInterval(updateClock, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <motion.div 
       whileHover={{ scale: 1.02 }}
@@ -54,14 +29,6 @@ const PersonalityCard = () => {
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
-
-      {/* Live Clock Widget */}
-      <div className="absolute top-2 right-2 bg-black/40 backdrop-blur-md border border-white/10 px-2 py-0.5 rounded flex items-center gap-1 z-20">
-        <div className="w-1 h-1 rounded-full bg-red-500 animate-pulse" />
-        <span className="text-[8px] font-mono font-bold text-gray-200 tracking-wider">
-          {mounted ? time : "00:00:00 PM IST"}
-        </span>
-      </div>
 
       {/* Arrow Button */}
       <div className="absolute bottom-2 right-2 bg-white text-black p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer z-20">
