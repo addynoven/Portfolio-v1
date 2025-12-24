@@ -6,6 +6,7 @@ import TechStackCard from "./TechStackCard";
 import BentoCard from "./BentoCard";
 import MapCard from "./MapCard";
 import PersonalityCard from "./PersonalityCard";
+import IntroCard from "./IntroCard";
 import HorizontalSocialBar from "./HorizontalSocialBar";
 import { FaArrowRight, FaTwitter, FaGithub, FaLinkedin, FaMoon, FaSun, FaCopy, FaCheck, FaPlus } from "react-icons/fa";
 import { useTheme } from "next-themes";
@@ -50,16 +51,7 @@ const BentoGrid = () => {
 
         {/* === ROW 1: Intro | Map | Photo (3 columns) === */}
         <div className="grid grid-cols-3 gap-2" style={{ height: '38%' }}>
-          <BentoCard colSpan={1} rowSpan={1} className="flex flex-col justify-center p-4">
-            <h1 className="text-xl md:text-2xl font-medium text-slate-800 dark:text-white mb-2">
-              Hi, I'm Aditya —
-            </h1>
-            <p className="text-xs text-slate-600 dark:text-gray-400 leading-relaxed">
-              Full Stack Developer, currently building{" "}
-              <span className="text-slate-800 dark:text-white underline underline-offset-2 decoration-UserAccent">cool stuff</span>{" "}
-              based in India.
-            </p>
-          </BentoCard>
+          <IntroCard colSpan={1} className="p-4" />
           <MapCard />
           <PersonalityCard />
         </div>
@@ -141,7 +133,75 @@ const BentoGrid = () => {
           </BentoCard>
 
           {/* About (spans 2 columns) */}
-          <BentoCard colSpan={2} rowSpan={1} className="col-span-2 flex flex-col justify-between p-3">
+          <BentoCard 
+            colSpan={2} 
+            rowSpan={1} 
+            className="col-span-2 flex flex-col justify-between p-3"
+            modalContent={
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-min">
+                {/* Row 1: What I'm about (2 cols) + What I do best (1 col) */}
+                <div className="md:col-span-2 bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
+                  <h2 className="text-2xl font-bold text-white mb-4">What I'm about?</h2>
+                  <div className="space-y-4">
+                    <div>
+                      <span className="text-UserAccent uppercase tracking-widest text-[10px] font-bold block mb-2">My Story</span>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        I am a software engineer based in India with a deep passion for building scalable and user-centric applications. 
+                        With a background in backend development and a love for frontend aesthetics, I aim to bridge the gap between complex logic and beautiful interfaces.
+                      </p>
+                    </div>
+                    <div>
+                      <span className="text-UserAccent uppercase tracking-widest text-[10px] font-bold block mb-2">What I Do Now</span>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        Currently I'm a Full Stack Developer building <span className="text-white underline underline-offset-2 decoration-UserAccent">cool stuff</span> and improving my skills every day.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
+                  <span className="text-gray-500 uppercase tracking-widest text-[10px] font-bold block mb-3">What I Do Best</span>
+                  <h3 className="text-xl font-bold text-white mb-4">Full Stack</h3>
+                  <p className="text-gray-400 text-sm mb-4">Building end-to-end solutions with modern technologies.</p>
+                  <ul className="space-y-2 text-gray-300 text-sm">
+                    <li className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-UserAccent" />
+                      System Architecture & API Design
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-UserAccent" />
+                      Responsive & Interactive Frontend
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-UserAccent" />
+                      Database Management
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Row 2: Experience (2 cols) + Stack I use (1 col) */}
+                <div className="md:col-span-2 bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
+                  <span className="text-UserAccent uppercase tracking-widest text-[10px] font-bold block mb-4">Experience</span>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="font-bold text-white">Full Stack Developer</p>
+                        <p className="text-xs text-gray-500 italic">Self-employed / Freelance</p>
+                      </div>
+                      <span className="text-[10px] text-gray-400 font-mono">2022 — Present</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
+                  <span className="text-gray-500 uppercase tracking-widest text-[10px] font-bold block mb-3">Stack I Use</span>
+                  <div className="flex flex-wrap gap-3">
+                    <TechStackCard />
+                  </div>
+                </div>
+              </div>
+            }
+          >
             <div>
               <span className="text-[8px] uppercase tracking-widest text-slate-500 dark:text-gray-500 block">About</span>
               <p className="text-sm text-slate-800 dark:text-white font-medium leading-relaxed mt-1">
