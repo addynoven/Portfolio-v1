@@ -10,6 +10,7 @@ interface BentoCardProps {
   rowSpan?: 1 | 2;
   onClick?: () => void;
   href?: string;
+  style?: React.CSSProperties;
 }
 
 const BentoCard = ({
@@ -19,6 +20,7 @@ const BentoCard = ({
   rowSpan = 1,
   onClick,
   href,
+  style,
 }: BentoCardProps) => {
   const colSpanClass = {
     1: "col-span-1",
@@ -50,6 +52,7 @@ const BentoCard = ({
         className
       )}
       onClick={onClick}
+      style={style}
     >
       {href ? (
         <a {...wrapperProps} className="block h-full">
