@@ -112,7 +112,8 @@ const LoadingScreen = () => {
 		// React 18 effects run twice in strict mode, but order between different effects in same component is sequential.
 		// Let's just read localStorage here too to be safe for the animation logic.
 		
-		const isFast = typeof window !== 'undefined' ? localStorage.getItem('loading-screen-mode') !== 'full' : true;
+		// Force fast mode unless explicitly set to 'full'
+		const isFast = true; 
 		// Update ref just in case
 		fastModeRef.current = isFast;
 
@@ -179,7 +180,7 @@ const LoadingScreen = () => {
 	};
 
 	// Don't render anything after done or if not on home page
-	if (phase === "done" || pathname !== "/") return null;
+	if (phase === "done" || (pathname !== "/" && pathname !== "/v1")) return null;
 
 	const showSolidBg = true;
 	const showScrambledLogo = phase === "concentrate" || phase === "brand";

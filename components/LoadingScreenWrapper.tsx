@@ -8,7 +8,7 @@ import LoadingScreen from "./LoadingScreen";
  * Terminal commands 'loading on' and 'loading off' set the localStorage key.
  */
 export default function LoadingScreenWrapper() {
-  const [showLoading, setShowLoading] = useState<boolean | null>(null);
+  const [showLoading, setShowLoading] = useState<boolean>(true);
 
   useEffect(() => {
     // Check localStorage on mount
@@ -16,8 +16,7 @@ export default function LoadingScreenWrapper() {
     setShowLoading(!shouldSkip);
   }, []);
 
-  // Don't render anything until we've checked localStorage (prevents flash)
-  if (showLoading === null) return null;
+
   
   // If loading is disabled, don't render the loading screen at all
   if (!showLoading) return null;
