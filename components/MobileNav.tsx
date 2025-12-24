@@ -7,16 +7,16 @@ import { cn } from "@/lib/utils";
 import { useSectionTransition } from "./SectionTransitionContext";
 
 const links = [
-  { name: "Home", path: "/#home", targetId: "home" },
-  { name: "Work", path: "/#work", targetId: "work" },
-  { name: "Contact", path: "/#contact", targetId: "contact" },
+  { name: "Home", path: "/v1/#home", targetId: "home" },
+  { name: "Work", path: "/v1/#work", targetId: "work" },
+  { name: "Contact", path: "/v1/#contact", targetId: "contact" },
 ];
 
 const MobileNav = () => {
   const { activeSection, navigateToSection } = useSectionTransition();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-     if (window.location.pathname === "/") {
+     if (window.location.pathname === "/v1") {
          e.preventDefault();
          navigateToSection(targetId);
      }
@@ -31,7 +31,7 @@ const MobileNav = () => {
       <SheetContent className="flex flex-col">
         {/* logo */}
         <div className="mt-24 mb-16 flex justify-center text-2xl">
-          <Link href="/">
+          <Link href="/v1">
             <h1 className="text-4xl font-semibold">
               Neon<span className="text-UserAccent">.</span>
             </h1>

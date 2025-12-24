@@ -8,9 +8,9 @@ import WaterDripCanvas from "./WaterDripCanvas";
 import WaterFillEffect from "./WaterFillEffect";
 
 const links = [
-    { name: "Home", path: "/#home", targetId: "home" },
-    { name: "Work", path: "/#work", targetId: "work" },
-    { name: "Contact", path: "/#contact", targetId: "contact" },
+    { name: "Home", path: "/v1/#home", targetId: "home" },
+    { name: "Work", path: "/v1/#work", targetId: "work" },
+    { name: "Contact", path: "/v1/#contact", targetId: "contact" },
 ];
 
 
@@ -168,7 +168,7 @@ const Nav = () => {
 
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
         // If we are on the home page, prevent default and smooth scroll
-        if (window.location.pathname === "/") {
+        if (window.location.pathname === "/v1") {
             e.preventDefault();
             navigateToSection(targetId);
         }

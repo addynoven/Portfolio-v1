@@ -1,29 +1,14 @@
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-// Header and Footer are now imported in LayoutWrapper, but we need to remove them from here if they are not used.
-// Actually, LayoutWrapper is a default export, let's import it.
-import LayoutWrapper from "@/components/LayoutWrapper";
-// import Header from "@/components/Header"; // Moved to LayoutWrapper
-// import Footer from "@/components/Footer"; // Moved to LayoutWrapper
-import TerminalButton from "@/components/TerminalButton";
-import LoadingScreenWrapper from "@/components/LoadingScreenWrapper";
-import PageTransition from "@/components/PageTransition";
-import StairTransition from "@/components/StairTransition";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { SectionTransitionProvider } from "@/components/SectionTransitionContext";
-import SectionStairTransition from "@/components/SectionStairTransition";
-import Oneko from "@/components/Oneko";
-import { CatProvider } from "@/components/CatContext";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
-import { RetroGrid } from "@/components/ui/retro-grid";
-
 import type { Metadata, Viewport } from "next";
 
 const jetbrainsMono = JetBrains_Mono({
 	subsets: ["latin"],
 	weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
 	variable: "--font-jetbrainsMono",
-	display: "swap", // Prevent FOIT (Flash of Invisible Text)
+	display: "swap",
 	preload: true,
 });
 
@@ -68,7 +53,6 @@ export const metadata: Metadata = {
 	},
 };
 
-// Viewport configuration for better mobile performance
 export const viewport: Viewport = {
 	width: "device-width",
 	initialScale: 1,
@@ -80,9 +64,6 @@ export const viewport: Viewport = {
 	],
 };
 
-// Loading screen visibility is controlled via terminal command: 'loading on' or 'loading off'
-// The LoadingScreen component reads from localStorage to determine if it should show
-
 export default function RootLayout({
 	children,
 }: {
@@ -91,31 +72,13 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={jetbrainsMono.variable}>
-					<ThemeProvider
+				<ThemeProvider
 					attribute="class"
 					defaultTheme="dark"
 					enableSystem
 					disableTransitionOnChange
 				>
-					<CatProvider>
-					<SectionTransitionProvider>
-					<RetroGrid 
-						angle={65}
-						cellSize={60}
-						opacity={0.4}
-						lightLineColor="rgba(0, 255, 153, 0.15)"
-						darkLineColor="rgba(0, 255, 153, 0.2)"
-					/>
-						<LoadingScreenWrapper />
-						<LayoutWrapper>
-							<StairTransition />
-							<SectionStairTransition />
-							<PageTransition>{children}</PageTransition>
-						</LayoutWrapper>
-						<TerminalButton />
-						<Oneko />
-					</SectionTransitionProvider>
-					</CatProvider>
+					{children}
 				</ThemeProvider>
 				<ServiceWorkerRegistration />
 			</body>

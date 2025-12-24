@@ -26,7 +26,7 @@ export default function LayoutWrapper({
   // Let's assume we show on Home "/" and maybe standard pages if they existed, but hide on /work and 404.
   // 404 pathname in usePathname hook might be the non-existent path. 
   
-  const isHomePage = pathname === "/";
+  const isHomePage = pathname === "/v1";
   
   // If we only want them on Home Page:
   const shouldShowNav = true; // Always show nav as per user feedback "design too off otherwise"

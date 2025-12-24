@@ -1,46 +1,20 @@
 "use client";
 
-// Section Components - Direct imports
-import Hero from "@/components/sections/Hero";
-import AboutMe from "@/components/sections/AboutMe";
-import ActivityDashboard from "@/components/sections/ActivityDashboard";
-import Work from "@/components/sections/Work";
-import Skills from "@/components/sections/Skills";
-import Contact from "@/components/sections/Contact";
-import InteractiveBadge from "@/components/sections/InteractiveBadge";
+import Link from "next/link";
 
 const Home = () => {
   return (
-    <section className="h-full relative">
-      <div className="container mx-auto h-full">
-        {/* Hero Section - Above the fold, render immediately */}
-        <Hero />
-
-        {/* Below the fold sections - use content-visibility optimization */}
-        <div className="content-auto">
-          <div className="border-b border-slate-200 dark:border-white/10" />
-          <Work limit={5} />
-        </div>
-        <div className="content-auto">
-          <div className="border-b border-slate-200 dark:border-white/10" />
-          <Skills />
-        </div>
-        <div className="content-auto">
-          <div className="border-b border-slate-200 dark:border-white/10" />
-          <AboutMe />
-        </div>
-        <div className="content-auto">
-          <div className="border-b border-slate-200 dark:border-white/10" />
-          <ActivityDashboard />
-        </div>
-        <div className="content-auto">
-          <div className="border-b border-slate-200 dark:border-white/10" />
-          <Contact />
-        </div>
-        <div className="content-auto">
-          <div className="border-b border-slate-200 dark:border-white/10" />
-          <InteractiveBadge name="Neon Stain" title="Full Stack Developer" handle="neonstain" status="Available" contactText="Contact Me" avatarUrl="photo.jpg" />
-        </div>
+    <section className="h-full flex flex-col items-center justify-center pt-20">
+      <h1 className="text-4xl font-bold mb-4">Aditya Sahu</h1>
+      <p className="text-xl mb-8">Full Stack Developer - V2 Coming Soon</p>
+      
+      <div className="flex gap-4">
+        <Link 
+          href="/v1" 
+          className="bg-primary text-white px-6 py-2 rounded hover:bg-primary/80 transition-colors"
+        >
+          View Portfolio V1
+        </Link>
       </div>
     </section>
   );
