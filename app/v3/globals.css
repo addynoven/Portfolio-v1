@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Dark mode via .dark class ─────────────────────────────── */
+/* In Tailwind 3, darkMode: 'class' handles this automatically via the .dark class */
+
+/* ── Ubuntu Mono (local font, served from /public) ─────────── */
+@font-face {
+  font-family: 'Ubuntu Mono';
+  src: url('/v3/fonts/Ubuntu_Mono/UbuntuMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu Mono';
+  src: url('/v3/fonts/Ubuntu_Mono/UbuntuMono-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu Mono';
+  src: url('/v3/fonts/Ubuntu_Mono/UbuntuMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu Mono';
+  src: url('/v3/fonts/Ubuntu_Mono/UbuntuMono-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE THEME TOKENS (HSL format for Tailwind 3 compatibility)
+───────────────────────────────────────────────────────────── */
+:root {
+  --background: 210 20% 98%;    /* #f6f8fa */
+  --foreground: 214 14% 14%;    /* #1f2328 */
+  --card: 0 0% 100%;            /* #ffffff */
+  --card-border: 210 18% 87%;   /* #d0d7de */
+  --muted: 212 9% 43%;          /* #656d76 */
+  --c0: 210 14% 93%;            /* #ebedf0 */
+}
+
+.dark {
+  --background: 216 28% 7%;     /* #0d1117 */
+  --foreground: 210 31% 93%;    /* #e6edf3 */
+  --card: 214 21% 11%;          /* #161b22 */
+  --card-border: 213 11% 22%;   /* #30363d */
+  --muted: 215 8% 53%;          /* #7d8590 */
+  --c0: 214 21% 11%;            /* #161b22 */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   COLOR SCHEMES — light
+───────────────────────────────────────────────────────────── */
+[data-scheme="neon"] {
+  --accent: #00e187;
+  --c1: #ccffeb;
+  --c2: #66ffc2;
+  --c3: #00ff99;
+  --c4: #00e187;
+}
+
+[data-scheme="blue"] {
+  --accent: #0969da;
+  --c1: #b6d8fb;
+  --c2: #67adf5;
+  --c3: #2e86de;
+  --c4: #0969da;
+}
+
+[data-scheme="emerald"] {
+  --accent: #1a7f37;
+  --c1: #9be9a8;
+  --c2: #40c463;
+  --c3: #30a14e;
+  --c4: #216e39;
+}
+
+[data-scheme="purple"] {
+  --accent: #8250df;
+  --c1: #e2d0ff;
+  --c2: #b088f9;
+  --c3: #8250df;
+  --c4: #6e40c9;
+}
+
+[data-scheme="rose"] {
+  --accent: #cf222e;
+  --c1: #ffd4d4;
+  --c2: #ff9090;
+  --c3: #e5534b;
+  --c4: #cf222e;
+}
+
+[data-scheme="amber"] {
+  --accent: #bf8700;
+  --c1: #ffe8a3;
+  --c2: #ffc72c;
+  --c3: #d4a017;
+  --c4: #bf8700;
+}
+
+[data-scheme="cyan"] {
+  --accent: #0598bc;
+  --c1: #b3f0f5;
+  --c2: #52cdd4;
+  --c3: #1aabb3;
+  --c4: #0598bc;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   COLOR SCHEMES — dark
+───────────────────────────────────────────────────────────── */
+.dark[data-scheme="neon"] {
+  --accent: #00ff99;
+  --c1: #00331f;
+  --c2: #00663d;
+  --c3: #00cc7a;
+  --c4: #00ff99;
+}
+
+.dark[data-scheme="blue"] {
+  --accent: #58a6ff;
+  --c1: #0e3060;
+  --c2: #1158b0;
+  --c3: #2576e8;
+  --c4: #58a6ff;
+}
+
+.dark[data-scheme="emerald"] {
+  --accent: #3fb950;
+  --c1: #0e2d18;
+  --c2: #1a6b30;
+  --c3: #2ea043;
+  --c4: #3fb950;
+}
+
+.dark[data-scheme="purple"] {
+  --accent: #a371f7;
+  --c1: #2d1b4e;
+  --c2: #5a2d9a;
+  --c3: #8957e5;
+  --c4: #a371f7;
+}
+
+.dark[data-scheme="rose"] {
+  --accent: #f78166;
+  --c1: #3d0c08;
+  --c2: #7d2620;
+  --c3: #c93c37;
+  --c4: #f78166;
+}
+
+.dark[data-scheme="amber"] {
+  --accent: #d29922;
+  --c1: #2d1a00;
+  --c2: #6b4100;
+  --c3: #bb8009;
+  --c4: #d29922;
+}
+
+.dark[data-scheme="cyan"] {
+  --accent: #39d0d6;
+  --c1: #0a2b2d;
+  --c2: #0e6570;
+  --c3: #1a9fa8;
+  --c4: #39d0d6;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TAILWIND THEME TOKENS
+───────────────────────────────────────────────────────────── */
+
+
+/* ── Base ──────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 17px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter, 'Inter', ui-sans-serif, system-ui, sans-serif);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* ── Smooth scroll ──────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+

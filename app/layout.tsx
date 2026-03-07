@@ -1,6 +1,6 @@
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeProvider } from "@/components/v1/ThemeProvider";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import type { Metadata, Viewport } from "next";
 

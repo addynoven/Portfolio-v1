@@ -4,7 +4,7 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import WaterFillEffect from "@/components/WaterFillEffect";
+import WaterFillEffect from "@/components/v1/WaterFillEffect";
 
 const buttonVariants = cva(
     "inline-flex items-center justify-center whitespace-nowrap rounded-full text-base font-semibold ring-offset-white transition-all relative overflow-hidden",

@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { checkRateLimit, recordSubmission, formatRetryAfter } from '@/lib/rate-limiter';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const getResend = () => {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return null;
+  return new Resend(apiKey);
+};
 
 interface ContactFormData {
   firstName: string;
@@ -106,6 +110,14 @@ export async function POST(request: NextRequest) {
     }
     
     // Send email
+    const resend = getResend();
+    if (!resend) {
+      return NextResponse.json(
+        { success: false, error: 'Email service is not configured' },
+        { status: 500 }
+      );
+    }
+
     const { error } = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>', // Use verified domain in production
       to: 'dmcbaditya@gmail.com',

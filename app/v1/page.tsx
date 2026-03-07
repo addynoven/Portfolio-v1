@@ -1,13 +1,13 @@
 "use client";
 
 // Section Components - Direct imports
-import Hero from "@/components/sections/Hero";
-import AboutMe from "@/components/sections/AboutMe";
-import ActivityDashboard from "@/components/sections/ActivityDashboard";
-import Work from "@/components/sections/Work";
-import Skills from "@/components/sections/Skills";
-import Contact from "@/components/sections/Contact";
-import InteractiveBadge from "@/components/sections/InteractiveBadge";
+import Hero from "@/components/v1/Hero";
+import AboutMe from "@/components/v1/AboutMe";
+import ActivityDashboard from "@/components/v1/ActivityDashboard";
+import Work from "@/components/v1/Work";
+import Skills from "@/components/v1/Skills";
+import Contact from "@/components/v1/Contact";
+import InteractiveBadge from "@/components/v1/InteractiveBadge";
 
 const Home = () => {
   return (

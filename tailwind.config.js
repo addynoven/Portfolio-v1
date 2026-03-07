@@ -23,6 +23,8 @@ module.exports = {
     extend: {
       fontFamily: {
         primary: "var(--font-jetbrainsMono)",
+        ubuntu: ["Ubuntu Mono", "monospace"],
+        caveat: ["var(--font-caveat)", "cursive"],
       },
       colors: {
         primary: {
@@ -68,6 +70,20 @@ module.exports = {
           3: "hsl(var(--chart-3))",
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
+        },
+        // V3 specific colors
+        v3: {
+          background: "var(--background)",
+          foreground: "var(--foreground)",
+          card: "var(--card)",
+          "card-border": "var(--card-border)",
+          muted: "var(--muted)",
+          accent: "var(--accent)",
+          c0: "var(--c0)",
+          c1: "var(--c1)",
+          c2: "var(--c2)",
+          c3: "var(--c3)",
+          c4: "var(--c4)",
         },
       },
       borderRadius: {

@@ -13,6 +13,7 @@ import ProjectCarousel from "./ProjectCarousel";
 import { FaArrowRight, FaMoon, FaSun, FaPlus } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
+import { VersionSwitcher } from "@/components/VersionSwitcher";
 
 const BentoGrid = () => {
   const { resolvedTheme, setTheme } = useTheme();
@@ -230,17 +231,7 @@ const BentoGrid = () => {
           {/* Version Badge */}
           <div className="flex items-center gap-3 text-gray-500">
             <span className="text-xs">Made with 💚 by Aditya</span>
-            <div className="flex items-center gap-1">
-              <a 
-                href="/v1" 
-                className="px-2 py-1 text-[10px] font-medium rounded-md bg-white/5 hover:bg-white/10 text-gray-500 hover:text-white transition-all"
-              >
-                V1
-              </a>
-              <span className="px-2 py-1 text-[10px] font-medium rounded-md bg-UserAccent/20 text-UserAccent border border-UserAccent/30">
-                V2
-              </span>
-            </div>
+            <VersionSwitcher />
           </div>
         </div>
       </div>

@@ -1,14 +1,14 @@
 "use client";
 
-import LayoutWrapper from "@/components/LayoutWrapper";
-import TerminalButton from "@/components/TerminalButton";
-import LoadingScreenWrapper from "@/components/LoadingScreenWrapper";
-import PageTransition from "@/components/PageTransition";
-import StairTransition from "@/components/StairTransition";
-import { SectionTransitionProvider } from "@/components/SectionTransitionContext";
-import SectionStairTransition from "@/components/SectionStairTransition";
-import Oneko from "@/components/Oneko";
-import { CatProvider } from "@/components/CatContext";
+import LayoutWrapper from "@/components/v1/LayoutWrapper";
+import TerminalButton from "@/components/v1/TerminalButton";
+import LoadingScreenWrapper from "@/components/v1/LoadingScreenWrapper";
+import PageTransition from "@/components/v1/PageTransition";
+import StairTransition from "@/components/v1/StairTransition";
+import { SectionTransitionProvider } from "@/components/v1/SectionTransitionContext";
+import SectionStairTransition from "@/components/v1/SectionStairTransition";
+import Oneko from "@/components/v1/Oneko";
+import { CatProvider } from "@/components/v1/CatContext";
 import { RetroGrid } from "@/components/ui/retro-grid";
 
 export default function V1Layout({
