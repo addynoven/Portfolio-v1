@@ -7,35 +7,35 @@
 
 /* ── Ubuntu Mono (local font, served from /public) ─────────── */
 @font-face {
-  font-family: 'Ubuntu Mono';
-  src: url('/v3/fonts/Ubuntu_Mono/UbuntuMono-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+	font-family: "Ubuntu Mono";
+	src: url("/v3/fonts/Ubuntu_Mono/UbuntuMono-Regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
-  font-family: 'Ubuntu Mono';
-  src: url('/v3/fonts/Ubuntu_Mono/UbuntuMono-Italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
+	font-family: "Ubuntu Mono";
+	src: url("/v3/fonts/Ubuntu_Mono/UbuntuMono-Italic.ttf") format("truetype");
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
 }
 
 @font-face {
-  font-family: 'Ubuntu Mono';
-  src: url('/v3/fonts/Ubuntu_Mono/UbuntuMono-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+	font-family: "Ubuntu Mono";
+	src: url("/v3/fonts/Ubuntu_Mono/UbuntuMono-Bold.ttf") format("truetype");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
-  font-family: 'Ubuntu Mono';
-  src: url('/v3/fonts/Ubuntu_Mono/UbuntuMono-BoldItalic.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
+	font-family: "Ubuntu Mono";
+	src: url("/v3/fonts/Ubuntu_Mono/UbuntuMono-BoldItalic.ttf") format("truetype");
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -45,38 +45,38 @@
    Palette: Neon Mint + Charcoal Gray (dark) / Warm Cream (light)
 ───────────────────────────────────────────────────────────── */
 :root {
-  /* HSL channels — Warm cream light theme */
-  --background: 30 33% 96%;       /* #faf6f1 */
-  --foreground: 220 15% 16%;      /* #232830 */
-  --card: 30 30% 99%;             /* #fefcfa */
-  --card-border: 30 15% 88%;      /* #e4ddd5 */
-  --border: 30 15% 88%;
-  --muted: 220 8% 50%;            /* #767c86 */
-  --c0: 30 14% 93%;               /* #f0ece7 */
+	/* HSL channels — Warm cream light theme */
+	--background: 30 30% 99%; /* #fefcfa */
+	--foreground: 220 15% 16%; /* #232830 */
+	--card: 30 30% 99%; /* #fefcfa */
+	--card-border: 30 30% 99%; /* #fefcfa - same as card to hide it */
+	--border: 30 30% 99%;
+	--muted: 220 8% 50%; /* #767c86 */
+	--c0: 30 14% 93%; /* #f0ece7 */
 
-  /* Full hex values — inline styles */
-  --v3-bg: #faf6f1;
-  --v3-fg: #232830;
-  --v3-card: #fefcfa;
-  --v3-card-border: #e4ddd5;
-  --v3-muted: #767c86;
+	/* Full hex values — inline styles */
+	--v3-bg: #fefcfa;
+	--v3-fg: #232830;
+	--v3-card: #fefcfa;
+	--v3-card-border: #fefcfa;
+	--v3-muted: #767c86;
 }
 
 .dark {
-  /* HSL channels — Charcoal Gray dark theme */
-  --background: 216 18% 13%;      /* #1a1f25 */
+	/* HSL channels — GitHub Dark theme */
+  --background: 215 28% 7%;      /* #0d1117 */
   --foreground: 210 25% 90%;      /* #dce4ed */
-  --card: 215 16% 17%;            /* #222830 */
-  --card-border: 215 12% 24%;     /* #323a45 */
-  --border: 215 12% 24%;
+  --card: 215 21% 11%;            /* #161b22 - slightly lighter for distinction */
+  --card-border: 215 12% 18%;     /* #21262d */
+  --border: 215 12% 18%;
   --muted: 215 10% 55%;           /* #7f8a99 */
-  --c0: 215 16% 17%;              /* #222830 */
+  --c0: 215 14% 12%;              /* #1a2029 */
 
-  /* Full hex values — inline styles */
-  --v3-bg: #1a1f25;
+	/* Full hex values — inline styles */
+  --v3-bg: #0d1117;
   --v3-fg: #dce4ed;
-  --v3-card: #222830;
-  --v3-card-border: #323a45;
+  --v3-card: #161b22;
+  --v3-card-border: #21262d;
   --v3-muted: #7f8a99;
 }
 
@@ -84,176 +84,180 @@
    COLOR SCHEMES — light
 ───────────────────────────────────────────────────────────── */
 [data-scheme="neon"] {
-  --accent: #00d68f;
-  --c1: #c2f5e2;
-  --c2: #5ceab5;
-  --c3: #00f5a0;
-  --c4: #00d68f;
+	--accent: #00d68f;
+	--c1: #c2f5e2;
+	--c2: #5ceab5;
+	--c3: #00f5a0;
+	--c4: #00d68f;
 }
 
 [data-scheme="blue"] {
-  --accent: #0969da;
-  --c1: #b6d8fb;
-  --c2: #67adf5;
-  --c3: #2e86de;
-  --c4: #0969da;
+	--accent: #0969da;
+	--c1: #b6d8fb;
+	--c2: #67adf5;
+	--c3: #2e86de;
+	--c4: #0969da;
 }
 
 [data-scheme="emerald"] {
-  --accent: #1a7f37;
-  --c1: #9be9a8;
-  --c2: #40c463;
-  --c3: #30a14e;
-  --c4: #216e39;
+	--accent: #1a7f37;
+	--c1: #9be9a8;
+	--c2: #40c463;
+	--c3: #30a14e;
+	--c4: #216e39;
 }
 
 [data-scheme="purple"] {
-  --accent: #8250df;
-  --c1: #e2d0ff;
-  --c2: #b088f9;
-  --c3: #8250df;
-  --c4: #6e40c9;
+	--accent: #8250df;
+	--c1: #e2d0ff;
+	--c2: #b088f9;
+	--c3: #8250df;
+	--c4: #6e40c9;
 }
 
 [data-scheme="rose"] {
-  --accent: #cf222e;
-  --c1: #ffd4d4;
-  --c2: #ff9090;
-  --c3: #e5534b;
-  --c4: #cf222e;
+	--accent: #cf222e;
+	--c1: #ffd4d4;
+	--c2: #ff9090;
+	--c3: #e5534b;
+	--c4: #cf222e;
 }
 
 [data-scheme="amber"] {
-  --accent: #bf8700;
-  --c1: #ffe8a3;
-  --c2: #ffc72c;
-  --c3: #d4a017;
-  --c4: #bf8700;
+	--accent: #bf8700;
+	--c1: #ffe8a3;
+	--c2: #ffc72c;
+	--c3: #d4a017;
+	--c4: #bf8700;
 }
 
 [data-scheme="cyan"] {
-  --accent: #0598bc;
-  --c1: #b3f0f5;
-  --c2: #52cdd4;
-  --c3: #1aabb3;
-  --c4: #0598bc;
+	--accent: #0598bc;
+	--c1: #b3f0f5;
+	--c2: #52cdd4;
+	--c3: #1aabb3;
+	--c4: #0598bc;
 }
 
 /* ─────────────────────────────────────────────────────────────
    COLOR SCHEMES — dark
 ───────────────────────────────────────────────────────────── */
 .dark[data-scheme="neon"] {
-  --accent: #00f5a0;
-  --c1: #0a2e1f;
-  --c2: #0d5c3a;
-  --c3: #00c87e;
-  --c4: #00f5a0;
+	--accent: #00f5a0;
+	--c1: #0a2e1f;
+	--c2: #0d5c3a;
+	--c3: #00c87e;
+	--c4: #00f5a0;
 }
 
 .dark[data-scheme="blue"] {
-  --accent: #58a6ff;
-  --c1: #0e3060;
-  --c2: #1158b0;
-  --c3: #2576e8;
-  --c4: #58a6ff;
+	--accent: #58a6ff;
+	--c1: #0e3060;
+	--c2: #1158b0;
+	--c3: #2576e8;
+	--c4: #58a6ff;
 }
 
 .dark[data-scheme="emerald"] {
-  --accent: #3fb950;
-  --c1: #0e2d18;
-  --c2: #1a6b30;
-  --c3: #2ea043;
-  --c4: #3fb950;
+	--accent: #3fb950;
+	--c1: #0e2d18;
+	--c2: #1a6b30;
+	--c3: #2ea043;
+	--c4: #3fb950;
 }
 
 .dark[data-scheme="purple"] {
-  --accent: #a371f7;
-  --c1: #2d1b4e;
-  --c2: #5a2d9a;
-  --c3: #8957e5;
-  --c4: #a371f7;
+	--accent: #a371f7;
+	--c1: #2d1b4e;
+	--c2: #5a2d9a;
+	--c3: #8957e5;
+	--c4: #a371f7;
 }
 
 .dark[data-scheme="rose"] {
-  --accent: #f78166;
-  --c1: #3d0c08;
-  --c2: #7d2620;
-  --c3: #c93c37;
-  --c4: #f78166;
+	--accent: #f78166;
+	--c1: #3d0c08;
+	--c2: #7d2620;
+	--c3: #c93c37;
+	--c4: #f78166;
 }
 
 .dark[data-scheme="amber"] {
-  --accent: #d29922;
-  --c1: #2d1a00;
-  --c2: #6b4100;
-  --c3: #bb8009;
-  --c4: #d29922;
+	--accent: #d29922;
+	--c1: #2d1a00;
+	--c2: #6b4100;
+	--c3: #bb8009;
+	--c4: #d29922;
 }
 
 .dark[data-scheme="cyan"] {
-  --accent: #39d0d6;
-  --c1: #0a2b2d;
-  --c2: #0e6570;
-  --c3: #1a9fa8;
-  --c4: #39d0d6;
+	--accent: #39d0d6;
+	--c1: #0a2b2d;
+	--c2: #0e6570;
+	--c3: #1a9fa8;
+	--c4: #39d0d6;
 }
 
 /* ─────────────────────────────────────────────────────────────
    CARD UTILITIES — soft lifted feel
 ───────────────────────────────────────────────────────────── */
 :root {
-  --card-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.03);
-  --card-shadow-hover: 0 2px 8px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.06);
-  --card-radius: 16px;
+	--card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+	--card-shadow-hover:
+		0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.06);
+	--card-radius: 16px;
 }
 .dark {
-  --card-shadow: 0 1px 3px rgba(0,0,0,.2), 0 4px 16px rgba(0,0,0,.15);
-  --card-shadow-hover: 0 4px 12px rgba(0,0,0,.3), 0 8px 32px rgba(0,0,0,.2);
+  --card-shadow: 0 1px 3px rgba(0,0,0,.45), 0 4px 16px rgba(0,0,0,.35);
+  --card-shadow-hover: 0 4px 12px rgba(0,0,0,.6), 0 8px 32px rgba(0,0,0,.45);
 }
-
 
 /* ── Base ──────────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  /* Override root globals.css border-border leak — V3 uses --card-border */
-  border-color: var(--v3-card-border);
-  border-width: 0;
-  border-style: solid;
+	box-sizing: border-box;
+	/* Override root globals.css border-border leak — V3 uses --card-border */
+	border-color: var(--v3-card-border);
+	border-width: 0;
+	border-style: solid;
 }
 
 html {
-  font-size: 17px;
+	font-size: 17px;
 }
 
 body {
-  background: var(--v3-bg);
-  color: var(--v3-fg);
-  font-family: var(--font-jetbrainsMono, 'JetBrains Mono', ui-monospace, monospace);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  transition: background 0.2s ease, color 0.2s ease;
-  /* Ensure V3's border var overrides root globals.css */
-  border-color: var(--v3-card-border);
+	background: var(--v3-bg);
+	color: var(--v3-fg);
+	font-family: var(
+		--font-jetbrainsMono,
+		"JetBrains Mono",
+		ui-monospace,
+		monospace
+	);
+	line-height: 1.65;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	transition:
+		background 0.2s ease,
+		color 0.2s ease;
+	/* Ensure V3's border var overrides root globals.css */
+	border-color: var(--v3-card-border);
 }
 
-/* ── Glassmorphism panel ───────────────────────────────────── */
+/* ── Solid panel (formerly Glassmorphism) ───────────────────── */
 .v3-glass {
-  background: hsl(var(--background) / 0.72);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid hsl(var(--card-border) / 0.4);
-  border-radius: var(--card-radius);
-  /* Added a subtle shadow to separate from background */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	background: var(--v3-card);
+	border: 1px solid var(--v3-card-border);
+	border-radius: var(--card-radius);
+	transition: border-color 0.2s ease, background 0.2s ease;
 }
 
 /* ── Smooth scroll ──────────────────────────────────────────── */
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -265,50 +269,50 @@ html {
    --notch-radius = radius of the concave curve
 ───────────────────────────────────────────────────────────── */
 :root {
-  --notch-size: 32px;
-  --notch-radius: 22px;
+	--notch-size: 32px;
+	--notch-radius: 22px;
 }
 
 /* ── Top-right notch ──────────────────────────────────────── */
 .notch-tr {
-  overflow: visible;
+	overflow: visible;
 }
 .notch-tr::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  width: var(--notch-size);
-  height: var(--notch-size);
-  background: radial-gradient(
-    circle at 0% 100%,
-    transparent var(--notch-radius),
-    var(--v3-bg) calc(var(--notch-radius) + 0.5px)
-  );
-  z-index: 2;
-  pointer-events: none;
-  border-top-right-radius: var(--card-radius);
+	content: "";
+	position: absolute;
+	top: -1px;
+	right: -1px;
+	width: var(--notch-size);
+	height: var(--notch-size);
+	background: radial-gradient(
+		circle at 0% 100%,
+		transparent var(--notch-radius),
+		var(--v3-bg) calc(var(--notch-radius) + 0.5px)
+	);
+	z-index: 2;
+	pointer-events: none;
+	border-top-right-radius: var(--card-radius);
 }
 
 /* ── Bottom-right notch ───────────────────────────────────── */
 .notch-br {
-  overflow: visible;
+	overflow: visible;
 }
 .notch-br::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  right: -1px;
-  width: var(--notch-size);
-  height: var(--notch-size);
-  background: radial-gradient(
-    circle at 0% 0%,
-    transparent var(--notch-radius),
-    var(--v3-bg) calc(var(--notch-radius) + 0.5px)
-  );
-  z-index: 2;
-  pointer-events: none;
-  border-bottom-right-radius: var(--card-radius);
+	content: "";
+	position: absolute;
+	bottom: -1px;
+	right: -1px;
+	width: var(--notch-size);
+	height: var(--notch-size);
+	background: radial-gradient(
+		circle at 0% 0%,
+		transparent var(--notch-radius),
+		var(--v3-bg) calc(var(--notch-radius) + 0.5px)
+	);
+	z-index: 2;
+	pointer-events: none;
+	border-bottom-right-radius: var(--card-radius);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -317,35 +321,37 @@ html {
    so the avatar appears with a transparent gap around it.
 ───────────────────────────────────────────────────────────── */
 :root {
-  --avatar-notch-gap: 8px; /* space between avatar and banner */
+	--avatar-notch-gap: 8px; /* space between avatar and banner */
 }
 
 /* Mobile banner mask */
 .banner-mask-mobile {
-  mask-image: radial-gradient(
-    circle at 64px calc(100% + 24px), /* Avatar center: X: pad 16px(4) + pl-2 8px(2) + radius 56px(14) - adjusted. Y: bottom + overlap */
-    transparent calc(56px + var(--avatar-notch-gap) - 1px),
-    black calc(56px + var(--avatar-notch-gap))
-  );
-  -webkit-mask-image: radial-gradient(
-    circle at 64px calc(100% + 24px),
-    transparent calc(56px + var(--avatar-notch-gap) - 1px),
-    black calc(56px + var(--avatar-notch-gap))
-  );
+	mask-image: radial-gradient(
+		circle at 64px calc(100% + 24px),
+		/* Avatar center: X: pad 16px(4) + pl-2 8px(2) + radius 56px(14) - adjusted. Y: bottom + overlap */
+		transparent calc(56px + var(--avatar-notch-gap) - 1px),
+		black calc(56px + var(--avatar-notch-gap))
+	);
+	-webkit-mask-image: radial-gradient(
+		circle at 64px calc(100% + 24px),
+		transparent calc(56px + var(--avatar-notch-gap) - 1px),
+		black calc(56px + var(--avatar-notch-gap))
+	);
 }
 
 /* Desktop banner mask */
 @media (min-width: 640px) {
-  .banner-mask-desktop {
-    mask-image: radial-gradient(
-      circle at 104px calc(100% + 14px), /* Desktop Avatar center: X: px-6 (24px) + pl-2 (8px) + radius 72px (w-36/2) = 104px */
-      transparent calc(72px + var(--avatar-notch-gap) - 1px),
-      black calc(72px + var(--avatar-notch-gap))
-    );
-    -webkit-mask-image: radial-gradient(
-      circle at 104px calc(100% + 14px),
-      transparent calc(72px + var(--avatar-notch-gap) - 1px),
-      black calc(72px + var(--avatar-notch-gap))
-    );
-  }
+	.banner-mask-desktop {
+		mask-image: radial-gradient(
+			circle at 104px calc(100% + 14px),
+			/* Desktop Avatar center: X: px-6 (24px) + pl-2 (8px) + radius 72px (w-36/2) = 104px */
+				transparent calc(72px + var(--avatar-notch-gap) - 1px),
+			black calc(72px + var(--avatar-notch-gap))
+		);
+		-webkit-mask-image: radial-gradient(
+			circle at 104px calc(100% + 14px),
+			transparent calc(72px + var(--avatar-notch-gap) - 1px),
+			black calc(72px + var(--avatar-notch-gap))
+		);
+	}
 }

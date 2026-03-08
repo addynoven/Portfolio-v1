@@ -12,13 +12,13 @@ const versions = [
 
 export function VersionSwitcher({ className }: { className?: string }) {
   const pathname = usePathname();
-
-  // Determine which version is active based on path
-  const currentVersion = pathname.startsWith("/v3") ? "V3" : pathname.startsWith("/v2") ? "V2" : pathname.startsWith("/v1") ? "V1" : "V2"; // Default to V2 if root (though root will redirect)
+  const currentVersion = pathname.startsWith("/v3") ? "V3" : pathname.startsWith("/v2") ? "V2" : pathname.startsWith("/v1") ? "V1" : "V2";
 
   return (
     <div className={cn("flex items-center gap-3", className)}>
-      <span className="text-[10px] uppercase tracking-widest text-slate-500 hidden sm:inline-block">Switch version</span>
+      <span className="text-[10px] uppercase tracking-widest text-slate-500 hidden sm:inline-block">
+        {pathname.startsWith("/v3") && pathname.includes("jp") ? "バージョン切り替え" : "Switch version"}
+      </span>
       <div className="flex items-center gap-1 p-1 bg-white/5 dark:bg-white/5 backdrop-blur-md rounded-lg border border-slate-200/10 dark:border-white/5 shadow-2xl">
         {versions.map((ver) => {
           const isActive = currentVersion === ver.label;

@@ -88,7 +88,7 @@
     }
     html {
         scroll-behavior: smooth;
-        overflow-x: hidden;
+        overflow-x: clip;
         /* Hide scrollbar but keep scroll functionality */
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* IE and Edge */
@@ -102,7 +102,7 @@
     /* Base body styles for light mode */
     body {
         @apply font-primary bg-slate-50 text-slate-900 leading-loose transition-colors duration-300;
-        overflow-x: hidden;
+        overflow-x: clip;
     }
 
     /* Dark mode body styles */

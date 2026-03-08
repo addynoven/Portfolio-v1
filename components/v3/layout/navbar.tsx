@@ -4,20 +4,24 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import ThemeToggle from "@/components/v3/ui/theme-toggle";
+import LanguageToggle from "@/components/v3/ui/language-toggle";
 import { useTheme, SCHEMES, SCHEME_META } from "@/lib/v3/theme";
 import { Icons } from "@/components/v3/ui/icons";
+import { METADATA } from "@/app/v3/constants";
+import { useLanguage } from "@/context/v3/language-context";
 
 const NAV_LINKS = [
-    { href: "/v3", label: "Home" },
-    { href: "/v3/projects", label: "Projects" },
-    { href: "/v3/blogs", label: "Blog" },
-    { href: "/v3/art-gallery", label: "Art Gallery" },
+    { href: "/v3", label: { en: "Home", jp: "ホーム" } },
+    { href: "/v3/projects", label: { en: "Projects", jp: "プロジェクト" } },
+    { href: "/v3/blogs", label: { en: "Blog", jp: "ブログ" } },
+    { href: "/v3/art-gallery", label: { en: "Art Gallery", jp: "アートギャラリー" } },
 ];
 
 export default function Navbar() {
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
     const { mode, scheme, setMode, setScheme } = useTheme();
+    const { language, t } = useLanguage();
 
     // Close menu on route change
     useEffect(() => { setOpen(false); }, [pathname]);
@@ -39,7 +43,7 @@ export default function Navbar() {
 
     return (
         <header className="sticky top-0 z-50 w-full" style={{ borderBottom: "1px solid var(--v3-card-border)" }}>
-            <div className="bg-background/80 backdrop-blur-md">
+            <div className="bg-background">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
                     {/* Logo */}
@@ -47,8 +51,8 @@ export default function Navbar() {
                         href="/v3"
                         className="text-lg font-bold font-mono select-none flex items-center gap-2 hover:opacity-70 transition-opacity"
                     >
-                        <span style={{ color: "var(--accent)" }}>鬼</span>
-                        <span className="text-foreground">aditya</span>
+                        <span style={{ color: "var(--accent)" }}>{language === "jp" ? "技" : "V"}</span>
+                        <span className="text-foreground">{METADATA.name.toLowerCase()}</span>
                     </Link>
 
                     {/* Desktop: nav links + theme toggle */}
@@ -60,7 +64,7 @@ export default function Navbar() {
                                     href={href}
                                     className={`px-3 py-1.5 rounded-lg text-base transition-all duration-150 font-mono ${getActiveStyles(href)}`}
                                 >
-                                    {label}
+                                    {t(label)}
                                 </Link>
                             ))}
                         </nav>
@@ -85,15 +89,18 @@ export default function Navbar() {
                                 </svg>
                                 CV
                             </button>
-                            <a href="https://github.com/addynoven" target="_blank" rel="noopener noreferrer" className="p-2 text-foreground/50 hover:text-accent transition-colors" aria-label="GitHub">
+                             <a href={`https://github.com/${METADATA.username}`} target="_blank" rel="noopener noreferrer" className="p-2 text-foreground/50 hover:text-accent transition-colors" aria-label="GitHub">
                                 <Icons.GitHub className="w-5 h-5" />
                             </a>
-                            <a href="https://x.com/addynoven" target="_blank" rel="noopener noreferrer" className="p-2 text-foreground/50 hover:text-accent transition-colors" aria-label="Twitter">
+                            <a href={`https://x.com/${METADATA.username}`} target="_blank" rel="noopener noreferrer" className="p-2 text-foreground/50 hover:text-accent transition-colors" aria-label="Twitter">
                                 <Icons.Twitter className="w-5 h-5" />
                             </a>
                         </div>
 
-                        <ThemeToggle />
+                        <div className="flex items-center gap-2">
+                             <LanguageToggle />
+                             <ThemeToggle />
+                        </div>
                     </div>
 
                     {/* Mobile: hamburger button */}
@@ -104,14 +111,14 @@ export default function Navbar() {
                         aria-expanded={open}
                     >
                         <Icons.Menu open={open} className="w-6 h-6 transition-all duration-200" />
-                        <span className="text-base font-mono">{open ? "Close" : "Menu"}</span>
+                        <span className="text-base font-mono">{open ? (language === "jp" ? "閉じる" : "Close") : (language === "jp" ? "メニュー" : "Menu")}</span>
                     </button>
                 </div>
             </div>
 
             {/* Mobile dropdown menu */}
             <div
-                className={`lg:hidden absolute left-0 right-0 top-full z-50 overflow-hidden transition-all duration-300 ${open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+                className={`lg:hidden absolute left-0 right-0 top-full z-50 overflow-hidden transition-all duration-300 ${open ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
                     }`}
                 style={{ background: "var(--v3-card)", borderBottom: open ? "1px solid var(--v3-card-border)" : "none" }}
             >
@@ -125,7 +132,7 @@ export default function Navbar() {
                                 href={href}
                                 className={`px-3 py-2.5 rounded-xl text-base font-mono transition-all duration-150 ${getActiveStyles(href)}`}
                             >
-                                {label}
+                                {t(label)}
                             </Link>
                         ))}
                     </nav>
@@ -133,9 +140,17 @@ export default function Navbar() {
                     {/* Divider */}
                     <div className="mb-4" style={{ borderTop: "1px solid var(--v3-card-border)" }} />
 
+                    {/* Language */}
+                    <p className="text-[10px] font-mono tracking-widest uppercase mb-2 select-none" style={{ color: "var(--v3-muted)" }}>
+                        {language === "jp" ? "言語" : "Language"}
+                    </p>
+                    <div className="mb-4">
+                        <LanguageToggle />
+                    </div>
+
                     {/* Mode */}
                     <p className="text-[10px] font-mono tracking-widest uppercase mb-2 select-none" style={{ color: "var(--v3-muted)" }}>
-                        Mode
+                        {language === "jp" ? "モード" : "Mode"}
                     </p>
                     <div className="flex gap-2 mb-4">
                         {(["light", "dark"] as const).map(m => (
@@ -147,14 +162,14 @@ export default function Navbar() {
                                     : "bg-foreground/5 text-foreground/50 hover:bg-foreground/10 hover:text-foreground"
                                     }`}
                             >
-                                {m === "light" ? "☀ Light" : "☾ Dark"}
+                                {m === "light" ? (language === "jp" ? "☀ ライト" : "☀ Light") : (language === "jp" ? "☾ ダーク" : "☾ Dark")}
                             </button>
                         ))}
                     </div>
 
                     {/* Color scheme */}
                     <p className="text-[10px] font-mono tracking-widest uppercase mb-3 select-none" style={{ color: "var(--v3-muted)" }}>
-                        Color Scheme
+                        {language === "jp" ? "カラースキーム" : "Color Scheme"}
                     </p>
                     <div className="flex gap-2.5 flex-wrap pb-1">
                         {SCHEMES.map(s => {
@@ -192,10 +207,10 @@ export default function Navbar() {
                             </svg>
                             CV
                         </button>
-                        <a href="https://github.com/addynoven" target="_blank" rel="noopener noreferrer" className="flex flex-1 justify-center py-2 items-center gap-2 text-base font-mono bg-foreground/5 rounded-xl text-foreground/50 hover:text-accent hover:bg-foreground/10 transition-all">
+                        <a href={`https://github.com/${METADATA.username}`} target="_blank" rel="noopener noreferrer" className="flex flex-1 justify-center py-2 items-center gap-2 text-base font-mono bg-foreground/5 rounded-xl text-foreground/50 hover:text-accent hover:bg-foreground/10 transition-all">
                             <Icons.GitHub className="w-5 h-5" /> GitHub
                         </a>
-                        <a href="https://x.com/addynoven" target="_blank" rel="noopener noreferrer" className="flex flex-1 justify-center py-2 items-center gap-2 text-base font-mono bg-foreground/5 rounded-xl text-foreground/50 hover:text-accent hover:bg-foreground/10 transition-all">
+                        <a href={`https://x.com/${METADATA.username}`} target="_blank" rel="noopener noreferrer" className="flex flex-1 justify-center py-2 items-center gap-2 text-base font-mono bg-foreground/5 rounded-xl text-foreground/50 hover:text-accent hover:bg-foreground/10 transition-all">
                             <Icons.Twitter className="w-5 h-5" /> Twitter
                         </a>
                     </div>
