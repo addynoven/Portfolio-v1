@@ -138,6 +138,9 @@ export const education = [
     },
 ]
 
+// ── Art Gallery ───────────────────────────────────────────── */
+export const GALLERY: { src: string; title: string; medium: string; year: string }[] = [];
+
 // ── Quotes (cycling) ─────────────────────────────────────── */
 export const QUOTES = [
     { 

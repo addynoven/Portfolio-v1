@@ -1,11 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { projects } from "@/app/v3/constants";
 import { Icons } from "@/components/v3/ui/icons";
+import { useLanguage } from "@/context/v3/language-context";
 
 /* ─────────────────────────────────────────────────────────────
    PLACEHOLDER — shown when projects array is empty
-───────────────────────────────────────────────────────────── */
+ ───────────────────────────────────────────────────────────── */
 function EmptyState() {
     return (
         <div className="flex flex-col items-center justify-center py-32 text-center">
@@ -35,7 +38,7 @@ function EmptyState() {
 
 /* ─────────────────────────────────────────────────────────────
    SKELETON CARD
-───────────────────────────────────────────────────────────── */
+ ───────────────────────────────────────────────────────────── */
 function SkeletonCard() {
     return (
         <div
@@ -54,8 +57,9 @@ function SkeletonCard() {
 
 /* ─────────────────────────────────────────────────────────────
    PROJECT CARD
-───────────────────────────────────────────────────────────── */
+ ───────────────────────────────────────────────────────────── */
 function ProjectCard({ project }: { project: typeof projects[0] }) {
+    const { t } = useLanguage();
     // Image click priority: live site → github repo → no link at all
     const imageHref = project.liveUrl || project.repoUrl || null;
 
@@ -83,7 +87,7 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
                     className="text-sm font-mono px-2.5 py-0.5 rounded-full select-none"
                     style={{ background: "var(--accent)", color: "var(--card)" }}
                 >
-                    {project.category}
+                    {t(project.category)}
                 </span>
             </div>
 
@@ -135,7 +139,7 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
 
                 {/* description */}
                 <p className="text-sm font-mono leading-relaxed flex-1 opacity-75 mb-4">
-                    {project.description}
+                    {t(project.description)}
                 </p>
 
                 {/* tags */}
@@ -199,13 +203,9 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
 
 /* ─────────────────────────────────────────────────────────────
    PAGE
-───────────────────────────────────────────────────────────── */
-export const metadata = {
-    title: "Projects — Aditya",
-    description: "A collection of things I've built — CLI tools, web apps, backend services and more.",
-};
-
+ ───────────────────────────────────────────────────────────── */
 export default function ProjectsPage() {
+    const { t } = useLanguage();
     const hasProjects = projects.length > 0;
 
     return (
