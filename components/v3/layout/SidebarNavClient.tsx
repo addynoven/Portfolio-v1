@@ -43,8 +43,8 @@ export default function SidebarNavClient({ items }: { items: Item[] }) {
   };
 
   return (
-    <aside className="hidden lg:flex flex-col gap-0.5 sticky top-20 h-fit w-44 shrink-0 select-none">
-      <div className="absolute left-[7px] top-2 bottom-2 w-px bg-foreground/10 -z-10" />
+    <aside className="hidden lg:flex flex-col gap-0.5 sticky top-20 h-fit w-44 shrink-0 select-none v3-glass p-4 rounded-xl">
+      <div className="absolute left-[23px] top-6 bottom-6 w-px bg-foreground/10 -z-10" />
 
       {items.map(({ id, label }) => {
         const isActive = active === id;

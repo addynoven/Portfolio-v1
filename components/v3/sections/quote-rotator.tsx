@@ -108,7 +108,15 @@ export default function QuoteRotator() {
             : "translateX(0)";
 
     return (
-        <section className="mt-12 mb-4 relative overflow-hidden rounded-2xl border border-dashed border-foreground/10 bg-foreground/2 p-8">
+        <section
+            className="mt-12 mb-4 relative overflow-hidden p-8"
+            style={{
+                background: "var(--v3-card)",
+                border: "1px dashed var(--v3-card-border)",
+                borderRadius: "var(--card-radius)",
+                boxShadow: "var(--card-shadow)",
+            }}
+        >
             {/* Whole-section fade */}
             <div
                 className="relative"

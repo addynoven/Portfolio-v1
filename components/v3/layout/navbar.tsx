@@ -8,10 +8,10 @@ import { useTheme, SCHEMES, SCHEME_META } from "@/lib/v3/theme";
 import { Icons } from "@/components/v3/ui/icons";
 
 const NAV_LINKS = [
-    { href: "/", label: "Home" },
-    { href: "/projects", label: "Projects" },
-    { href: "/blogs", label: "Blog" },
-    { href: "/art-gallery", label: "Art Gallery" },
+    { href: "/v3", label: "Home" },
+    { href: "/v3/projects", label: "Projects" },
+    { href: "/v3/blogs", label: "Blog" },
+    { href: "/v3/art-gallery", label: "Art Gallery" },
 ];
 
 export default function Navbar() {
@@ -31,24 +31,24 @@ export default function Navbar() {
     }, [open]);
 
     const getActiveStyles = (href: string) => {
-        const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+        const isActive = href === "/v3" ? pathname === "/v3" : pathname.startsWith(href);
         return isActive
             ? "bg-accent/10 text-accent font-semibold"
             : "text-foreground/50 hover:text-foreground hover:bg-foreground/5";
     };
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-card-border">
+        <header className="sticky top-0 z-50 w-full" style={{ borderBottom: "1px solid var(--v3-card-border)" }}>
             <div className="bg-background/80 backdrop-blur-md">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
                     {/* Logo */}
                     <Link
                         href="/v3"
-                        className="text-lg font-bold font-mono select-none hover:opacity-70 transition-opacity"
-                        style={{ color: "var(--accent)" }}
+                        className="text-lg font-bold font-mono select-none flex items-center gap-2 hover:opacity-70 transition-opacity"
                     >
-                        Aditya
+                        <span style={{ color: "var(--accent)" }}>鬼</span>
+                        <span className="text-foreground">aditya</span>
                     </Link>
 
                     {/* Desktop: nav links + theme toggle */}
@@ -65,7 +65,7 @@ export default function Navbar() {
                             ))}
                         </nav>
 
-                        <div className="w-px h-4 mx-2" style={{ background: "var(--card-border)" }} />
+                        <div className="w-px h-4 mx-2" style={{ background: "var(--v3-card-border)" }} />
 
                         {/* Connections */}
                         <div className="flex items-center gap-0.5 mr-2">
@@ -77,7 +77,7 @@ export default function Navbar() {
                                     if (RESUME_URL) window.open(RESUME_URL, "_blank", "noopener,noreferrer");
                                 }}
                                 className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-sm font-mono font-semibold border transition-all duration-150 text-foreground/60 hover:text-accent hover:border-accent/40 hover:bg-accent/5"
-                                style={{ borderColor: "var(--card-border)" }}
+                                style={{ borderColor: "var(--v3-card-border)" }}
                                 aria-label="Download CV"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -113,7 +113,7 @@ export default function Navbar() {
             <div
                 className={`lg:hidden absolute left-0 right-0 top-full z-50 overflow-hidden transition-all duration-300 ${open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
                     }`}
-                style={{ background: "var(--card)", borderBottom: open ? "1px solid var(--card-border)" : "none" }}
+                style={{ background: "var(--v3-card)", borderBottom: open ? "1px solid var(--v3-card-border)" : "none" }}
             >
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
 
@@ -131,10 +131,10 @@ export default function Navbar() {
                     </nav>
 
                     {/* Divider */}
-                    <div className="mb-4" style={{ borderTop: "1px solid var(--card-border)" }} />
+                    <div className="mb-4" style={{ borderTop: "1px solid var(--v3-card-border)" }} />
 
                     {/* Mode */}
-                    <p className="text-[10px] font-mono tracking-widest uppercase mb-2 select-none" style={{ color: "var(--muted)" }}>
+                    <p className="text-[10px] font-mono tracking-widest uppercase mb-2 select-none" style={{ color: "var(--v3-muted)" }}>
                         Mode
                     </p>
                     <div className="flex gap-2 mb-4">
@@ -153,7 +153,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Color scheme */}
-                    <p className="text-[10px] font-mono tracking-widest uppercase mb-3 select-none" style={{ color: "var(--muted)" }}>
+                    <p className="text-[10px] font-mono tracking-widest uppercase mb-3 select-none" style={{ color: "var(--v3-muted)" }}>
                         Color Scheme
                     </p>
                     <div className="flex gap-2.5 flex-wrap pb-1">
@@ -168,7 +168,7 @@ export default function Navbar() {
                                     className="w-8 h-8 rounded-full transition-all duration-150"
                                     style={{
                                         backgroundColor: color,
-                                        boxShadow: isActive ? `0 0 0 2px var(--card), 0 0 0 4px ${color}` : undefined,
+                                        boxShadow: isActive ? `0 0 0 2px var(--v3-card), 0 0 0 4px ${color}` : undefined,
                                         transform: isActive ? "scale(1.15)" : undefined,
                                     }}
                                 />
@@ -177,7 +177,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Mobile Connections */}
-                    <div className="pt-5 mt-5 flex items-center gap-3" style={{ borderTop: "1px solid var(--card-border)" }}>
+                    <div className="pt-5 mt-5 flex items-center gap-3" style={{ borderTop: "1px solid var(--v3-card-border)" }}>
                         <button
                             onClick={() => {
                                 const RESUME_URL = ""; // TODO: add your resume link here

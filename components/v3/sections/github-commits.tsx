@@ -123,13 +123,14 @@ export default function GithubCommits() {
         <div className="w-full">
             {/* header */}
             <p className="text-xs font-mono tracking-widest uppercase select-none mb-3"
-                style={{ color: "var(--muted)" }}>
+                style={{ color: "var(--v3-muted)" }}>
                 GitHub Contributions · @{GITHUB_USERNAME}
             </p>
 
             {/* card */}
             <div
-                className="rounded-2xl p-4 w-full overflow-x-clip bg-card border border-dashed border-card-border"
+                className="rounded-2xl p-4 w-full overflow-x-clip bg-card"
+                style={{ border: "1px dashed var(--v3-card-border)", borderRadius: "var(--card-radius)", boxShadow: "var(--card-shadow)" }}
             >
                 {/* graph inner — observed for width */}
                 <div ref={graphRef} className="w-full">
@@ -166,7 +167,7 @@ export default function GithubCommits() {
                                         <div
                                             key={label + col}
                                             className="text-[10px] font-mono select-none shrink-0 truncate"
-                                            style={{ width: (nextCol - col) * CELL_SLOT, color: "var(--muted)" }}
+                                            style={{ width: (nextCol - col) * CELL_SLOT, color: "var(--v3-muted)" }}
                                         >
                                             {label}
                                         </div>
@@ -185,7 +186,7 @@ export default function GithubCommits() {
                                         <div
                                             key={i}
                                             className="text-[10px] font-mono select-none flex items-center justify-end"
-                                            style={{ height: CELL_SIZE, color: "var(--muted)" }}
+                                            style={{ height: CELL_SIZE, color: "var(--v3-muted)" }}
                                         >
                                             {label}
                                         </div>
@@ -217,7 +218,7 @@ export default function GithubCommits() {
                                                     {day && (
                                                         <div
                                                             className={`absolute z-50 bottom-[calc(100%+6px)] ${tooltipPos} px-2 py-1 rounded text-[10px] font-mono whitespace-nowrap pointer-events-none select-none opacity-0 group-hover:opacity-100 transition-opacity`}
-                                                            style={{ background: "var(--foreground)", color: "var(--background)" }}
+                                                            style={{ background: "var(--v3-fg)", color: "var(--v3-bg)" }}
                                                         >
                                                             {day.count} on {fmtDate(day.date)}
                                                         </div>
@@ -232,11 +233,11 @@ export default function GithubCommits() {
 
                             {/* footer */}
                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mt-3">
-                                <span className="text-xs font-mono select-none" style={{ color: "var(--muted)" }}>
+                                <span className="text-xs font-mono select-none" style={{ color: "var(--v3-muted)" }}>
                                     {total.toLocaleString()} contributions in the last year
                                 </span>
                                 <div className="flex items-center gap-1.5 text-xs font-mono select-none"
-                                    style={{ color: "var(--muted)" }}>
+                                    style={{ color: "var(--v3-muted)" }}>
                                     <span>Less</span>
                                     {LEGEND_COUNTS.map(c => (
                                         <div key={c} style={{ ...heatStyle(c), width: 11, height: 11, borderRadius: 2 }} />

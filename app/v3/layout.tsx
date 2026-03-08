@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Caveat } from "next/font/google";
+import { JetBrains_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/v3/layout/navbar";
 import Footer from "@/components/v3/layout/footer";
 import { ThemeProvider } from "@/lib/v3/theme";
+import ThunderRootBg from "@/ThunderRootBg";
 
 /* ── Fonts (self-hosted by Next.js, preloaded automatically) ── */
-const inter = Inter({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-jetbrainsMono",
   display: "swap",
 });
 
@@ -35,10 +36,11 @@ export default function V3Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className={`${inter.variable} ${caveat.variable} antialiased min-h-screen flex flex-col overflow-x-hidden`}>
+    <div className={`${jetbrainsMono.variable} ${caveat.variable} antialiased min-h-screen flex flex-col overflow-x-hidden`}>
       <ThemeProvider>
+        <ThunderRootBg className="!fixed !inset-0 !w-screen !h-screen z-0 pointer-events-none" />
         <Navbar />
-        <main className="flex-1">
+        <main className="flex-1 relative z-[1]">
           {children}
         </main>
         {/* <Footer /> */}

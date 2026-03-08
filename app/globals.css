@@ -47,7 +47,7 @@
         --card-bg: 0 0% 100%;
         /* User accent color - can be changed via terminal */
         --user-accent: #00ff99;
-        --user-accent-hover: #00e187;
+        --user-accent-hover: #00cc7a;
     }
 
     /* Dark mode - the original portfolio dark theme */
@@ -75,7 +75,7 @@
         --card-bg: 240 6% 17%;
         /* User accent color - can be changed via terminal */
         --user-accent: #00ff99;
-        --user-accent-hover: #00e187;
+        --user-accent-hover: #00cc7a;
     }
   .theme {
         --animate-grid: grid 15s linear infinite;

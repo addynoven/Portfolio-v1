@@ -209,7 +209,7 @@ export default function ProjectsPage() {
     const hasProjects = projects.length > 0;
 
     return (
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-12 mt-8 mb-24 v3-glass rounded-3xl">
 
             {/* ── Header ── */}
             <div className="mb-10">

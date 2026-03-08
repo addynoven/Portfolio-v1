@@ -40,12 +40,17 @@ export default function ThemeToggle() {
             {/* Panel */}
             {open && (
                 <div
-                    className="absolute right-0 top-[calc(100%+10px)] w-60 rounded-2xl p-5 z-50 shadow-2xl"
-                    style={{ background: "var(--card)", border: "1px solid var(--card-border)" }}
+                    className="absolute right-0 top-[calc(100%+10px)] w-60 p-5 z-50"
+                    style={{
+                        background: "var(--v3-card)",
+                        border: "1px solid var(--v3-card-border)",
+                        borderRadius: "var(--card-radius)",
+                        boxShadow: "var(--card-shadow-hover)",
+                    }}
                 >
                     {/* ── Mode ── */}
                     <p className="text-[10px] font-mono tracking-widest uppercase mb-2 select-none"
-                        style={{ color: "var(--muted)" }}>
+                        style={{ color: "var(--v3-muted)" }}>
                         Mode
                     </p>
                     <div className="flex gap-2 mb-5">
@@ -65,7 +70,7 @@ export default function ThemeToggle() {
 
                     {/* ── Color Scheme ── */}
                     <p className="text-[10px] font-mono tracking-widest uppercase mb-3 select-none"
-                        style={{ color: "var(--muted)" }}>
+                        style={{ color: "var(--v3-muted)" }}>
                         Color Scheme
                     </p>
                     <div className="grid grid-cols-6 gap-2.5">
@@ -84,7 +89,7 @@ export default function ThemeToggle() {
                                     style={{
                                         backgroundColor: color,
                                         ...(isActive ? { ringColor: color, outlineColor: color } : {}),
-                                        boxShadow: isActive ? `0 0 0 2px var(--card), 0 0 0 4px ${color}` : undefined,
+                                        boxShadow: isActive ? `0 0 0 2px var(--v3-card), 0 0 0 4px ${color}` : undefined,
                                     }}
                                 />
                             );
@@ -93,7 +98,7 @@ export default function ThemeToggle() {
 
                     {/* scheme name label */}
                     <p className="text-[11px] font-mono mt-3 select-none text-center"
-                        style={{ color: "var(--muted)" }}>
+                        style={{ color: "var(--v3-muted)" }}>
                         {SCHEME_META[scheme].label}
                     </p>
                 </div>

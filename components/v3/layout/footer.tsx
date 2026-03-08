@@ -18,7 +18,7 @@ export default function Footer() {
             {/* gradient fade from page bg into footer */}
             <div className="absolute -top-16 left-0 right-0 h-16 pointer-events-none" />
 
-            <div className="rounded-2xl bg-card border border-card-border shadow-sm mb-10 overflow-hidden">
+            <div className="bg-card border overflow-hidden mb-10" style={{ borderColor: "var(--v3-card-border)", borderRadius: "var(--card-radius)", boxShadow: "var(--card-shadow)" }}>
                 <div className="max-w-5xl mx-auto px-6 py-12">
 
                     {/* ── Main row ──────────────────────── */}
@@ -52,7 +52,7 @@ export default function Footer() {
                         {/* Pages */}
                         <div>
                             <p className="text-sm font-mono tracking-widest uppercase mb-4 select-none"
-                                style={{ color: "var(--muted)" }}>
+                                style={{ color: "var(--v3-muted)" }}>
                                 Pages
                             </p>
                             <ul className="flex flex-col gap-2.5">
@@ -72,7 +72,7 @@ export default function Footer() {
                         {/* Connect */}
                         <div>
                             <p className="text-sm font-mono tracking-widest uppercase mb-4 select-none"
-                                style={{ color: "var(--muted)" }}>
+                                style={{ color: "var(--v3-muted)" }}>
                                 Connect
                             </p>
                             <ul className="flex flex-col gap-2.5">
@@ -103,13 +103,13 @@ export default function Footer() {
                     {/* ── Bottom bar ────────────────────── */}
                     <div
                         className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-10 pt-6"
-                        style={{ borderTop: "1px solid var(--card-border)" }}
+                        style={{ borderTop: "1px solid var(--v3-card-border)" }}
                     >
-                        <p className="text-sm font-mono select-none" style={{ color: "var(--muted)" }}>
+                        <p className="text-sm font-mono select-none" style={{ color: "var(--v3-muted)" }}>
                             © {year} Aditya · All rights reserved
                         </p>
 
-                        <p className="text-sm font-mono select-none" style={{ color: "var(--muted)" }}>
+                        <p className="text-sm font-mono select-none" style={{ color: "var(--v3-muted)" }}>
                             Built with{" "}
                             <span style={{ color: "var(--accent)", cursor: "pointer" }}>Next.js</span>
                             {" · "}TypeScript{" · "}Tailwind CSS

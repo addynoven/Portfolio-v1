@@ -39,35 +39,56 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   BASE THEME TOKENS (HSL format for Tailwind 3 compatibility)
+   BASE THEME TOKENS
+   - HSL channel values for Tailwind 3 compat (bg-foreground/5)
+   - Full hex aliases (--v3-*) for inline styles
+   Palette: Neon Mint + Charcoal Gray (dark) / Warm Cream (light)
 ───────────────────────────────────────────────────────────── */
 :root {
-  --background: 210 20% 98%;    /* #f6f8fa */
-  --foreground: 214 14% 14%;    /* #1f2328 */
-  --card: 0 0% 100%;            /* #ffffff */
-  --card-border: 210 18% 87%;   /* #d0d7de */
-  --muted: 212 9% 43%;          /* #656d76 */
-  --c0: 210 14% 93%;            /* #ebedf0 */
+  /* HSL channels — Warm cream light theme */
+  --background: 30 33% 96%;       /* #faf6f1 */
+  --foreground: 220 15% 16%;      /* #232830 */
+  --card: 30 30% 99%;             /* #fefcfa */
+  --card-border: 30 15% 88%;      /* #e4ddd5 */
+  --border: 30 15% 88%;
+  --muted: 220 8% 50%;            /* #767c86 */
+  --c0: 30 14% 93%;               /* #f0ece7 */
+
+  /* Full hex values — inline styles */
+  --v3-bg: #faf6f1;
+  --v3-fg: #232830;
+  --v3-card: #fefcfa;
+  --v3-card-border: #e4ddd5;
+  --v3-muted: #767c86;
 }
 
 .dark {
-  --background: 216 28% 7%;     /* #0d1117 */
-  --foreground: 210 31% 93%;    /* #e6edf3 */
-  --card: 214 21% 11%;          /* #161b22 */
-  --card-border: 213 11% 22%;   /* #30363d */
-  --muted: 215 8% 53%;          /* #7d8590 */
-  --c0: 214 21% 11%;            /* #161b22 */
+  /* HSL channels — Charcoal Gray dark theme */
+  --background: 216 18% 13%;      /* #1a1f25 */
+  --foreground: 210 25% 90%;      /* #dce4ed */
+  --card: 215 16% 17%;            /* #222830 */
+  --card-border: 215 12% 24%;     /* #323a45 */
+  --border: 215 12% 24%;
+  --muted: 215 10% 55%;           /* #7f8a99 */
+  --c0: 215 16% 17%;              /* #222830 */
+
+  /* Full hex values — inline styles */
+  --v3-bg: #1a1f25;
+  --v3-fg: #dce4ed;
+  --v3-card: #222830;
+  --v3-card-border: #323a45;
+  --v3-muted: #7f8a99;
 }
 
 /* ─────────────────────────────────────────────────────────────
    COLOR SCHEMES — light
 ───────────────────────────────────────────────────────────── */
 [data-scheme="neon"] {
-  --accent: #00e187;
-  --c1: #ccffeb;
-  --c2: #66ffc2;
-  --c3: #00ff99;
-  --c4: #00e187;
+  --accent: #00d68f;
+  --c1: #c2f5e2;
+  --c2: #5ceab5;
+  --c3: #00f5a0;
+  --c4: #00d68f;
 }
 
 [data-scheme="blue"] {
@@ -122,11 +143,11 @@
    COLOR SCHEMES — dark
 ───────────────────────────────────────────────────────────── */
 .dark[data-scheme="neon"] {
-  --accent: #00ff99;
-  --c1: #00331f;
-  --c2: #00663d;
-  --c3: #00cc7a;
-  --c4: #00ff99;
+  --accent: #00f5a0;
+  --c1: #0a2e1f;
+  --c2: #0d5c3a;
+  --c3: #00c87e;
+  --c4: #00f5a0;
 }
 
 .dark[data-scheme="blue"] {
@@ -178,8 +199,17 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   TAILWIND THEME TOKENS
+   CARD UTILITIES — soft lifted feel
 ───────────────────────────────────────────────────────────── */
+:root {
+  --card-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.03);
+  --card-shadow-hover: 0 2px 8px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.06);
+  --card-radius: 16px;
+}
+.dark {
+  --card-shadow: 0 1px 3px rgba(0,0,0,.2), 0 4px 16px rgba(0,0,0,.15);
+  --card-shadow-hover: 0 4px 12px rgba(0,0,0,.3), 0 8px 32px rgba(0,0,0,.2);
+}
 
 
 /* ── Base ──────────────────────────────────────────────────── */
@@ -187,6 +217,10 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  /* Override root globals.css border-border leak — V3 uses --card-border */
+  border-color: var(--v3-card-border);
+  border-width: 0;
+  border-style: solid;
 }
 
 html {
@@ -194,14 +228,27 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter, 'Inter', ui-sans-serif, system-ui, sans-serif);
+  background: var(--v3-bg);
+  color: var(--v3-fg);
+  font-family: var(--font-jetbrainsMono, 'JetBrains Mono', ui-monospace, monospace);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   transition: background 0.2s ease, color 0.2s ease;
+  /* Ensure V3's border var overrides root globals.css */
+  border-color: var(--v3-card-border);
+}
+
+/* ── Glassmorphism panel ───────────────────────────────────── */
+.v3-glass {
+  background: hsl(var(--background) / 0.72);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid hsl(var(--card-border) / 0.4);
+  border-radius: var(--card-radius);
+  /* Added a subtle shadow to separate from background */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* ── Smooth scroll ──────────────────────────────────────────── */
@@ -209,3 +256,96 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ─────────────────────────────────────────────────────────────
+   INVERTED BORDER RADIUS (NOTCH) — concave corner cutouts
+   Creates a concave "bite" in the card corner. The floating
+   element sits OUTSIDE with a visible gap of page background.
+
+   --notch-size  = how big the cutout area is
+   --notch-radius = radius of the concave curve
+───────────────────────────────────────────────────────────── */
+:root {
+  --notch-size: 32px;
+  --notch-radius: 22px;
+}
+
+/* ── Top-right notch ──────────────────────────────────────── */
+.notch-tr {
+  overflow: visible;
+}
+.notch-tr::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: var(--notch-size);
+  height: var(--notch-size);
+  background: radial-gradient(
+    circle at 0% 100%,
+    transparent var(--notch-radius),
+    var(--v3-bg) calc(var(--notch-radius) + 0.5px)
+  );
+  z-index: 2;
+  pointer-events: none;
+  border-top-right-radius: var(--card-radius);
+}
+
+/* ── Bottom-right notch ───────────────────────────────────── */
+.notch-br {
+  overflow: visible;
+}
+.notch-br::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: var(--notch-size);
+  height: var(--notch-size);
+  background: radial-gradient(
+    circle at 0% 0%,
+    transparent var(--notch-radius),
+    var(--v3-bg) calc(var(--notch-radius) + 0.5px)
+  );
+  z-index: 2;
+  pointer-events: none;
+  border-bottom-right-radius: var(--card-radius);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   AVATAR BANNER MASK (CUTOUT)
+   Creates a circular transparent cutout in the banner image 
+   so the avatar appears with a transparent gap around it.
+───────────────────────────────────────────────────────────── */
+:root {
+  --avatar-notch-gap: 8px; /* space between avatar and banner */
+}
+
+/* Mobile banner mask */
+.banner-mask-mobile {
+  mask-image: radial-gradient(
+    circle at 64px calc(100% + 24px), /* Avatar center: X: pad 16px(4) + pl-2 8px(2) + radius 56px(14) - adjusted. Y: bottom + overlap */
+    transparent calc(56px + var(--avatar-notch-gap) - 1px),
+    black calc(56px + var(--avatar-notch-gap))
+  );
+  -webkit-mask-image: radial-gradient(
+    circle at 64px calc(100% + 24px),
+    transparent calc(56px + var(--avatar-notch-gap) - 1px),
+    black calc(56px + var(--avatar-notch-gap))
+  );
+}
+
+/* Desktop banner mask */
+@media (min-width: 640px) {
+  .banner-mask-desktop {
+    mask-image: radial-gradient(
+      circle at 104px calc(100% + 14px), /* Desktop Avatar center: X: px-6 (24px) + pl-2 (8px) + radius 72px (w-36/2) = 104px */
+      transparent calc(72px + var(--avatar-notch-gap) - 1px),
+      black calc(72px + var(--avatar-notch-gap))
+    );
+    -webkit-mask-image: radial-gradient(
+      circle at 104px calc(100% + 14px),
+      transparent calc(72px + var(--avatar-notch-gap) - 1px),
+      black calc(72px + var(--avatar-notch-gap))
+    );
+  }
+}

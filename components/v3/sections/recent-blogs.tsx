@@ -2,21 +2,26 @@ import Link from "next/link";
 import { posts } from "@/content/v3/blogs";
 
 export default function RecentBlogs() {
-    // Show up to 3 most recent posts
     const recentPosts = posts.slice(0, 3);
 
     if (recentPosts.length === 0) {
         return (
             <div
-                className="flex flex-col items-center justify-center p-12 rounded-2xl text-center"
-                style={{ background: "var(--card)", border: "1px dashed var(--card-border)" }}
+                className="flex flex-col items-center justify-center p-12 text-center"
+                style={{
+                    background: "var(--v3-card)",
+                    border: "1px dashed var(--v3-card-border)",
+                    borderRadius: "var(--card-radius)",
+                    boxShadow: "var(--card-shadow)",
+                }}
             >
                 <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-xl font-mono select-none"
+                    className="w-12 h-12 flex items-center justify-center mb-4 text-xl font-mono select-none"
                     style={{
-                        background: "var(--c0)",
+                        background: "var(--v3-bg)",
                         color: "var(--accent)",
-                        border: "1px solid var(--card-border)",
+                        border: "1px solid var(--v3-card-border)",
+                        borderRadius: "12px",
                     }}
                 >
                     ✍
@@ -30,19 +35,48 @@ export default function RecentBlogs() {
     }
 
     return (
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-5">
             {recentPosts.map((post) => (
                 <Link
                     key={post.slug}
                     href={`/blogs/${post.slug}`}
-                    className="group flex flex-col p-5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-accent no-underline"
-                    style={{ background: "var(--card)", border: "1px solid var(--card-border)" }}
+                    className="group relative flex flex-col p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent no-underline notch-tr"
+                    style={{
+                        background: "var(--v3-card)",
+                        border: "1px solid var(--v3-card-border)",
+                        borderRadius: "var(--card-radius)",
+                        boxShadow: "var(--card-shadow)",
+                    }}
                 >
+                    {/* ── Floating arrow button (top-right) ── */}
+                    <span
+                        className="absolute -top-3.5 -right-3.5 w-8 h-8 flex items-center justify-center transition-all duration-200 z-10 group-hover:scale-110"
+                        style={{
+                            background: "var(--accent)",
+                            borderRadius: "10px",
+                            boxShadow: "var(--card-shadow)",
+                            color: "var(--v3-card)",
+                        }}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
+                        </svg>
+                    </span>
+
                     <div className="flex items-start justify-between gap-4 mb-2">
                         <p className="text-base font-bold font-mono group-hover:text-accent transition-colors duration-200">
                             {post.title}
                         </p>
-                        <span className="shrink-0 text-xs font-mono opacity-50 flex items-center gap-1.5 mt-0.5">
+                        {/* ── Date pill ── */}
+                        <span
+                            className="shrink-0 text-xs font-mono px-2.5 py-1 select-none"
+                            style={{
+                                background: "var(--v3-bg)",
+                                border: "1px solid var(--v3-card-border)",
+                                borderRadius: "10px",
+                                color: "var(--v3-muted)",
+                            }}
+                        >
                             {post.date}
                         </span>
                     </div>
@@ -56,8 +90,13 @@ export default function RecentBlogs() {
                             {post.tags.slice(0, 3).map((tag) => (
                                 <span
                                     key={tag}
-                                    className="text-xs font-mono px-2 py-0.5 rounded-full select-none"
-                                    style={{ background: "var(--c0)", color: "var(--muted)" }}
+                                    className="text-xs font-mono px-2.5 py-1 select-none"
+                                    style={{
+                                        background: "var(--v3-card)",
+                                        border: "1px solid var(--v3-card-border)",
+                                        borderRadius: "10px",
+                                        color: "var(--v3-muted)",
+                                    }}
                                 >
                                     {tag}
                                 </span>
@@ -75,12 +114,16 @@ export default function RecentBlogs() {
 
 export function RecentBlogsSkeleton() {
     return (
-        <div className="grid grid-cols-1 gap-4 animate-pulse">
+        <div className="grid grid-cols-1 gap-5 animate-pulse">
             {Array.from({ length: 3 }).map((_, i) => (
                 <div
                     key={i}
-                    className="p-5 rounded-xl flex flex-col gap-3"
-                    style={{ background: "var(--card)", border: "1px solid var(--card-border)" }}
+                    className="p-5 flex flex-col gap-3"
+                    style={{
+                        background: "var(--v3-card)",
+                        border: "1px solid var(--v3-card-border)",
+                        borderRadius: "var(--card-radius)",
+                    }}
                 >
                     <div className="h-4 w-3/4 rounded bg-foreground/8 mb-1" />
                     <div className="h-3 w-full rounded bg-foreground/8" />
@@ -94,6 +137,3 @@ export function RecentBlogsSkeleton() {
         </div>
     );
 }
-
-
-

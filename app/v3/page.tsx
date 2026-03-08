@@ -119,11 +119,11 @@ export default function Home() {
         ── */}
 
         {/* Mobile: absolute-height hero block that pulls up behind navbar */}
-        <div className="sm:hidden w-full -mt-16 relative h-72">
+        <div className="sm:hidden w-full -mt-16 relative h-72 banner-mask-mobile">
           <ImageWithPlaceholder
             src="/v3/images/banner.webp"
             alt="Banner"
-            fill priority
+            fill preload 
             containerClassName="w-full h-full"
             className="object-cover select-none"
             sizes="100vw"
@@ -140,12 +140,12 @@ export default function Home() {
         </div>
 
         {/* Desktop: padded, rounded card inside max-width container */}
-        <div className="hidden sm:block w-full px-6 pt-6">
+        <div className="hidden sm:block w-full px-6 pt-6 banner-mask-desktop">
           <div className="max-w-5xl mx-auto h-60 bg-neutral-200 dark:bg-neutral-800 rounded-2xl overflow-hidden relative">
             <ImageWithPlaceholder
               src="/v3/images/banner.webp"
               alt="Banner"
-              fill priority
+              fill preload
               containerClassName="w-full h-full"
               className="object-cover select-none"
               sizes="(max-width: 1024px) 100vw, 1024px"
@@ -159,7 +159,7 @@ export default function Home() {
 
           {/* Avatar + name — peeks below banner */}
           <div className="flex gap-4 items-end -mt-20 sm:-mt-14 pl-2">
-            <div className="w-28 h-28 md:w-36 md:h-36 bg-neutral-300 dark:bg-neutral-800 rounded-full overflow-hidden border-4 border-background shrink-0 relative backdrop-blur-3xl shadow-lg">
+            <div className="w-28 h-28 md:w-36 md:h-36 bg-neutral-300 dark:bg-neutral-800 rounded-full overflow-hidden shrink-0 relative backdrop-blur-3xl shadow-lg ring-1 ring-border/20">
               <ImageWithPlaceholder
                 src="/photo.jpg"
                 alt="Aditya avatar"
@@ -188,7 +188,7 @@ export default function Home() {
             <main className="flex-1 min-w-0">
 
               {/* ── Bio, tags, socials ─────────────────────── */}
-              <section id="hero" className="scroll-mt-24">
+              <section id="hero" className="scroll-mt-24 v3-glass p-6 sm:p-8 rounded-2xl">
                 <p className="text-lg font-mono opacity-80 leading-relaxed max-w-2xl">
                   I build things that actually work in the real world — sharp, fast, and user-friendly. 
                   Mostly focused on AI now, experimenting with models, fine-tuning, and pushing practical features into real products. 
@@ -208,7 +208,7 @@ export default function Home() {
               </section>
 
               {/* ── GitHub Contributions ───────────────────── */}
-              <section id="contributions" className="mt-14 scroll-mt-24">
+              <section id="contributions" className="mt-14 scroll-mt-24 v3-glass p-6 sm:p-8 rounded-2xl">
                 <p className="text-2xl font-bold select-none mb-4">Contributions</p>
                 <Suspense fallback={<CommitsSkeleton />}>
                   <GithubCommits />
@@ -219,7 +219,7 @@ export default function Home() {
               <QuoteRotatorWrapper />
 
               {/* ── Experience ─────────────────────────────── */}
-              <section id="experience" className="mt-14 scroll-mt-24">
+              <section id="experience" className="mt-14 scroll-mt-24 v3-glass p-6 sm:p-8 rounded-2xl">
                 <p className="text-2xl font-bold select-none mb-5">Experience</p>
                 <Suspense fallback={<ExperienceSkeleton />}>
                   <ExperienceTimeline />
@@ -227,7 +227,7 @@ export default function Home() {
               </section>
 
               {/* ── Skills (grouped) ──────────────────────── */}
-              <section id="skills" className="mt-14 scroll-mt-24">
+              <section id="skills" className="mt-14 scroll-mt-24 v3-glass p-6 sm:p-8 rounded-2xl">
                 <p className="text-2xl font-bold select-none mb-6">Skills</p>
                 <Suspense fallback={<SkillsSkeleton />}>
                   <SkillGroups groups={skillGroups} />
@@ -235,7 +235,7 @@ export default function Home() {
               </section>
 
               {/* ── Recent Blogs ───────────────────────────── */}
-              <section id="blogs" className="mt-14 scroll-mt-24">
+              <section id="blogs" className="mt-14 scroll-mt-24 v3-glass p-6 sm:p-8 rounded-2xl">
                 <div className="flex items-center justify-between mb-5">
                   <p className="text-2xl font-bold select-none">Recent Blogs</p>
                   <a
@@ -251,7 +251,7 @@ export default function Home() {
               </section>
 
               {/* ── Featured Projects ──────────────────────── */}
-              <section id="projects" className="mt-14 scroll-mt-24">
+              <section id="projects" className="mt-14 scroll-mt-24 v3-glass p-6 sm:p-8 rounded-2xl">
                 <div className="flex items-center justify-between mb-5">
                   <p className="text-2xl font-bold select-none">Projects</p>
                   <a

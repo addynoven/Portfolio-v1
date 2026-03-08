@@ -15,7 +15,7 @@ export const SCHEME_META: Record<Scheme, { label: string; dark: string; light: s
     rose: { label: "Rose", dark: "#f78166", light: "#cf222e" },
     amber: { label: "Amber", dark: "#d29922", light: "#bf8700" },
     cyan: { label: "Cyan", dark: "#39d0d6", light: "#0598bc" },
-    neon: { label: "Neon", dark: "#00ff99", light: "#00e187" },
+    neon: { label: "Neon", dark: "#00f5a0", light: "#00d68f" },
 };
 
 /* ── Context ────────────────────────────────────────────────── */
