@@ -258,6 +258,7 @@ body {
 /* ── Smooth scroll ──────────────────────────────────────────── */
 html {
 	scroll-behavior: smooth;
+	scroll-padding-top: 5rem; /* navbar height (16 = 4rem) + extra buffer */
 }
 
 /* ─────────────────────────────────────────────────────────────

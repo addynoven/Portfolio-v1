@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { VersionSwitcher } from "@/components/VersionSwitcher";
+import { useLenis } from "lenis/react";
 
 interface Item {
   id: string;
@@ -9,17 +9,18 @@ interface Item {
 }
 
 // How far from the top of the viewport counts as "active"
-const OFFSET = 120; // px — accounts for sticky navbar height
+const OFFSET = 100; // px — accounts for sticky navbar height
 
 export default function SidebarNavClient({ items }: { items: Item[] }) {
   const [active, setActive] = useState<string>(items[0]?.id ?? "");
+  const lenis = useLenis();
 
   useEffect(() => {
     const getActive = () => {
-      const scrollY = window.scrollY + OFFSET;
+      const scrollY = window.scrollY + OFFSET + 20;
 
       // If we've scrolled to the absolute bottom, activate the last item naturally
-      if (window.innerHeight + Math.round(window.scrollY) >= document.body.offsetHeight - 5) {
+      if (window.innerHeight + Math.round(window.scrollY) >= document.body.offsetHeight - 20) {
         setActive(items[items.length - 1].id);
         return;
       }
@@ -42,10 +43,18 @@ export default function SidebarNavClient({ items }: { items: Item[] }) {
   }, [items]);
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - OFFSET + 4;
-    window.scrollTo({ top, behavior: "smooth" });
+    if (lenis) {
+      lenis.scrollTo(`#${id}`, {
+        offset: -OFFSET,
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo out
+      });
+    } else {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - OFFSET;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
   };
 
   return (

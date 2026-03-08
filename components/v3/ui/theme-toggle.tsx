@@ -2,15 +2,27 @@
 
 import { useTheme, SCHEME_META } from "@/lib/v3/theme";
 import { Sun, Moon } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
     const { mode, scheme, setMode } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const toggleMode = () => {
         setMode(mode === "dark" ? "light" : "dark");
     };
 
     const accentColor = mode === "dark" ? SCHEME_META[scheme].dark : SCHEME_META[scheme].light;
+
+    if (!mounted) {
+        return (
+            <div className="w-10 h-10 rounded-xl bg-foreground/5 animate-pulse" />
+        );
+    }
 
     return (
         <button

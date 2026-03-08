@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { useTheme as useNextTheme } from "next-themes";
 
 /* ── Types & constants ────────────────────────────────────── */
 export type Mode = "dark" | "light";
@@ -31,42 +32,37 @@ const ThemeContext = createContext<ThemeCtx>({
     setMode: () => { }, setScheme: () => { },
 });
 
-/* ── Helpers ────────────────────────────────────────────────── */
-function applyToDOM(mode: Mode, scheme: Scheme) {
-    document.documentElement.classList.toggle("dark", mode === "dark");
-    document.documentElement.setAttribute("data-scheme", scheme);
-}
-
 /* ── Provider ───────────────────────────────────────────────── */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-    const [mode, setModeState] = useState<Mode>("dark");
+    const { theme, setTheme, resolvedTheme } = useNextTheme();
     const [scheme, setSchemeState] = useState<Scheme>("neon");
+    const [mounted, setMounted] = useState(false);
 
-    // On mount: read saved prefs or fall back to system
+    // Initial mount to read local storage for scheme
     useEffect(() => {
-        const savedMode = localStorage.getItem("theme-mode") as Mode | null;
         const savedScheme = localStorage.getItem("theme-scheme") as Scheme | null;
-        const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-        const m = savedMode ?? (systemDark ? "dark" : "light");
-        const s = savedScheme ?? "neon";
-
-        setModeState(m as Mode);
-        setSchemeState(s as Scheme);
-        applyToDOM(m as Mode, s as Scheme);
+        if (savedScheme) setSchemeState(savedScheme);
+        setMounted(true);
     }, []);
 
+    // Apply scheme to DOM whenever it changes
+    useEffect(() => {
+        if (mounted) {
+            document.documentElement.setAttribute("data-scheme", scheme);
+        }
+    }, [scheme, mounted]);
+
     const setMode = (m: Mode) => {
-        setModeState(m);
-        localStorage.setItem("theme-mode", m);
-        applyToDOM(m, scheme);
+        setTheme(m);
     };
 
     const setScheme = (s: Scheme) => {
         setSchemeState(s);
         localStorage.setItem("theme-scheme", s);
-        applyToDOM(mode, s);
     };
+
+    // Use resolvedTheme (or theme as fallback) to determine the current mode
+    const mode = (resolvedTheme || theme || "dark") as Mode;
 
     return (
         <ThemeContext.Provider value={{ mode, scheme, setMode, setScheme }}>

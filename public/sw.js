@@ -2,8 +2,6 @@
 const CACHE_NAME = 'portfolio-v1';
 const STATIC_ASSETS = [
   '/',
-  '/fonts/JetBrainsMono-Regular.woff2',
-  '/fonts/JetBrainsMono-Bold.woff2',
   '/photo.jpg',
 ];
 
