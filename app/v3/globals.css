@@ -64,20 +64,20 @@
 
 .dark {
 	/* HSL channels — GitHub Dark theme */
-  --background: 215 28% 7%;      /* #0d1117 */
-  --foreground: 210 25% 90%;      /* #dce4ed */
-  --card: 215 21% 11%;            /* #161b22 - slightly lighter for distinction */
-  --card-border: 215 12% 18%;     /* #21262d */
-  --border: 215 12% 18%;
-  --muted: 215 10% 55%;           /* #7f8a99 */
-  --c0: 215 21% 11%;              /* #161b22 */
+	--background: 215 28% 7%; /* #0d1117 */
+	--foreground: 210 25% 90%; /* #dce4ed */
+	--card: 215 21% 11%; /* #161b22 - slightly lighter for distinction */
+	--card-border: 215 12% 18%; /* #21262d */
+	--border: 215 12% 18%;
+	--muted: 215 10% 55%; /* #7f8a99 */
+	--c0: 215 21% 11%; /* #161b22 */
 
 	/* Full hex values — inline styles */
-  --v3-bg: #0d1117;
-  --v3-fg: #dce4ed;
-  --v3-card: #161b22;
-  --v3-card-border: #21262d;
-  --v3-muted: #7f8a99;
+	--v3-bg: #0d1117;
+	--v3-fg: #dce4ed;
+	--v3-card: #161b22;
+	--v3-card-border: #21262d;
+	--v3-muted: #7f8a99;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -208,8 +208,9 @@
 	--card-radius: 16px;
 }
 .dark {
-  --card-shadow: 0 1px 3px rgba(0,0,0,.45), 0 4px 16px rgba(0,0,0,.35);
-  --card-shadow-hover: 0 4px 12px rgba(0,0,0,.6), 0 8px 32px rgba(0,0,0,.45);
+	--card-shadow: 0 1px 3px rgba(0, 0, 0, 0.45), 0 4px 16px rgba(0, 0, 0, 0.35);
+	--card-shadow-hover:
+		0 4px 12px rgba(0, 0, 0, 0.6), 0 8px 32px rgba(0, 0, 0, 0.45);
 }
 
 /* ── Base ──────────────────────────────────────────────────── */
@@ -252,7 +253,9 @@ body {
 	background: var(--v3-card);
 	border: 1px solid var(--v3-card-border);
 	border-radius: var(--card-radius);
-	transition: border-color 0.2s ease, background 0.2s ease;
+	transition:
+		border-color 0.2s ease,
+		background 0.2s ease;
 }
 
 /* ── Smooth scroll ──────────────────────────────────────────── */
@@ -355,4 +358,22 @@ html {
 			black calc(72px + var(--avatar-notch-gap))
 		);
 	}
+}
+
+/* ─────────────────────────────────────────────────────────────
+   AUDIO PLAYER — Sound Wave Animation
+   Creates animated sound bars for the music player button
+───────────────────────────────────────────────────────────── */
+@keyframes sound-wave {
+	0%,
+	100% {
+		height: 4px;
+	}
+	50% {
+		height: 20px;
+	}
+}
+
+.animate-sound-wave {
+	animation: sound-wave 0.5s ease-in-out infinite;
 }
