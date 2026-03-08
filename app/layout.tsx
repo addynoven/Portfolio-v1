@@ -1,6 +1,7 @@
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/v1/ThemeProvider";
+import MusicWrapper from "@/components/v3/layout/music-wrapper";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import type { Metadata, Viewport } from "next";
 
@@ -14,15 +15,27 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
 	title: "Aditya Sahu | Full Stack Developer Portfolio",
-	description: "Full Stack Developer specializing in React, Next.js, Node.js, and AI-powered solutions. View my projects and get in touch for collaboration.",
-	keywords: ["Full Stack Developer", "React Developer", "Next.js", "Node.js", "MERN Stack", "Web Developer", "Portfolio", "Aditya Sahu", "Neon Stain"],
+	description:
+		"Full Stack Developer specializing in React, Next.js, Node.js, and AI-powered solutions. View my projects and get in touch for collaboration.",
+	keywords: [
+		"Full Stack Developer",
+		"React Developer",
+		"Next.js",
+		"Node.js",
+		"MERN Stack",
+		"Web Developer",
+		"Portfolio",
+		"Aditya Sahu",
+		"Neon Stain",
+	],
 	authors: [{ name: "Aditya Sahu", url: "https://github.com/addynoven" }],
 	creator: "Aditya Sahu",
 	openGraph: {
 		type: "website",
 		locale: "en_US",
 		title: "Aditya Sahu | Full Stack Developer Portfolio",
-		description: "Full Stack Developer specializing in React, Next.js, Node.js, and AI-powered solutions.",
+		description:
+			"Full Stack Developer specializing in React, Next.js, Node.js, and AI-powered solutions.",
 		siteName: "Neon Stain Portfolio",
 		images: [
 			{
@@ -36,7 +49,8 @@ export const metadata: Metadata = {
 	twitter: {
 		card: "summary_large_image",
 		title: "Aditya Sahu | Full Stack Developer Portfolio",
-		description: "Full Stack Developer specializing in React, Next.js, Node.js, and AI-powered solutions.",
+		description:
+			"Full Stack Developer specializing in React, Next.js, Node.js, and AI-powered solutions.",
 		creator: "@addynoven",
 		images: ["/photo.jpg"],
 	},
@@ -72,15 +86,17 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={jetbrainsMono.variable}>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="dark"
-					enableSystem
-					disableTransitionOnChange
-				>
-					{children}
-				</ThemeProvider>
-				<ServiceWorkerRegistration />
+				<MusicWrapper>
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="dark"
+						enableSystem
+						disableTransitionOnChange
+					>
+						{children}
+					</ThemeProvider>
+					<ServiceWorkerRegistration />
+				</MusicWrapper>
 			</body>
 		</html>
 	);

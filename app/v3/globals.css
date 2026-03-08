@@ -53,6 +53,7 @@
 	--border: 30 30% 99%;
 	--muted: 220 8% 50%; /* #767c86 */
 	--c0: 30 14% 93%; /* #f0ece7 */
+	--c0-cell: #e8e3dc; /* visible empty cell — slightly darker than card */
 
 	/* Full hex values — inline styles */
 	--v3-bg: #fefcfa;
@@ -71,6 +72,7 @@
 	--border: 215 12% 18%;
 	--muted: 215 10% 55%; /* #7f8a99 */
 	--c0: 215 21% 11%; /* #161b22 */
+	--c0-cell: #2a3240; /* visible empty cell — clearly distinct from card bg */
 
 	/* Full hex values — inline styles */
 	--v3-bg: #0d1117;
@@ -365,15 +367,10 @@ html {
    Creates animated sound bars for the music player button
 ───────────────────────────────────────────────────────────── */
 @keyframes sound-wave {
-	0%,
+	0% {
+		height: 3px;
+	}
 	100% {
-		height: 4px;
+		height: var(--bar-max, 18px);
 	}
-	50% {
-		height: 20px;
-	}
-}
-
-.animate-sound-wave {
-	animation: sound-wave 0.5s ease-in-out infinite;
 }

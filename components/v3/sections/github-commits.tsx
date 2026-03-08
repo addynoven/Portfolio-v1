@@ -16,22 +16,48 @@ const CACHE_KEY = "gh_commits_v3";
 const CACHE_TTL = 5 * 60 * 1000;
 
 const DAY_LABELS = {
-    en: ["", "Mon", "", "Wed", "", "Fri", ""],
-    jp: ["", "月", "", "水", "", "金", ""]
+	en: ["", "Mon", "", "Wed", "", "Fri", ""],
+	jp: ["", "月", "", "水", "", "金", ""],
 };
 
 const MONTHS = {
-    en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    jp: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+	en: [
+		"Jan",
+		"Feb",
+		"Mar",
+		"Apr",
+		"May",
+		"Jun",
+		"Jul",
+		"Aug",
+		"Sep",
+		"Oct",
+		"Nov",
+		"Dec",
+	],
+	jp: [
+		"1月",
+		"2月",
+		"3月",
+		"4月",
+		"5月",
+		"6月",
+		"7月",
+		"8月",
+		"9月",
+		"10月",
+		"11月",
+		"12月",
+	],
 };
 
-const LEGEND_COUNTS = [0, 1, 3, 7, 12];
+const LEGEND_COUNTS = [0, 1, 2, 3, 4];
 
-// Cell: 13px wide, 3px gap → 16px per column slot
-const CELL_SIZE = 13;
+// Cell: 14px wide, 3px gap → 17px per column slot
+const CELL_SIZE = 14;
 const CELL_GAP = 3;
-const CELL_SLOT = CELL_SIZE + CELL_GAP; // 16
-const DAY_LABEL_W = 28; // day label column width incl margin
+const CELL_SLOT = CELL_SIZE + CELL_GAP; // 17
+const DAY_LABEL_W = 32; // day label column width incl margin
 
 /* ── Helpers ────────────────────────────────────────────────── */
 function groupIntoWeeks(days: Day[]): Week[] {
@@ -51,7 +77,10 @@ function groupIntoWeeks(days: Day[]): Week[] {
 	return weeks;
 }
 
-function getMonthLabels(weeks: Week[], monthNames: string[]): { label: string; col: number }[] {
+function getMonthLabels(
+	weeks: Week[],
+	monthNames: string[],
+): { label: string; col: number }[] {
 	const out: { label: string; col: number }[] = [];
 	let last = -1;
 	weeks.forEach((week, col) => {
@@ -66,12 +95,47 @@ function getMonthLabels(weeks: Week[], monthNames: string[]): { label: string; c
 	return out;
 }
 
-function heatStyle(count: number | null): React.CSSProperties {
-	switch (count) {
+/**
+ * Compute quartile thresholds from all non-zero contribution counts.
+ * Returns [q1, q2, q3, q4] where each is the boundary for that level.
+ */
+function computeThresholds(days: Day[]): [number, number, number, number] {
+	const nonZero = days
+		.map((d) => d.count)
+		.filter((c) => c > 0)
+		.sort((a, b) => a - b);
+	if (nonZero.length === 0) return [1, 2, 3, 4];
+	const q = (p: number) =>
+		nonZero[Math.min(Math.floor(p * nonZero.length), nonZero.length - 1)];
+	return [
+		Math.max(1, q(0.25)),
+		Math.max(2, q(0.5)),
+		Math.max(3, q(0.75)),
+		Math.max(4, q(0.95)),
+	];
+}
+
+function getHeatLevel(
+	count: number,
+	thresholds: [number, number, number, number],
+): number {
+	if (count <= 0) return 0;
+	if (count <= thresholds[0]) return 1;
+	if (count <= thresholds[1]) return 2;
+	if (count <= thresholds[2]) return 3;
+	return 4;
+}
+
+function heatStyle(level: number | null): React.CSSProperties {
+	switch (level) {
 		case null:
 			return { backgroundColor: "transparent" };
 		case 0:
-			return { backgroundColor: "hsl(var(--c0))" };
+			// Empty cells: hollow outline style — categorically different from filled
+			return {
+				backgroundColor: "transparent",
+				boxShadow: "inset 0 0 0 1px var(--c0-cell)",
+			};
 		case 1:
 			return { backgroundColor: "var(--c1)" };
 		case 2:
@@ -91,13 +155,15 @@ export default function GithubCommits({
 }: {
 	initialData?: Day[] | null;
 }) {
-    const { language } = useLanguage();
-    
+	const { language } = useLanguage();
+
+	const [allDays, setAllDays] = useState<Day[]>(() => initialData ?? []);
 	const [allWeeks, setAllWeeks] = useState<Week[]>(() => {
 		return initialData && initialData.length > 0
 			? groupIntoWeeks(initialData)
 			: [];
 	});
+	const thresholds = computeThresholds(allDays);
 
 	const [total, setTotal] = useState(() => {
 		return initialData && initialData.length > 0
@@ -119,6 +185,7 @@ export default function GithubCommits({
 				if (raw) {
 					const { data, ts } = JSON.parse(raw);
 					if (Date.now() - ts < CACHE_TTL && data && data.length > 0) {
+						setAllDays(data);
 						setAllWeeks(groupIntoWeeks(data));
 						setTotal(
 							data.reduce((acc: number, day: Day) => acc + day.count, 0),
@@ -156,6 +223,7 @@ export default function GithubCommits({
 						CACHE_KEY,
 						JSON.stringify({ data, ts: Date.now() }),
 					);
+					setAllDays(data);
 					setAllWeeks(groupIntoWeeks(data));
 					setTotal(data.reduce((s, d) => s + d.count, 0));
 				}
@@ -175,7 +243,7 @@ export default function GithubCommits({
 	const cellStyle = {
 		width: CELL_SIZE,
 		height: CELL_SIZE,
-		borderRadius: 2,
+		borderRadius: 3,
 		flexShrink: 0,
 	} as const;
 	const gapStyle = { gap: CELL_GAP } as const;
@@ -308,7 +376,19 @@ export default function GithubCommits({
 																color: "var(--v3-bg)",
 															}}
 														>
-															{day.count} {language === "jp" ? "コントリビューション：" : "on"} {new Date(day.date).toLocaleDateString(language === "jp" ? "ja-JP" : "en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}
+															{day.count}{" "}
+															{language === "jp"
+																? "コントリビューション："
+																: "on"}{" "}
+															{new Date(day.date).toLocaleDateString(
+																language === "jp" ? "ja-JP" : "en-US",
+																{
+																	month: "short",
+																	day: "numeric",
+																	year: "numeric",
+																	timeZone: "UTC",
+																},
+															)}
 														</div>
 													)}
 												</div>
@@ -324,21 +404,24 @@ export default function GithubCommits({
 									className="text-xs font-mono select-none"
 									style={{ color: "var(--v3-muted)" }}
 								>
-									{total.toLocaleString()} {language === "jp" ? "過去1年間のコントリビューション" : "contributions in the last year"}
+									{total.toLocaleString()}{" "}
+									{language === "jp"
+										? "過去1年間のコントリビューション"
+										: "contributions in the last year"}
 								</span>
 								<div
 									className="flex items-center gap-1.5 text-xs font-mono select-none"
 									style={{ color: "var(--v3-muted)" }}
 								>
 									<span>{language === "jp" ? "少" : "Less"}</span>
-									{LEGEND_COUNTS.map((c) => (
+									{LEGEND_COUNTS.map((level) => (
 										<div
-											key={c}
+											key={level}
 											style={{
-												...heatStyle(c),
-												width: 11,
-												height: 11,
-												borderRadius: 2,
+												...heatStyle(level),
+												width: 12,
+												height: 12,
+												borderRadius: 3,
 											}}
 										/>
 									))}
