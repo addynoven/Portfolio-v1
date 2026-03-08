@@ -6,7 +6,6 @@ import Footer from "@/components/v3/layout/footer";
 import { ThemeProvider } from "@/lib/v3/theme";
 import ThunderRootBg from "@/components/v3/layout/thunder-root-bg";
 import { METADATA } from "@/app/v3/constants";
-import { LanguageProvider } from "@/context/v3/language-context";
 import { LenisProvider } from "@/components/v3/lenis-provider";
 
 /* ── Fonts ── */
@@ -54,18 +53,16 @@ export default function V3Layout({ children }: { children: React.ReactNode }) {
 			className={`${jetbrainsMono.variable} ${caveat.variable} min-h-screen bg-background text-foreground font-sans selection:bg-accent/30`}
 		>
 			<ThemeProvider>
-				<LanguageProvider>
-					<LenisProvider>
-						<div className="relative z-10 bg-background">
-							<Navbar />
-							<ThunderRootBg className="!fixed !inset-0 !w-screen !h-screen z-0 pointer-events-none" />
-							<main className="flex-1 relative z-[1] bg-transparent">
-								{children}
-							</main>
-							<Footer />
-						</div>
-					</LenisProvider>
-				</LanguageProvider>
+						<LenisProvider>
+							<div className="relative z-10 bg-background">
+								<Navbar />
+								<ThunderRootBg className="!fixed !inset-0 !w-screen !h-screen z-0 pointer-events-none" />
+								<main className="flex-1 relative z-[1] bg-transparent">
+									{children}
+								</main>
+								<Footer />
+							</div>
+						</LenisProvider>
 			</ThemeProvider>
 		</div>
 	);

@@ -1,6 +1,7 @@
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/v1/ThemeProvider";
+import { LanguageProvider } from "@/context/v3/language-context";
 import MusicWrapper from "@/components/v3/layout/music-wrapper";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import type { Metadata, Viewport } from "next";
@@ -87,14 +88,16 @@ export default function RootLayout({
 		<html lang="ja" suppressHydrationWarning>
 			<body className={`${jetbrainsMono.variable} antialiased bg-background text-foreground transition-colors duration-300`}>
 				<MusicWrapper>
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="light"
-						enableSystem
-						disableTransitionOnChange
-					>
-						{children}
-					</ThemeProvider>
+					<LanguageProvider>
+						<ThemeProvider
+							attribute="class"
+							defaultTheme="light"
+							enableSystem
+							disableTransitionOnChange
+						>
+							{children}
+						</ThemeProvider>
+					</LanguageProvider>
 					<ServiceWorkerRegistration />
 				</MusicWrapper>
 			</body>

@@ -41,8 +41,8 @@ export const socials = [
 	},
 	{
 		platform: "Email",
-		handle: "addynoven@gmail.com",
-		url: "mailto:addynoven@gmail.com",
+		handle: "dmcbaditya@gmail.com",
+		url: "mailto:dmcbaditya@gmail.com",
 	},
 ];
 
