@@ -29,7 +29,7 @@ interface ThemeCtx {
 }
 
 const ThemeContext = createContext<ThemeCtx>({
-    mode: "dark", scheme: "neon", mounted: false,
+    mode: "light", scheme: "neon", mounted: false,
     setMode: () => { }, setScheme: () => { },
 });
 
@@ -63,7 +63,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     };
 
     // Use resolvedTheme (or theme as fallback) to determine the current mode
-    const mode = (resolvedTheme || theme || "dark") as Mode;
+    const mode = (resolvedTheme || theme || "light") as Mode;
 
     return (
         <ThemeContext.Provider value={{ mode, scheme, mounted, setMode, setScheme }}>

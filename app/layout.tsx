@@ -84,12 +84,12 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="ja" suppressHydrationWarning>
 			<body className={jetbrainsMono.variable}>
 				<MusicWrapper>
 					<ThemeProvider
 						attribute="class"
-						defaultTheme="dark"
+						defaultTheme="light"
 						enableSystem
 						disableTransitionOnChange
 					>
