@@ -139,7 +139,50 @@ export const education = [
 ]
 
 // ── Art Gallery ───────────────────────────────────────────── */
-export const GALLERY: { src: string; title: string; medium: string; year: string }[] = [];
+export const GALLERY: { src: string; title: string; medium: string; year: string }[] = [
+    {
+        src: "/v3/art/Silent_Watcher_Behind_the_Mask.png",
+        title: "Silent Watcher Behind the Mask",
+        medium: "Digital Art",
+        year: "2024"
+    },
+    {
+        src: "/v3/art/nazuna_chan.png",
+        title: "Nazuna Chan",
+        medium: "Digital Art",
+        year: "2024"
+    },
+    {
+        src: "/v3/art/golden_elf_sketch.webp",
+        title: "Golden Elf Sketch",
+        medium: "Sketch",
+        year: "2024"
+    },
+    {
+        src: "/v3/art/sleepy_girl.webp",
+        title: "Sleepy Girl",
+        medium: "Digital Art",
+        year: "2024"
+    },
+    {
+        src: "/v3/art/girl.png",
+        title: "Girl",
+        medium: "Digital Art",
+        year: "2024"
+    },
+    {
+        src: "/v3/art/image.png",
+        title: "Abstract Composition",
+        medium: "Digital Art",
+        year: "2024"
+    },
+    {
+        src: "/v3/art/Pasted image.png",
+        title: "Sketch Study",
+        medium: "Sketch",
+        year: "2024"
+    }
+];
 
 // ── Quotes (cycling) ─────────────────────────────────────── */
 export const QUOTES = [

@@ -12,6 +12,9 @@ import { skillGroups, METADATA } from "@/app/v3/constants";
 import QuoteRotatorWrapper from "@/components/v3/sections/quote-rotator-wrapper";
 import AnimatedAvatar from "@/components/v3/ui/animated-avatar";
 import GithubCommits from "@/components/v3/sections/github-commits";
+import FeaturedArt from "@/components/v3/sections/featured-art";
+import Link from "next/link";
+import { MoveRight } from "lucide-react";
 
 /* ── Section skeletons (local for now) ──────────────────────────────── */
 function CommitsSkeleton() {
@@ -156,9 +159,38 @@ export default function Home() {
               </Suspense>
             </section>
 
-            <div className="mt-20 flex justify-center">
-              <QuoteRotatorWrapper />
-            </div>
+            {/* ── Quotes ───────────────────────────────────── */}
+            <section id="quotes" className="mt-16 scroll-mt-24">
+              <div className="flex items-center gap-3 mb-8">
+                <h2 className="text-xl font-bold lowercase tracking-tight">
+                    {language === "jp" ? "名言" : "Quotes"}
+                </h2>
+                <div className="h-px flex-1 bg-border/50" />
+              </div>
+              <div className="flex justify-center">
+                <QuoteRotatorWrapper />
+              </div>
+            </section>
+
+            {/* ── Art Gallery ─────────────────────────────── */}
+            <section id="art-gallery" className="mt-16 scroll-mt-24">
+              <div className="flex items-center justify-between mb-8 group/title">
+                <div className="flex items-center gap-3 flex-1">
+                  <h2 className="text-xl font-bold lowercase tracking-tight">
+                      {language === "jp" ? "アートギャラリー" : "Art Gallery"}
+                  </h2>
+                  <div className="h-px flex-1 bg-border/50" />
+                </div>
+                <Link
+                  href="/v3/art-gallery"
+                  className="ml-4 flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider opacity-50 hover:opacity-100 transition-opacity whitespace-nowrap"
+                >
+                  {language === "jp" ? "すべて見る" : "View All"}
+                  <MoveRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+              <FeaturedArt />
+            </section>
           </main>
         </div>
       </div>

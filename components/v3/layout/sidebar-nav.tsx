@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { id: "skills", label: { en: "Skills", jp: "スキル" } },
   { id: "experience", label: { en: "Experience", jp: "経歴" } },
   { id: "blogs", label: { en: "Blogs", jp: "ブログ" } },
+  { id: "quotes", label: { en: "Quotes", jp: "名言" } },
   { id: "art-gallery", label: { en: "Art Gallery", jp: "アートギャラリー" } },
 ];
 

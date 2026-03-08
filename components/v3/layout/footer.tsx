@@ -5,6 +5,7 @@ import { socials, METADATA } from "@/app/v3/constants";
 import { Icons } from "@/components/v3/ui/icons";
 import { VersionSwitcher } from "@/components/VersionSwitcher";
 import { useLanguage } from "@/context/v3/language-context";
+import FooterAnimation from "./footer-animation";
 
 const PAGES = [
 	{ href: "/", label: { en: "Home", jp: "ホーム" } },
@@ -34,23 +35,12 @@ export default function Footer() {
 					<div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
 						{/* Brand */}
 						<div className="col-span-1">
-							<p
-								className="text-2xl font-bold font-mono"
-								style={{ color: "var(--accent)" }}
-							>
-								{METADATA.name}
-							</p>
+							<div className="flex justify-start">
+								<FooterAnimation />
+							</div>
 							<p className="text-base font-mono mt-2 leading-relaxed opacity-70 whitespace-pre-line">
 								{t(METADATA.footerBio)}
 							</p>
-
-							{/* status dot */}
-							<div className="flex items-center gap-2 mt-4">
-								<span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-								<span className="text-sm font-mono opacity-70">
-									{language === "jp" ? "お仕事募集中" : "open to opportunities"}
-								</span>
-							</div>
 						</div>
 
 						{/* Pages */}
