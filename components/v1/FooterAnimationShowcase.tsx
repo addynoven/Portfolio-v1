@@ -136,7 +136,7 @@ const FooterAnimationShowcase = () => {
       case "letterChange":
         // Generate uppercase and formatted versions dynamically
         const upperLetters = siteName.toUpperCase().split('');
-        const formattedLetters = siteName.split('').map((c, i) => 
+        const formattedLetters = siteName.split('').map((c: string, i: number) => 
           i === 0 ? c.toUpperCase() : c.toLowerCase()
         );
         return (
@@ -144,24 +144,24 @@ const FooterAnimationShowcase = () => {
             key="letterChange"
             className="font-black tracking-tight"
           >
-            {upperLetters.map((letter, i) => (
+            {upperLetters.map((letter: string, i: number) => (
               <motion.span
                 key={i}
                 className={
-                  i < letterStep
+                  i < (letterStep as number)
                     ? "text-slate-700 dark:text-white"
-                    : i === letterStep - 1
+                    : i === (letterStep as number) - 1
                     ? "text-UserAccent"
                     : "text-slate-700 dark:text-white"
                 }
                 animate={
-                  i === letterStep - 1
+                  i === (letterStep as number) - 1
                     ? { y: [0, -2, 0], scale: [1, 1.1, 1] }
                     : {}
                 }
                 transition={{ duration: 0.2 }}
               >
-                {i < letterStep ? formattedLetters[i] : letter}
+                {i < (letterStep as number) ? formattedLetters[i] : letter}
               </motion.span>
             ))}
             <span className="text-UserAccent">.</span>

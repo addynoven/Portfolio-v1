@@ -110,19 +110,7 @@ export default function Footer() {
 							© {year} {METADATA.name} · All rights reserved
 						</p>
 
-						<div className="flex flex-col sm:flex-row items-center gap-6">
-							<p
-								className="text-sm font-mono select-none"
-								style={{ color: "var(--v3-muted)" }}
-							>
-								{language === "jp" ? "使用技術：" : "Built with "}
-								<span style={{ color: "var(--accent)", cursor: "pointer" }}>
-									Next.js
-								</span>
-								{" · "}TypeScript{" · "}Tailwind CSS
-							</p>
 							<VersionSwitcher />
-						</div>
 					</div>
 				</div>
 			</div>

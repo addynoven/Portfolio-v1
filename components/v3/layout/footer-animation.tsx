@@ -133,19 +133,19 @@ const FooterAnimation = () => {
                 
                 return (
                     <motion.span key="letterChange" className={textBaseClasses}>
-                        {upperLetters.map((letter, i) => (
+                        {upperLetters.map((letter: string, i: number) => (
                             <motion.span
                                 key={i}
                                 className="text-foreground"
                                 // No green passing style as requested
                                 animate={
-                                    i === letterStep - 1
+                                    i === (letterStep as number) - 1
                                         ? { y: [0, -2, 0], scale: [1, 1.1, 1] }
                                         : {}
                                 }
                                 transition={{ duration: 0.2 }}
                             >
-                                {i < letterStep ? finalLetters[i] : letter}
+                                {i < (letterStep as number) ? finalLetters[i] : letter}
                             </motion.span>
                         ))}
                         <span style={{ color: accentColor }}>.</span>
