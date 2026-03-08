@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, lazy, Suspense, useCallback } from "react";
+import { useState, lazy, Suspense, useCallback, useEffect } from "react";
 import { useLanguage } from "@/context/v3/language-context";
 import { Play, Square, ArrowLeft, Maximize2, Minimize2 } from "lucide-react";
 import Link from "next/link";
@@ -223,18 +223,29 @@ function BgCard({ item }: { item: BgItem }) {
 	const toggleLive = useCallback(() => setIsLive((p) => !p), []);
 	const toggleExpand = useCallback(() => setIsExpanded((p) => !p), []);
 
+	// Close fullscreen overlay on Escape key
+	useEffect(() => {
+		if (!isExpanded) return;
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") setIsExpanded(false);
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [isExpanded]);
+
 	return (
 		<>
 			{/* ── Fullscreen overlay ── */}
 			{isExpanded && (
 				<div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col">
-					<div className="flex items-center justify-between px-6 py-4 border-b border-foreground/10">
+					{/* ── Top bar — always on top ── */}
+					<div className="relative z-20 flex items-center justify-between px-6 py-4 border-b border-foreground/10 bg-background/80 backdrop-blur-md">
 						<div>
 							<h3 className="text-lg font-bold font-mono">{item.name}</h3>
 							<p className="text-xs font-mono opacity-50">
 								{t({
-									en: "Full-screen preview — move your mouse to interact",
-									jp: "フルスクリーンプレビュー — マウスを動かしてインタラクト",
+									en: "Full-screen preview — press Esc or click Close to exit",
+									jp: "フルスクリーンプレビュー — Escまたは閉じるをクリックして終了",
 								})}
 							</p>
 						</div>
@@ -243,14 +254,30 @@ function BgCard({ item }: { item: BgItem }) {
 							className="flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground/10 hover:bg-foreground/20 transition-colors text-sm font-mono cursor-pointer"
 						>
 							<Minimize2 className="w-4 h-4" />
-							{t({ en: "Close", jp: "閉じる" })}
+							{t({ en: "Close", jp: "閉じる" })}{" "}
+							<kbd className="ml-1 px-1.5 py-0.5 text-[10px] rounded bg-foreground/10 border border-foreground/20 font-mono">
+								Esc
+							</kbd>
 						</button>
 					</div>
-					<div className="flex-1 relative">
+
+					{/* ── Background render area ── */}
+					<div className="flex-1 relative z-0">
 						<Suspense fallback={<LivePreviewSkeleton />}>
 							{item.render()}
 						</Suspense>
 					</div>
+
+					{/* ── Floating close button — always visible on top of canvas ── */}
+					<button
+						onClick={toggleExpand}
+						className="fixed top-20 right-6 z-30 flex items-center gap-2 px-4 py-2 rounded-xl bg-background/80 backdrop-blur-md border border-foreground/20 shadow-lg hover:bg-background hover:scale-105 transition-all duration-200 text-sm font-mono cursor-pointer"
+					>
+						<Minimize2 className="w-4 h-4" />
+						<kbd className="px-1.5 py-0.5 text-[10px] rounded bg-foreground/10 border border-foreground/20 font-mono">
+							Esc
+						</kbd>
+					</button>
 				</div>
 			)}
 
