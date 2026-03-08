@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useTheme } from "next-themes";
+import { useTheme, SCHEME_META } from "@/lib/v3/theme";
 
 const r15 = Math.PI / 12;
 const r90 = Math.PI / 2;
@@ -49,9 +49,8 @@ export default function PlumBackground({
 	className,
 	frameDelay = 40,
 }: PlumBackgroundProps) {
-	const { theme, resolvedTheme } = useTheme();
-	const currentTheme = resolvedTheme || theme;
-	const isDark = currentTheme !== "light";
+	const { mode, scheme } = useTheme();
+	const isDark = mode === "dark";
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
 	useEffect(() => {
@@ -88,9 +87,6 @@ export default function PlumBackground({
 		}
 
 		function frame(now: number) {
-			// Throttle: only fire a generation burst every `frameDelay` ms.
-			// The whole generation still runs at once — that's what keeps
-			// the growth feeling natural. We're just slowing the rhythm.
 			if (now - lastTime < frameDelay) {
 				rafId = requestAnimationFrame(frame);
 				return;
@@ -101,7 +97,7 @@ export default function PlumBackground({
 			prevSteps = steps;
 			steps = [];
 
-			if (!prevSteps.length) return; // done — stop RAF
+			if (!prevSteps.length) return; 
 
 			prevSteps.forEach((fn) => fn());
 			rafId = requestAnimationFrame(frame);
@@ -113,9 +109,15 @@ export default function PlumBackground({
 			lastTime = 0;
 			ctx.clearRect(0, 0, W, H);
 			ctx.lineWidth = 1;
+            
+            // Restore original neutral color for dark mode (bluish-white)
+            // Use dark neutral (text black) only for light mode
+            const baseColor = isDark ? "#dce4ed" : "#232830";
+            
+            // Subtle opacity for both
 			ctx.strokeStyle = isDark
-				? "rgba(220, 228, 237, 0.15)"
-				: "rgba(35, 40, 48, 0.35)";
+				? `${baseColor}26` // ~15% (hex 26) - matches original aesthetic
+				: `${baseColor}40`; // ~25% (hex 40) - visible dark lines for light theme
 
 			steps =
 				Math.random() < 0.5
@@ -149,12 +151,12 @@ export default function PlumBackground({
 			clearTimeout(resizeTimer);
 			window.removeEventListener("resize", onResize);
 		};
-	}, [isDark, init, frameDelay]);
+	}, [isDark, scheme, init, frameDelay]);
 
 	return (
 		<canvas
 			ref={canvasRef}
-			className={`absolute inset-0 w-full h-full block z-0 pointer-events-none opacity-[0.55] dark:opacity-40 ${className || ""}`}
+			className={`absolute inset-0 w-full h-full block z-0 pointer-events-none opacity-[0.9] dark:opacity-40 ${className || ""}`}
 		/>
 	);
 }

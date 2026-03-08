@@ -80,7 +80,7 @@ export default function Home() {
         {/* ── Two-column layout (lg+) ─────────────────────── */}
         <div className="flex items-start gap-10 mt-12">
           {/* Left: sticky sidebar */}
-          <div className="hidden lg:block shrink-0">
+          <div className="hidden lg:block shrink-0 sticky top-24 h-fit">
              <SidebarNav />
           </div>
 

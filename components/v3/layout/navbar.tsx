@@ -51,7 +51,7 @@ export default function Navbar() {
                         href="/v3"
                         className="text-lg font-bold font-mono select-none flex items-center gap-2 hover:opacity-70 transition-opacity"
                     >
-                        <span style={{ color: "var(--accent)" }}>{language === "jp" ? "技" : "V"}</span>
+                        <span style={{ color: "var(--accent)" }}>{language === "jp" ? "技" : "ne"}</span>
                         <span className="text-foreground">{METADATA.name.toLowerCase()}</span>
                     </Link>
 

@@ -17,12 +17,12 @@ export default function Footer() {
 	const { t, language } = useLanguage();
 
 	return (
-		<footer className="relative mt-24 mb-10 w-full max-w-5xl mx-auto px-4 sm:px-6">
+		<footer className="relative mt-24 mb-0 max-w-5xl mx-auto px-4 sm:px-6">
 			{/* gradient fade from page bg into footer */}
 			<div className="absolute -top-16 left-0 right-0 h-16 pointer-events-none" />
 
 			<div
-				className="bg-card border overflow-hidden p-1"
+				className="bg-card border p-1"
 				style={{
 					borderColor: "var(--v3-card-border)",
 					borderRadius: "var(--card-radius)",

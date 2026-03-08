@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 
 export default function V3Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`${jetbrainsMono.variable} ${caveat.variable} min-h-screen bg-background text-foreground font-sans selection:bg-accent/30 lowercase overflow-hidden`}>
+    <div className={`${jetbrainsMono.variable} ${caveat.variable} min-h-screen bg-background text-foreground font-sans selection:bg-accent/30 lowercase `}>
       <ThemeProvider>
         <LanguageProvider>
           <div className="relative z-10 bg-background">

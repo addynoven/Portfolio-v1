@@ -18,7 +18,13 @@ export default function SidebarNavClient({ items }: { items: Item[] }) {
     const getActive = () => {
       const scrollY = window.scrollY + OFFSET;
 
-      // Walk sections bottom-up; first one whose top is <= scrollY wins
+      // If we've scrolled to the absolute bottom, activate the last item naturally
+      if (window.innerHeight + Math.round(window.scrollY) >= document.body.offsetHeight - 5) {
+        setActive(items[items.length - 1].id);
+        return;
+      }
+
+      // Walk sections top-down; the last one whose top is <= scrollY wins
       let current = items[0].id;
       for (const { id } of items) {
         const el = document.getElementById(id);
@@ -43,7 +49,7 @@ export default function SidebarNavClient({ items }: { items: Item[] }) {
   };
 
   return (
-    <aside className="hidden md:flex flex-col gap-0.5 sticky top-24 h-fit w-44 shrink-0 select-none">
+    <aside className="hidden md:flex flex-col gap-0.5 h-fit w-44 shrink-0 select-none">
       <div className="absolute left-[5.5px] top-6 bottom-6 w-px bg-foreground/10" />
 
       {items.map(({ id, label }) => {
