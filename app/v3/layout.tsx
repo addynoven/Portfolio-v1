@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 		type: "website",
 		images: [
 			{
-				url: METADATA.bannerPath,
+				url: "/v3/images/og-main.png",
 				width: 1200,
 				height: 630,
 				alt: `${METADATA.name} Portfolio Banner`,
