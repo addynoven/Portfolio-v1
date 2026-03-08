@@ -6,7 +6,7 @@ import { FaCopy, FaCheck } from "react-icons/fa";
 
 const ContactCard = () => {
   const [copied, setCopied] = useState(false);
-  const email = "adityasahu0605@gmail.com";
+  const email = "dmcbaditya@gmail.com";
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(email);

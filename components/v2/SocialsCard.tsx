@@ -10,7 +10,7 @@ const socials = [
   { icon: FaLinkedin, href: "https://linkedin.com/in/addynoven", label: "LinkedIn" },
   { icon: SiLeetcode, href: "https://leetcode.com/addynoven", label: "LeetCode" },
   { icon: FaDribbble, href: "#", label: "Dribbble" },
-  { icon: FaEnvelope, href: "mailto:aditya@example.com", label: "Email" },
+  { icon: FaEnvelope, href: "mailto:dmcbaditya@gmail.com", label: "Email" },
 ];
 
 const SocialsCard = () => {

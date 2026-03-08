@@ -181,7 +181,7 @@ export default function Terminal() {
     if (command === "contact")
       return [
         { type: "output", color: "yellow", text: "📬 Get in Touch:" },
-        { type: "output", color: "blue", text: "  📧 Email:  addynoven@gmail.com" },
+        { type: "output", color: "blue", text: "  📧 Email:  dmcbaditya@gmail.com" },
         { type: "output", color: "blue", text: "  🐙 GitHub: github.com/addynoven" },
         { type: "output", color: "cyan", text: "  → Type 'goto contact' or 'open github'" },
       ];
@@ -312,7 +312,7 @@ export default function Terminal() {
         github: "https://github.com/addynoven",
         linkedin: "https://linkedin.com/in/addynoven",
         twitter: "https://twitter.com/addynoven",
-        email: "mailto:addynoven@gmail.com",
+        email: "mailto:dmcbaditya@gmail.com",
       };
       if (!link || !links[link]) {
         return [

@@ -8,7 +8,7 @@ const socials = [
   { icon: FaTwitter, href: "https://twitter.com/addynoven", label: "Twitter" },
   { icon: FaGithub, href: "https://github.com/addynoven", label: "GitHub" },
   { icon: FaLinkedin, href: "https://linkedin.com/in/addynoven", label: "LinkedIn" },
-  { icon: FaEnvelope, href: "mailto:adityasahu0605@gmail.com", label: "Email" },
+  { icon: FaEnvelope, href: "mailto:dmcbaditya@gmail.com", label: "Email" },
   { icon: SiLeetcode, href: "https://leetcode.com/addynoven", label: "LeetCode" },
 ];
 
