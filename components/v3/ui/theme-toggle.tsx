@@ -5,54 +5,58 @@ import { Sun, Moon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
-    const { mode, scheme, setMode } = useTheme();
-    const [mounted, setMounted] = useState(false);
+	const { mode, scheme, setMode } = useTheme();
+	const [mounted, setMounted] = useState(false);
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
-    const toggleMode = () => {
-        setMode(mode === "dark" ? "light" : "dark");
-    };
+	const toggleMode = () => {
+		setMode(mode === "dark" ? "light" : "dark");
+	};
 
-    const accentColor = mode === "dark" ? SCHEME_META[scheme].dark : SCHEME_META[scheme].light;
+	const accentColor =
+		mode === "dark" ? SCHEME_META[scheme].dark : SCHEME_META[scheme].light;
 
-    if (!mounted) {
-        return (
-            <div className="w-10 h-10 rounded-xl bg-foreground/5 animate-pulse" />
-        );
-    }
+	if (!mounted) {
+		return (
+			<div className="w-10 h-10 rounded-xl bg-foreground/5 animate-pulse" />
+		);
+	}
 
-    return (
-        <button
-            onClick={toggleMode}
-            className="group flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 hover:bg-foreground/5 relative overflow-hidden"
-            aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
-            title={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
-        >
-            {/* Background Glow matching scheme */}
-            <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
-                style={{ backgroundColor: accentColor }}
-            />
+	return (
+		<button
+			onClick={toggleMode}
+			className="group flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 hover:bg-foreground/5 relative overflow-hidden"
+			aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
+			title={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
+		>
+			{/* Background Glow matching scheme */}
+			<div
+				className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+				style={{ backgroundColor: accentColor }}
+			/>
 
-            <div className="relative z-10">
-                {mode === "dark" ? (
-                    <Sun size={20} className="text-foreground/60 group-hover:text-foreground transition-colors duration-300" />
-                ) : (
-                    <Moon size={20} className="text-foreground/60 group-hover:text-foreground transition-colors duration-300" />
-                )}
-            </div>
+			<div className="relative z-10">
+				{mode === "dark" ? (
+					<Sun
+						size={20}
+						className="text-foreground/60 group-hover:text-foreground transition-colors duration-300"
+					/>
+				) : (
+					<Moon
+						size={20}
+						className="text-foreground/60 group-hover:text-foreground transition-colors duration-300"
+					/>
+				)}
+			</div>
 
-            {/* Micro-dot for current scheme color */}
-            <span 
-                className="absolute bottom-1.5 right-1.5 w-1.5 h-1.5 rounded-full shadow-sm transition-all duration-500"
-                style={{ backgroundColor: accentColor }}
-            />
-        </button>
-    );
+			{/* Micro-dot for current scheme color */}
+			<span
+				className="absolute bottom-1.5 right-1.5 w-1.5 h-1.5 rounded-full shadow-sm transition-all duration-500"
+				style={{ backgroundColor: accentColor }}
+			/>
+		</button>
+	);
 }
-
-
-

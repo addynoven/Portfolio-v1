@@ -2,16 +2,19 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useMusic } from "@/context/v3/music-context";
 
 const EnterScreen = () => {
 	const router = useRouter();
 	const [isEntering, setIsEntering] = useState(false);
+	const { play } = useMusic();
 
 	const handleEnter = () => {
 		setIsEntering(true);
-		// Set flag so v3 layout knows to auto-start music
-		sessionStorage.setItem("v3-should-play-music", "true");
-		// Small delay for the animation before navigating
+		// Play immediately — this is inside a click handler (user gesture),
+		// so the browser allows it. The <audio> element lives in root layout
+		// and persists across route changes, so music keeps playing on /v3.
+		play();
 		setTimeout(() => {
 			router.push("/v3");
 		}, 500);
