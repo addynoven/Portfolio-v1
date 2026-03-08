@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 function BlogCard({ post }: { post: (typeof posts)[number] }) {
     return (
         <Link
-            href={`/blogs/${post.slug}`}
+            href={`/v3/blogs/${post.slug}`}
             className="blog-card group flex items-start gap-6 py-8 px-1 no-underline"
             style={{ borderBottom: "1px solid var(--card-border)" }}
         >

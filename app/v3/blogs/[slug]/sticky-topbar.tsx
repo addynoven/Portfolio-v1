@@ -29,7 +29,7 @@ export default function StickyTopbar({ title }: { title: string }) {
             className={`blog-topbar transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
         >
             <Link
-                href="/blogs"
+                href="/v3/blogs"
                 className="blog-back-btn flex items-center gap-1.5 font-mono text-sm"
                 style={{ color: "var(--muted)" }}
                 aria-label="Back to blog"

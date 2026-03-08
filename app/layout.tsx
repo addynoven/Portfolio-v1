@@ -85,8 +85,19 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="ja" suppressHydrationWarning>
-			<body className={`${jetbrainsMono.variable} antialiased bg-background text-foreground transition-colors duration-300`}>
+		<html
+			lang="ja"
+			translate="no"
+			className="notranslate"
+			suppressHydrationWarning
+		>
+			<head>
+				<meta name="google" content="notranslate" />
+			</head>
+			<body
+				className={`${jetbrainsMono.variable} antialiased bg-background text-foreground transition-colors duration-300`}
+				suppressHydrationWarning
+			>
 				<MusicWrapper>
 					<LanguageProvider>
 						<ThemeProvider

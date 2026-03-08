@@ -125,7 +125,7 @@ function ArticleSkeleton() {
                 <div
                     key={i}
                     className="h-4 rounded bg-foreground/8 mb-3"
-                    style={{ width: `${70 + Math.random() * 28}%` }}
+                    style={{ width: `${75 + (i % 4) * 5}%` }}
                 />
             ))}
         </div>

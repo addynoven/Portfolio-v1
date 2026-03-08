@@ -78,7 +78,7 @@ export default function Home() {
 							{METADATA.name}
 						</h1>
 						<p className="text-base font-mono opacity-75 cursor-text mt-0.5">
-							{new Date().getFullYear() - 2002} · {t(METADATA.role)} ·{" "}
+							23 · {t(METADATA.role)} ·{" "}
 							{t(METADATA.location)}
 						</p>
 					</div>
