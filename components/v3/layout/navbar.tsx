@@ -20,7 +20,7 @@ const NAV_LINKS = [
 export default function Navbar() {
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
-    const { mode, scheme, setMode, setScheme } = useTheme();
+    const { mode, scheme, mounted, setMode, setScheme } = useTheme();
     const { language, t } = useLanguage();
 
     // Close menu on route change
@@ -157,10 +157,13 @@ export default function Navbar() {
                             <button
                                 key={m}
                                 onClick={() => setMode(m)}
-                                className={`flex-1 py-2 rounded-xl text-xs font-mono font-semibold transition-all duration-150 ${mode === m
-                                    ? "bg-foreground text-background"
-                                    : "bg-foreground/5 text-foreground/50 hover:bg-foreground/10 hover:text-foreground"
-                                    }`}
+                                className={`flex-1 py-2 rounded-xl text-xs font-mono font-semibold transition-all duration-150 ${
+                                    !mounted
+                                        ? "bg-foreground/5 text-foreground/50"
+                                        : mode === m
+                                            ? "bg-foreground text-background"
+                                            : "bg-foreground/5 text-foreground/50 hover:bg-foreground/10 hover:text-foreground"
+                                }`}
                             >
                                 {m === "light" ? (language === "jp" ? "☀ ライト" : "☀ Light") : (language === "jp" ? "☾ ダーク" : "☾ Dark")}
                             </button>
@@ -173,8 +176,10 @@ export default function Navbar() {
                     </p>
                     <div className="flex gap-2.5 flex-wrap pb-1">
                         {SCHEMES.map(s => {
-                            const color = mode === "dark" ? SCHEME_META[s].dark : SCHEME_META[s].light;
-                            const isActive = scheme === s;
+                            const color = mounted
+                                ? (mode === "dark" ? SCHEME_META[s].dark : SCHEME_META[s].light)
+                                : SCHEME_META[s].dark; // always use dark on server for consistent SSR
+                            const isActive = mounted && scheme === s;
                             return (
                                 <button
                                     key={s}

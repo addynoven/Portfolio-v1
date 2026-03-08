@@ -2,7 +2,14 @@
 
 import { useState, lazy, Suspense, useCallback, useEffect } from "react";
 import { useLanguage } from "@/context/v3/language-context";
-import { Play, Square, ArrowLeft, Maximize2, Minimize2 } from "lucide-react";
+import {
+	Play,
+	Square,
+	ArrowLeft,
+	Maximize2,
+	Minimize2,
+	ExternalLink,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -237,9 +244,9 @@ function BgCard({ item }: { item: BgItem }) {
 		<>
 			{/* ── Fullscreen overlay ── */}
 			{isExpanded && (
-				<div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col">
+				<div className="fixed inset-0 z-[60] bg-background flex flex-col isolate">
 					{/* ── Top bar — always on top ── */}
-					<div className="relative z-20 flex items-center justify-between px-6 py-4 border-b border-foreground/10 bg-background/80 backdrop-blur-md">
+					<div className="relative z-[10] flex items-center justify-between px-6 py-4 border-b border-foreground/10 bg-background shadow-md">
 						<div>
 							<h3 className="text-lg font-bold font-mono">{item.name}</h3>
 							<p className="text-xs font-mono opacity-50">
@@ -261,28 +268,21 @@ function BgCard({ item }: { item: BgItem }) {
 						</button>
 					</div>
 
-					{/* ── Background render area ── */}
-					<div className="flex-1 relative z-0">
+					{/* ── Background render area — isolated so canvases can't escape ── */}
+					<div
+						className="flex-1 relative overflow-hidden isolate"
+						style={{ zIndex: 0 }}
+					>
 						<Suspense fallback={<LivePreviewSkeleton />}>
 							{item.render()}
 						</Suspense>
 					</div>
-
-					{/* ── Floating close button — always visible on top of canvas ── */}
-					<button
-						onClick={toggleExpand}
-						className="fixed top-20 right-6 z-30 flex items-center gap-2 px-4 py-2 rounded-xl bg-background/80 backdrop-blur-md border border-foreground/20 shadow-lg hover:bg-background hover:scale-105 transition-all duration-200 text-sm font-mono cursor-pointer"
-					>
-						<Minimize2 className="w-4 h-4" />
-						<kbd className="px-1.5 py-0.5 text-[10px] rounded bg-foreground/10 border border-foreground/20 font-mono">
-							Esc
-						</kbd>
-					</button>
 				</div>
 			)}
 
 			{/* ── Card ── */}
-			<div
+			<Link
+				href={`/v3/backgrounds/${item.id}`}
 				className="group relative flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-foreground/5"
 				style={{
 					background: "var(--v3-card)",
@@ -314,7 +314,11 @@ function BgCard({ item }: { item: BgItem }) {
 					{/* ── Action buttons ── */}
 					<div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
 						<button
-							onClick={toggleLive}
+							onClick={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								toggleLive();
+							}}
 							className={`w-9 h-9 flex items-center justify-center rounded-xl backdrop-blur-md border transition-all duration-200 hover:scale-110 cursor-pointer ${
 								isLive
 									? "bg-accent/20 border-accent/30 text-accent"
@@ -334,7 +338,9 @@ function BgCard({ item }: { item: BgItem }) {
 							)}
 						</button>
 						<button
-							onClick={() => {
+							onClick={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
 								if (!isLive) setIsLive(true);
 								setIsExpanded(true);
 							}}
@@ -376,7 +382,7 @@ function BgCard({ item }: { item: BgItem }) {
 						))}
 					</div>
 				</div>
-			</div>
+			</Link>
 		</>
 	);
 }
@@ -397,7 +403,7 @@ export default function BackgroundsShowcase() {
 			</Link>
 
 			{/* ── Header ── */}
-			<div className="mb-10">
+			<div className="mb-10 v3-glass p-6 sm:p-8 rounded-2xl">
 				<h1 className="text-3xl sm:text-4xl font-bold">
 					{t({
 						en: "Background Components",
@@ -405,7 +411,7 @@ export default function BackgroundsShowcase() {
 					})}
 				</h1>
 				<p
-					className="text-base font-mono mt-2 leading-relaxed max-w-2xl"
+					className="text-base font-mono mt-2 leading-relaxed max-w-2xl "
 					style={{ color: "var(--muted)" }}
 				>
 					{t({

@@ -23,12 +23,13 @@ export const SCHEME_META: Record<Scheme, { label: string; dark: string; light: s
 interface ThemeCtx {
     mode: Mode;
     scheme: Scheme;
+    mounted: boolean;
     setMode: (m: Mode) => void;
     setScheme: (s: Scheme) => void;
 }
 
 const ThemeContext = createContext<ThemeCtx>({
-    mode: "dark", scheme: "neon",
+    mode: "dark", scheme: "neon", mounted: false,
     setMode: () => { }, setScheme: () => { },
 });
 
@@ -65,7 +66,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const mode = (resolvedTheme || theme || "dark") as Mode;
 
     return (
-        <ThemeContext.Provider value={{ mode, scheme, setMode, setScheme }}>
+        <ThemeContext.Provider value={{ mode, scheme, mounted, setMode, setScheme }}>
             {children}
         </ThemeContext.Provider>
     );
