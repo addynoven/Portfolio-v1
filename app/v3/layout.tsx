@@ -28,9 +28,22 @@ export const metadata: Metadata = {
 		title: METADATA.name,
 		description: METADATA.ogDescription.en,
 		type: "website",
+		images: [
+			{
+				url: METADATA.bannerPath,
+				width: 1200,
+				height: 630,
+				alt: `${METADATA.name} Portfolio Banner`,
+			},
+		],
 	},
 	icons: {
-		icon: "/v3/images/favicon_io/favicon.ico",
+		icon: [
+			{
+				url: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%234ade80"><animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/></circle></svg>',
+				type: "image/svg+xml",
+			}
+		],
 	},
 };
 
