@@ -4,12 +4,15 @@ import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 import RGBDistortionImage from "@/components/v1/RGBDistortionImage";
 import { METADATA } from "@/app/v3/constants";
+import { useLanguage } from "@/context/v3/language-context";
 
 interface AnimatedAvatarProps {
   className?: string;
 }
 
 const AnimatedAvatar = ({ className = "" }: AnimatedAvatarProps) => {
+  const { t } = useLanguage();
+
   return (
     <div className={`relative ${className}`}>
       <motion.div
@@ -36,7 +39,7 @@ const AnimatedAvatar = ({ className = "" }: AnimatedAvatarProps) => {
           >
             <RGBDistortionImage
               src="/photo.jpg"
-              alt={`${METADATA.name} avatar`}
+              alt={`${t(METADATA.name)} avatar`}
               intensity={1.2}
               waveFrequency={8.0}
               className="w-full h-full object-cover"

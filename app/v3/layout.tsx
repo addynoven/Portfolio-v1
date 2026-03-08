@@ -22,10 +22,10 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-	title: `${METADATA.name} — Portfolio`,
+	title: `${METADATA.name.en} — Portfolio`,
 	description: METADATA.ogDescription.en,
 	openGraph: {
-		title: METADATA.name,
+		title: METADATA.name.en,
 		description: METADATA.ogDescription.en,
 		type: "website",
 		images: [

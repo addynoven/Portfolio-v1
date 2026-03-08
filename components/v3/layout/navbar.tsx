@@ -52,7 +52,7 @@ export default function Navbar() {
                         className="text-lg font-bold font-mono select-none flex items-center gap-2 hover:opacity-70 transition-opacity"
                     >
                         <span style={{ color: "var(--accent)" }}>{language === "jp" ? "技" : "ne"}</span>
-                        <span className="text-foreground">{METADATA.name.toLowerCase()}</span>
+                        <span className="text-foreground">{t(METADATA.name).toLowerCase()}</span>
                     </Link>
 
                     {/* Desktop: nav links + theme toggle */}

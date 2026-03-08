@@ -238,7 +238,15 @@ export const QUOTES = [
 
 // ── Site Metadata (Single Source of Truth) ────────────────── */
 export const METADATA = {
-	name: "Neon",
+	name: {
+		en: "Neon",
+		jp: "ネオン",
+	},
+	element: {
+		symbol: "Neon",
+		breakdown: "ネ・オ・ン",
+		hiragana: "ねおん",
+	},
 	role: {
 		en: "software engineer",
 		jp: "ソフトウェアエンジニア",

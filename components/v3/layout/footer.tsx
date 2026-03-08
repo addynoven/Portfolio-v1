@@ -107,7 +107,7 @@ export default function Footer() {
 							className="text-sm font-mono select-none"
 							style={{ color: "var(--v3-muted)" }}
 						>
-							© {year} {METADATA.name} · All rights reserved
+							© {year} {t(METADATA.name)} · All rights reserved
 						</p>
 
 							<VersionSwitcher />

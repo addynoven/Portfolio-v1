@@ -75,7 +75,7 @@ export default function Home() {
 					</div>
 					<div className="mb-2">
 						<h1 className="text-3xl font-bold select-none leading-tight">
-							{METADATA.name}
+							{t(METADATA.name)}
 						</h1>
 						<p className="text-base font-mono opacity-75 cursor-text mt-0.5">
 							23 · {t(METADATA.role)} ·{" "}
