@@ -85,7 +85,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="ja" suppressHydrationWarning>
-			<body className={jetbrainsMono.variable}>
+			<body className={`${jetbrainsMono.variable} antialiased bg-background text-foreground transition-colors duration-300`}>
 				<MusicWrapper>
 					<ThemeProvider
 						attribute="class"

@@ -21,15 +21,15 @@ const EnterScreen = () => {
 	};
 
 	return (
-		<div className="h-screen w-full flex flex-col items-center justify-center bg-black relative overflow-hidden">
+		<div className="h-screen w-full flex flex-col items-center justify-center bg-background relative overflow-hidden transition-colors duration-500">
 			{/* Background animated gradient */}
-			<div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-80" />
+			<div className="absolute inset-0 bg-gradient-to-br from-background via-foreground/5 to-background opacity-80" />
 
 			{/* Animated circles in background */}
 			<div className="absolute inset-0 overflow-hidden">
-				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" />
+				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" />
 				<div
-					className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"
+					className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl animate-pulse"
 					style={{ animationDelay: "0.5s" }}
 				/>
 			</div>
@@ -39,12 +39,12 @@ const EnterScreen = () => {
 			>
 				{/* Title */}
 				<div className="text-center">
-					<h1 className="text-4xl md:text-6xl font-mono font-bold text-white mb-2">
-						<span className="text-emerald-400">{"<"}</span>
+					<h1 className="text-4xl md:text-6xl font-mono font-bold text-foreground mb-2">
+						<span className="text-accent">{"<"}</span>
 						Portfolio
-						<span className="text-emerald-400">{" />"}</span>
+						<span className="text-accent">{" />"}</span>
 					</h1>
-					<p className="text-gray-400 font-mono text-sm md:text-base animate-pulse">
+					<p className="text-muted-foreground font-mono text-sm md:text-base animate-pulse">
 						Initializing V3...
 					</p>
 				</div>
@@ -53,15 +53,15 @@ const EnterScreen = () => {
 				<button
 					onClick={handleEnter}
 					disabled={isEntering}
-					className="group relative px-8 py-4 font-mono text-lg text-white bg-transparent border-2 border-emerald-400/50 rounded-lg overflow-hidden transition-all duration-300 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-400/20 disabled:opacity-50"
+					className="group relative px-8 py-4 font-mono text-lg text-foreground bg-transparent border-2 border-accent/50 rounded-lg overflow-hidden transition-all duration-300 hover:border-accent hover:shadow-lg hover:shadow-accent/20 disabled:opacity-50"
 				>
 					{/* Button background animation */}
-					<span className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/10 to-emerald-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+					<span className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/10 to-accent/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
 
 					<span className="relative flex items-center gap-3">
 						{/* Play icon */}
 						<svg
-							className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform"
+							className="w-5 h-5 text-accent group-hover:scale-110 transition-transform"
 							fill="currentColor"
 							viewBox="0 0 20 20"
 						>
@@ -72,12 +72,12 @@ const EnterScreen = () => {
 				</button>
 
 				{/* Music hint */}
-				<p className="text-gray-500 text-xs font-mono flex items-center gap-2">
+				<p className="text-muted-foreground text-xs font-mono flex items-center gap-2">
 					<span className="flex gap-0.5">
 						{[1, 2, 3].map((bar) => (
 							<span
 								key={bar}
-								className="w-0.5 bg-emerald-400/50 rounded-full animate-pulse"
+								className="w-0.5 bg-accent/50 rounded-full animate-pulse"
 								style={{
 									height: `${4 + bar * 3}px`,
 									animationDelay: `${bar * 0.15}s`,
