@@ -21,7 +21,7 @@ export default function ThemeToggle() {
 
 	if (!mounted) {
 		return (
-			<div className="w-10 h-10 rounded-xl bg-foreground/5 animate-pulse" />
+			<div className="w-10 h-10 rounded-xl bg-foreground/5" />
 		);
 	}
 
