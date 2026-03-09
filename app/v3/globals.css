@@ -93,53 +93,17 @@
 	--c4: #00d68f;
 }
 
-[data-scheme="blue"] {
-	--accent: #0969da;
-	--c1: #b6d8fb;
-	--c2: #67adf5;
-	--c3: #2e86de;
-	--c4: #0969da;
-}
 
-[data-scheme="emerald"] {
-	--accent: #1a7f37;
-	--c1: #9be9a8;
-	--c2: #40c463;
-	--c3: #30a14e;
-	--c4: #216e39;
-}
 
-[data-scheme="purple"] {
-	--accent: #8250df;
-	--c1: #e2d0ff;
-	--c2: #b088f9;
-	--c3: #8250df;
-	--c4: #6e40c9;
-}
 
-[data-scheme="rose"] {
-	--accent: #cf222e;
-	--c1: #ffd4d4;
-	--c2: #ff9090;
-	--c3: #e5534b;
-	--c4: #cf222e;
-}
 
-[data-scheme="amber"] {
-	--accent: #bf8700;
-	--c1: #ffe8a3;
-	--c2: #ffc72c;
-	--c3: #d4a017;
-	--c4: #bf8700;
-}
 
-[data-scheme="cyan"] {
-	--accent: #0598bc;
-	--c1: #b3f0f5;
-	--c2: #52cdd4;
-	--c3: #1aabb3;
-	--c4: #0598bc;
-}
+
+
+
+
+
+
 
 /* ─────────────────────────────────────────────────────────────
    COLOR SCHEMES — dark
@@ -152,53 +116,17 @@
 	--c4: #00f5a0;
 }
 
-.dark[data-scheme="blue"] {
-	--accent: #58a6ff;
-	--c1: #114285;
-	--c2: #1b6dcc;
-	--c3: #398af7;
-	--c4: #58a6ff;
-}
 
-.dark[data-scheme="emerald"] {
-	--accent: #3fb950;
-	--c1: #0e4429;
-	--c2: #006d32;
-	--c3: #26a641;
-	--c4: #39d353;
-}
 
-.dark[data-scheme="purple"] {
-	--accent: #a371f7;
-	--c1: #3f256e;
-	--c2: #6540ab;
-	--c3: #8957e5;
-	--c4: #a371f7;
-}
 
-.dark[data-scheme="rose"] {
-	--accent: #f78166;
-	--c1: #5e130f;
-	--c2: #9e271f;
-	--c3: #d1463e;
-	--c4: #f78166;
-}
 
-.dark[data-scheme="amber"] {
-	--accent: #d29922;
-	--c1: #4a2800;
-	--c2: #8a5000;
-	--c3: #bb8009;
-	--c4: #d29922;
-}
 
-.dark[data-scheme="cyan"] {
-	--accent: #39d0d6;
-	--c1: #0e484a;
-	--c2: #167a80;
-	--c3: #1eb9c4;
-	--c4: #39d0d6;
-}
+
+
+
+
+
+
 
 /* ─────────────────────────────────────────────────────────────
    CARD UTILITIES — soft lifted feel

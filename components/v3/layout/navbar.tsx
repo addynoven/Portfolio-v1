@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import ThemeToggle from "@/components/v3/ui/theme-toggle";
 import LanguageToggle from "@/components/v3/ui/language-toggle";
-import { useTheme, SCHEMES, SCHEME_META } from "@/lib/v3/theme";
+import { useTheme } from "@/lib/v3/theme";
 import { Icons } from "@/components/v3/ui/icons";
 import { METADATA } from "@/app/v3/constants";
 import { useLanguage } from "@/context/v3/language-context";
@@ -20,7 +20,7 @@ const NAV_LINKS = [
 export default function Navbar() {
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
-    const { mode, scheme, mounted, setMode, setScheme } = useTheme();
+    const { mode, mounted, setMode } = useTheme();
     const { language, t } = useLanguage();
 
     // Close menu on route change
@@ -106,118 +106,106 @@ export default function Navbar() {
                     {/* Mobile: hamburger button */}
                     <button
                         onClick={() => setOpen(o => !o)}
-                        className="lg:hidden flex items-center gap-2 px-3 py-1.5 rounded-lg font-mono text-base transition-all duration-150 text-foreground/60 hover:text-foreground hover:bg-foreground/5"
+                        className="lg:hidden flex items-center gap-2 px-3 py-1.5 rounded-lg font-mono text-base transition-all duration-150 text-foreground/60 hover:text-foreground hover:bg-foreground/5 z-[80]"
                         aria-label="Toggle menu"
                         aria-expanded={open}
                     >
-                        <Icons.Menu open={open} className="w-6 h-6 transition-all duration-200" />
+                        {open ? (
+                            <Icons.Close className="w-6 h-6" />
+                        ) : (
+                            <Icons.Menu className="w-6 h-6" />
+                        )}
                         <span className="text-base font-mono">{open ? (language === "jp" ? "閉じる" : "Close") : (language === "jp" ? "メニュー" : "Menu")}</span>
                     </button>
                 </div>
             </div>
 
-            {/* Mobile dropdown menu */}
+            {/* Mobile full-screen menu */}
             <div
-                className={`lg:hidden absolute left-0 right-0 top-full z-50 overflow-hidden transition-all duration-300 ${open ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
-                    }`}
-                style={{ background: "var(--v3-card)", borderBottom: open ? "1px solid var(--v3-card-border)" : "none" }}
+                className={`lg:hidden fixed inset-0 z-[70] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none translate-y-4"
+                }`}
+                style={{ background: "var(--v3-bg)" }}
             >
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
-
+                <div className="h-full flex flex-col px-6 pt-24 pb-10 overflow-y-auto">
                     {/* Nav links */}
-                    <nav className="flex flex-col gap-1 mb-5">
-                        {NAV_LINKS.map(({ href, label }) => (
+                    <nav className="flex flex-col gap-4 mb-10">
+                        {NAV_LINKS.map(({ href, label }, idx) => (
                             <Link
                                 key={href}
                                 href={href}
-                                className={`px-3 py-2.5 rounded-xl text-base font-mono transition-all duration-150 ${getActiveStyles(href)}`}
+                                className={`text-4xl font-bold font-mono transition-all duration-300 ${
+                                    pathname === href ? "text-accent" : "text-foreground/40 hover:text-foreground"
+                                }`}
+                                style={{ 
+                                    transitionDelay: open ? `${idx * 50}ms` : "0ms",
+                                    transform: open ? "none" : "translateY(20px)"
+                                }}
                             >
                                 {t(label)}
                             </Link>
                         ))}
                     </nav>
 
-                    {/* Divider */}
-                    <div className="mb-4" style={{ borderTop: "1px solid var(--v3-card-border)" }} />
+                    <div className="mt-auto space-y-8">
+                        {/* Divider */}
+                        <div className="w-full h-px" style={{ background: "var(--v3-card-border)" }} />
 
-                    {/* Language */}
-                    <p className="text-[10px] font-mono tracking-widest uppercase mb-2 select-none" style={{ color: "var(--v3-muted)" }}>
-                        {language === "jp" ? "言語" : "Language"}
-                    </p>
-                    <div className="mb-4">
-                        <LanguageToggle />
-                    </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                             {/* Language & Mode */}
+                            <div className="space-y-6">
+                                <div>
+                                    <p className="text-[10px] font-mono tracking-widest uppercase mb-3 text-muted">
+                                        {language === "jp" ? "言語" : "Language"}
+                                    </p>
+                                    <LanguageToggle variant="full" />
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-mono tracking-widest uppercase mb-3 text-muted">
+                                        {language === "jp" ? "モード" : "Mode"}
+                                    </p>
+                                    <div className="flex gap-2">
+                                        {(["light", "dark"] as const).map(m => (
+                                            <button
+                                                key={m}
+                                                onClick={() => setMode(m)}
+                                                className={`flex-1 py-3 rounded-xl text-xs font-mono font-semibold transition-all duration-200 ${
+                                                    !mounted
+                                                        ? "bg-foreground/5 text-foreground/50"
+                                                        : mode === m
+                                                            ? "bg-accent text-accent-foreground"
+                                                            : "bg-foreground/5 text-foreground/50"
+                                                }`}
+                                            >
+                                                {m === "light" ? (language === "jp" ? "☀ ライト" : "☀ Light") : (language === "jp" ? "☾ ダーク" : "☾ Dark")}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    {/* Mode */}
-                    <p className="text-[10px] font-mono tracking-widest uppercase mb-2 select-none" style={{ color: "var(--v3-muted)" }}>
-                        {language === "jp" ? "モード" : "Mode"}
-                    </p>
-                    <div className="flex gap-2 mb-4">
-                        {(["light", "dark"] as const).map(m => (
+                        {/* Mobile Connections */}
+                        <div className="flex items-center gap-3 pt-4">
                             <button
-                                key={m}
-                                onClick={() => setMode(m)}
-                                className={`flex-1 py-2 rounded-xl text-xs font-mono font-semibold transition-all duration-150 ${
-                                    !mounted
-                                        ? "bg-foreground/5 text-foreground/50"
-                                        : mode === m
-                                            ? "bg-foreground text-background"
-                                            : "bg-foreground/5 text-foreground/50 hover:bg-foreground/10 hover:text-foreground"
-                                }`}
+                                onClick={() => {
+                                    const RESUME_URL = "";
+                                    if (RESUME_URL) window.open(RESUME_URL, "_blank", "noopener,noreferrer");
+                                }}
+                                className="flex-1 flex justify-center py-3 items-center gap-2 text-sm font-mono bg-accent/10 rounded-xl text-accent font-bold"
                             >
-                                {m === "light" ? (language === "jp" ? "☀ ライト" : "☀ Light") : (language === "jp" ? "☾ ダーク" : "☾ Dark")}
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
+                                </svg>
+                                CV
                             </button>
-                        ))}
-                    </div>
-
-                    {/* Color scheme */}
-                    <p className="text-[10px] font-mono tracking-widest uppercase mb-3 select-none" style={{ color: "var(--v3-muted)" }}>
-                        {language === "jp" ? "カラースキーム" : "Color Scheme"}
-                    </p>
-                    <div className="flex gap-2.5 flex-wrap pb-1">
-                        {SCHEMES.map(s => {
-                            const color = mounted
-                                ? (mode === "dark" ? SCHEME_META[s].dark : SCHEME_META[s].light)
-                                : SCHEME_META[s].dark; // always use dark on server for consistent SSR
-                            const isActive = mounted && scheme === s;
-                            return (
-                                <button
-                                    key={s}
-                                    title={SCHEME_META[s].label}
-                                    onClick={() => setScheme(s)}
-                                    className="w-8 h-8 rounded-full transition-all duration-150"
-                                    style={{
-                                        backgroundColor: color,
-                                        boxShadow: isActive ? `0 0 0 2px var(--v3-card), 0 0 0 4px ${color}` : undefined,
-                                        transform: isActive ? "scale(1.15)" : undefined,
-                                    }}
-                                />
-                            );
-                        })}
-                    </div>
-
-                    {/* Mobile Connections */}
-                    <div className="pt-5 mt-5 flex items-center gap-3" style={{ borderTop: "1px solid var(--v3-card-border)" }}>
-                        <button
-                            onClick={() => {
-                                const RESUME_URL = ""; // TODO: add your resume link here
-                                console.log("CV button clicked", RESUME_URL || "(no URL set yet)");
-                                if (RESUME_URL) window.open(RESUME_URL, "_blank", "noopener,noreferrer");
-                            }}
-                            className="flex flex-1 justify-center py-2 items-center gap-2 text-base font-mono bg-accent/10 rounded-xl text-accent font-semibold hover:bg-accent/20 transition-all"
-                            aria-label="Download CV"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
-                            </svg>
-                            CV
-                        </button>
-                        <a href={`https://github.com/${METADATA.username}`} target="_blank" rel="noopener noreferrer" className="flex flex-1 justify-center py-2 items-center gap-2 text-base font-mono bg-foreground/5 rounded-xl text-foreground/50 hover:text-accent hover:bg-foreground/10 transition-all">
-                            <Icons.GitHub className="w-5 h-5" /> GitHub
-                        </a>
-                        <a href={`https://x.com/${METADATA.username}`} target="_blank" rel="noopener noreferrer" className="flex flex-1 justify-center py-2 items-center gap-2 text-base font-mono bg-foreground/5 rounded-xl text-foreground/50 hover:text-accent hover:bg-foreground/10 transition-all">
-                            <Icons.Twitter className="w-5 h-5" /> Twitter
-                        </a>
+                            <a href={`https://github.com/${METADATA.username}`} target="_blank" rel="noopener noreferrer" className="flex-1 flex justify-center py-3 items-center gap-2 text-sm font-mono bg-foreground/5 rounded-xl text-foreground/70 font-bold">
+                                <Icons.GitHub className="w-5 h-5" /> GitHub
+                            </a>
+                            <a href={`https://x.com/${METADATA.username}`} target="_blank" rel="noopener noreferrer" className="flex-1 flex justify-center py-3 items-center gap-2 text-sm font-mono bg-foreground/5 rounded-xl text-foreground/70 font-bold">
+                                <Icons.Twitter className="w-5 h-5" /> Twitter
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
