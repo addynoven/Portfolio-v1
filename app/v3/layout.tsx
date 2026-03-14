@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/lib/v3/theme";
 import ThunderRootBg from "@/components/v3/layout/thunder-root-bg";
 import { METADATA } from "@/app/v3/constants";
 import { LenisProvider } from "@/components/v3/lenis-provider";
+import ThemeTransitionOverlay from "@/components/v3/ui/theme-transition-overlay";
 
 /* ── Fonts ── */
 const jetbrainsMono = JetBrains_Mono({
@@ -53,6 +54,7 @@ export default function V3Layout({ children }: { children: React.ReactNode }) {
 			className={`${jetbrainsMono.variable} ${caveat.variable} min-h-screen bg-background text-foreground font-sans selection:bg-accent/30`}
 		>
 			<ThemeProvider>
+						<ThemeTransitionOverlay />
 						<LenisProvider>
 							<div className="relative z-10 bg-background">
 								<Navbar />

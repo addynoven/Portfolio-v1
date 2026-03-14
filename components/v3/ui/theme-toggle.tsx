@@ -12,8 +12,15 @@ export default function ThemeToggle() {
 		setMounted(true);
 	}, []);
 
-	const toggleMode = () => {
-		setMode(mode === "dark" ? "light" : "dark");
+	const toggleMode = (e: React.MouseEvent<HTMLButtonElement>) => {
+		if (!mounted) return;
+		const targetTheme = mode === "dark" ? "light" : "dark";
+
+		// Dispatch custom event for the transition overlay
+		const event = new CustomEvent("theme-transition", {
+			detail: { x: e.clientX, y: e.clientY, targetTheme },
+		});
+		window.dispatchEvent(event);
 	};
 
 	const accentColor =
