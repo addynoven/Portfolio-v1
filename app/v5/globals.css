@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
+@import 'locomotive-scroll/dist/locomotive-scroll.css';
+
+.v5-root {
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  background-color: #050505;
+  color: #ffffff;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: clip;
+}
+
+/* Scoped custom cursor hiding only within V5 */
+.v5-root,
+.v5-root * {
+  cursor: none !important;
+}
+
+/* Fallback for devices without fine pointer */
+@media (pointer: coarse) {
+  .v5-root,
+  .v5-root * {
+    cursor: auto !important;
+  }
+}
+
+@keyframes flyOutRight {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(250%); }
+}
+
+@keyframes flyInLeft {
+  0% { transform: translateX(-250%); }
+  100% { transform: translateX(0); }
+}
+
+.v5-root .animate-fly-out {
+  animation: flyOutRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.v5-root .animate-fly-in {
+  animation: flyInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes flyOutUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-150%); }
+}
+
+@keyframes flyInUp {
+  0% { transform: translateY(150%); }
+  100% { transform: translateY(0); }
+}
+
+.v5-root .animate-fly-out-up {
+  animation: flyOutUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.v5-root .animate-fly-in-up {
+  animation: flyInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
