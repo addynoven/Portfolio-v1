@@ -352,8 +352,8 @@ const ActivityDashboard = memo(function ActivityDashboard() {
   }, []);
 
   return (
-    <section className="py-20 xl:py-32 relative z-20">
-      <div className="container mx-auto px-4">
+    <section id="activity" className="relative scroll-mt-24 w-full z-20">
+      <div className="w-full">
         {/* Section Title - renders instantly */}
         <motion.div
           initial={{ opacity: 1, y: 0 }}
@@ -369,7 +369,7 @@ const ActivityDashboard = memo(function ActivityDashboard() {
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
           {/* Discord Status - Large */}
           <BentoCard className="md:col-span-2 lg:col-span-2" delay={0.1}>
             <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider mb-3 block">

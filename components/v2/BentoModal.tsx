@@ -44,10 +44,10 @@ const BentoModal = ({
             <DialogPrimitive.Description>{description || "Modal content"}</DialogPrimitive.Description>
           </VisuallyHidden.Root>
 
-          <div className="bg-[#0a0a0a] border border-white/10 rounded-[2rem] h-full flex flex-col overflow-hidden">
+          <div className="bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 rounded-[2rem] h-full flex flex-col overflow-hidden shadow-2xl">
             {/* Close Button - Inside modal, at top center */}
             <div className="flex justify-center py-4 flex-shrink-0">
-              <DialogPrimitive.Close className="rounded-full bg-white/10 p-2 text-white/50 hover:bg-white/20 hover:text-white transition-all border border-white/10 outline-none">
+              <DialogPrimitive.Close className="rounded-full bg-slate-200 dark:bg-white/10 p-2 text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white transition-all border border-slate-300 dark:border-white/10 outline-none">
                 <Cross2Icon className="h-4 w-4" />
                 <span className="sr-only">Close</span>
               </DialogPrimitive.Close>

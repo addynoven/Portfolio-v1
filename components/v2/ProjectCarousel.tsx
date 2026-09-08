@@ -29,11 +29,11 @@ const projects: Project[] = [
     tech: ["React", "Node.js", "MongoDB"],
   },
   {
-    title: "Portfolio V2",
-    description: "Modern bento-grid portfolio design",
-    image: "/photo.jpg",
-    href: "/",
-    tech: ["Next.js", "Tailwind", "Framer"],
+    title: "NeonFlix",
+    description: "Modern video streaming and media browsing platform",
+    image: "/assets/work/neonflix.png",
+    href: "https://github.com/addynoven",
+    tech: ["Next.js", "Tailwind", "TypeScript"],
   },
 ];
 
@@ -55,7 +55,7 @@ const ProjectCarousel = () => {
 
   return (
     <div
-      className="relative h-full overflow-hidden rounded-2xl bg-[#1a1a1a] border border-white/5 group"
+      className="relative h-full overflow-hidden rounded-3xl bg-slate-900 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/5 group shadow-sm"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

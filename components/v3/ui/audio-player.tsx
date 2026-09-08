@@ -1,20 +1,22 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useMusic } from "@/context/v3/music-context";
 
 const BAR_HEIGHTS = [10, 16, 12, 18, 8, 14];
 
 export default function AudioPlayer() {
+	const pathname = usePathname();
 	const { isPlaying, isMuted, togglePlay, toggleMute } = useMusic();
+
+	if (!pathname?.startsWith("/v3")) {
+		return null;
+	}
 
 	const isActive = isPlaying && !isMuted;
 
 	const handleClick = () => {
-		if (!isPlaying) {
-			togglePlay(); // start playing
-		} else {
-			toggleMute(); // mute/unmute
-		}
+		togglePlay();
 	};
 
 	const label = !isPlaying ? "PLAY" : isMuted ? "MUTED" : "PLAYING";

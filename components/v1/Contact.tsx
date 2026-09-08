@@ -132,7 +132,7 @@ const Contact = memo(function Contact() {
       id="contact"
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
-      className="py-24 xl:py-32 relative overflow-hidden"
+      className="relative scroll-mt-24 w-full overflow-hidden"
     >
       {/* Subtle gradient background */}
       <div className="absolute inset-0 -z-10">
@@ -141,7 +141,7 @@ const Contact = memo(function Contact() {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-full relative z-10">
         {/* Section Header */}
         <motion.div
           className="mb-16 xl:mb-20"
@@ -171,7 +171,7 @@ const Contact = memo(function Contact() {
           </div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-8 xl:gap-16 items-start max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-5 gap-8 xl:gap-12 items-start w-full">
           {/* Contact Form */}
           <motion.div 
             className="lg:col-span-3"

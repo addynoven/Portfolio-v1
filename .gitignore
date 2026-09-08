@@ -35,3 +35,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scratch reports & stitch dumps
+reports/srbh-analysis/
+reports/v4-updated/
+reports/*.json
+!reports/neon.abstergo.me-20251214T001404.json
+stitch/

@@ -15,6 +15,10 @@ export interface ExperienceItem {
     company: string;
     position: string;
     duration: string;
+    location?: string;
+    description?: string;
+    bullets?: string[];
+    skills?: string[];
 }
 
 export interface ExperienceData {

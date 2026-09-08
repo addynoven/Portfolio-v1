@@ -59,20 +59,36 @@ export const About: AboutData = {
 // experience data
 export const Experience: ExperienceData = {
     icon: "/assets/resume/badge.svg",
-    title: "My experience",
-    description: `
-    I've developed user-friendly web applications as a Full Stack Developer, collaborating with teams to deliver responsive solutions that enhance functionality and user experience. 
-    `,
+    title: "Work Experience",
+    description: "Production software engineering and startup contributions building reliable, user-centric web applications and scalable backends.",
     items: [
         {
-            company: "RI BEAUTY (Startup)",
+            company: "RI BEAUTY",
             position: "Full Stack Developer",
             duration: "Jun 2024 - Present",
+            location: "Remote / Bhopal, India",
+            description: "Lead full-stack engineering for production e-commerce platform and client-facing digital experiences.",
+            bullets: [
+                "Architected a modern e-commerce web application with Next.js 16, React 19, TypeScript, and Tailwind CSS.",
+                "Engineered Razorpay payment gateway integration with robust webhook verification, cryptographic signature validation, and email alerts.",
+                "Optimized Core Web Vitals to sub-second LCP by implementing dynamic component streaming and responsive image optimization.",
+                "Built cart state management, persistent wishlist, and real-time product search with defensive boundary validation."
+            ],
+            skills: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS", "Razorpay", "Node.js", "REST APIs"]
         },
         {
-            company: "Orcus (Startup)",
+            company: "Orcus",
             position: "Full Stack Developer",
             duration: "Dec 2023 - May 2024",
+            location: "Bhopal, India",
+            description: "Developed responsive frontend features and scalable backend REST APIs within an agile startup environment.",
+            bullets: [
+                "Constructed reusable, accessible UI component modules adhering to modern accessibility guidelines.",
+                "Designed and implemented RESTful endpoints with Node.js and Express, incorporating JWT authentication and rate limiting.",
+                "Structured MongoDB schemas with indexing strategies to minimize database query latency on high-traffic routes.",
+                "Collaborated closely in cross-functional agile sprints, conducting code reviews and optimizing release delivery."
+            ],
+            skills: ["React", "JavaScript", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"]
         },
     ],
 };
@@ -80,53 +96,38 @@ export const Experience: ExperienceData = {
 // education data
 export const Education: EducationData = {
     icon: "/assets/Resume/cap.svg",
-    title: "My Education",
-    description: "My educational journey and certifications:",
+    title: "Education & Certifications",
+    description: "Formal computer science education and professional industry certifications:",
     items: [
         {
             institution: "Oriental Group of Institutes",
-            degree: "Master of Computer Applications",
+            degree: "Master of Computer Applications (MCA)",
             duration: "Sep 2024 - Present",
         },
         {
+            institution: "LNCT Group of Colleges",
+            degree: "BCA, Artificial Intelligence & Data Analytics",
+            duration: "Oct 2021 - May 2024",
+        },
+        {
+            institution: "Red Hat (ITE Infotech)",
+            degree: "RHCSA (Red Hat Certified System Administrator)",
+            duration: "Feb 2020 - Jun 2020",
+        },
+        {
             institution: "Sheryians Coding School",
-            degree: "Back-End Domination",
+            degree: "Back-End Domination (Node.js, Express, Databases)",
             duration: "Aug 2024 - Present",
         },
         {
             institution: "Sheryians Coding School",
-            degree: "Advanced DSA with Java",
-            duration: "Apr 2024 - Present",
-        },
-        {
-            institution: "LNCT Group of Colleges",
-            degree: "BCA, AI & Data Analytics",
-            duration: "Oct 2021 - May 2024",
-        },
-        {
-            institution: "Sheryians Coding School",
-            degree: "Front-End Domination",
-            duration: "Jan 2024 - Jul 2024",
-        },
-        {
-            institution: "Sheryians Coding School",
-            degree: "MERN Stack Developer",
-            duration: "Jul 2023 - Jan 2024",
+            degree: "Front-End Domination & MERN Stack Development",
+            duration: "Jul 2023 - Jul 2024",
         },
         {
             institution: "Sharma Computer Academy",
-            degree: "Java and Spring Boot",
-            duration: "Jun 2022 - Jun 2023",
-        },
-        {
-            institution: "Sharma Computer Academy",
-            degree: "DSA with C++",
-            duration: "Jan 2022 - Jun 2022",
-        },
-        {
-            institution: "ITE Infotech Pvt Ltd",
-            degree: "RHCSA Certification",
-            duration: "Feb 2020 - Jun 2020",
+            degree: "Advanced DSA & Systems with C++ and Java",
+            duration: "Jan 2022 - Jun 2023",
         },
     ],
 };
@@ -159,15 +160,15 @@ export const Skills: SkillsData = {
 export const projects: ProjectItem[] = [
     {
         num: "01",
-        category: "E-Commerce",
+        category: "Full Stack",
         title: "RI Store",
         description:
-            "Premium jewelry e-commerce platform with Razorpay payments, wishlist, multi-step checkout, and real-time search. A year-long project featuring modern UI with Next.js 16 and React 19.",
+            "Production jewelry e-commerce platform featuring Razorpay checkout, wishlist, and multi-step order workflows. Built on Next.js 16 and React 19 with 95+ Core Web Vitals score.",
         href: "",
         image: "/assets/work/ristore.png",
         Stack: [
-            { name: "Next.js" },
-            { name: "React" },
+            { name: "Next.js 16" },
+            { name: "React 19" },
             { name: "TypeScript" },
             { name: "Tailwind CSS" },
             { name: "Razorpay" },
@@ -181,7 +182,7 @@ export const projects: ProjectItem[] = [
         category: "Full Stack",
         title: "NeonFlix",
         description:
-            "A modern Netflix-inspired streaming platform with user authentication, TV shows, movies, and personalized recommendations. Features a sleek dark UI with smooth animations.",
+            "Full-featured streaming web app with JWT authentication, real-time title search, personalized watchlists, and dynamic video playback interfaces with sleek cyberpunk theme.",
         href: "",
         image: "/assets/work/neonflix.png",
         Stack: [
@@ -192,14 +193,14 @@ export const projects: ProjectItem[] = [
             { name: "Auth.js" },
         ],
         live: "https://neonflix.abstergo.me/",
-        github: "https://github.com/addynoven",
+        github: "https://github.com/addynoven/NeonTv",
     },
     {
         num: "03",
         category: "AI/ML",
         title: "Dog Lab",
         description:
-            "AI-powered dog breed identification using a fine-tuned ConvNeXt model with 99% accuracy across 120+ breeds. Features quiz games, emergency vet locator, and breed origin mapping.",
+            "AI-powered canine classification system achieving 99% accuracy across 120+ breeds using a fine-tuned ConvNeXt model. Includes real-time image inference, vet locator, and breed quiz.",
         href: "",
         image: "/assets/work/doglab.png",
         Stack: [
@@ -210,49 +211,49 @@ export const projects: ProjectItem[] = [
             { name: "Tailwind CSS" },
         ],
         live: "https://doglab.abstergo.me/",
-        github: "https://github.com/addynoven",
+        github: "https://github.com/addynoven/dog_breed_identifier_frontend",
     },
     {
         num: "04",
         category: "Full Stack",
         title: "SecureShare",
         description:
-            "End-to-end encrypted file sharing platform with automatic expiration, password protection, and drag-n-drop uploads. Privacy-first design with no permanent storage.",
+            "Privacy-first zero-knowledge encrypted file sharing with auto-expiration, password-protected downloads, and streaming uploads with zero permanent retention.",
         href: "",
         image: "/assets/work/secureshare.png",
         Stack: [
             { name: "Next.js" },
             { name: "Node.js" },
-            { name: "Encryption" },
+            { name: "Web Crypto" },
             { name: "AWS S3" },
             { name: "Tailwind CSS" },
         ],
         live: "https://secureshare.abstergo.me/",
-        github: "https://github.com/addynoven",
+        github: "https://github.com/addynoven/dammmage-backend",
     },
     {
         num: "05",
-        category: "NPM Package",
+        category: "CLI & Tools",
         title: "ReactBits Installer",
         description:
-            "CLI tool for installing beautiful, animated React components from the ReactBits library. Supports selective component installation with automatic dependency resolution.",
+            "Open-source CLI tool published on NPM for selectively installing animated React UI components with automated dependency resolution and Tailwind setup.",
         href: "",
         image: "/assets/work/reactbits.png",
         Stack: [
             { name: "Node.js" },
             { name: "CLI" },
-            { name: "NPM" },
+            { name: "NPM Package" },
             { name: "JavaScript" },
         ],
         live: "https://www.npmjs.com/package/reactbits-installer",
-        github: "https://github.com/addynoven",
+        github: "https://github.com/addynoven/react-bits",
     },
     {
         num: "06",
-        category: "Python Package",
+        category: "CLI & Tools",
         title: "NeetCode RPG",
         description:
-            "A gamified coding practice CLI tool published on PyPI. Turns LeetCode-style problem solving into an RPG adventure with XP, levels, and achievements.",
+            "Gamified coding adventure CLI published on PyPI. Transforms algorithmic practice into an RPG progression system with terminal XP, level-ups, and streak tracking.",
         href: "",
         image: "/assets/work/neetcode.png",
         Stack: [
@@ -262,14 +263,14 @@ export const projects: ProjectItem[] = [
             { name: "Rich" },
         ],
         live: "https://pypi.org/project/neetcode-rpg/",
-        github: "https://github.com/addynoven",
+        github: "https://pypi.org/project/neetcode-rpg/",
     },
     {
         num: "07",
         category: "Mobile",
         title: "Devotional App",
         description:
-            "A beautiful Flutter/Dart mobile application for daily devotionals, spiritual content, and meditation. Features offline support and push notifications.",
+            "Cross-platform mobile application developed with Flutter and Firebase. Features daily spiritual readings, audio player, offline sync, and push notifications.",
         href: "",
         image: "/assets/work/devotional.png",
         Stack: [

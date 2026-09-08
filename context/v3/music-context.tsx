@@ -6,7 +6,9 @@ import React, {
 	useRef,
 	useState,
 	useCallback,
+	useEffect,
 } from "react";
+import { usePathname } from "next/navigation";
 
 interface MusicContextType {
 	isPlaying: boolean;
@@ -22,9 +24,25 @@ const MusicContext = createContext<MusicContextType | undefined>(undefined);
 export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
+	const pathname = usePathname();
 	const audioRef = useRef<HTMLAudioElement | null>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [isMuted, setIsMuted] = useState(false);
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => {
+		setMounted(true);
+	}, []);
+
+	useEffect(() => {
+		if (pathname && !pathname.startsWith("/v3")) {
+			const audio = audioRef.current;
+			if (audio && !audio.paused) {
+				audio.pause();
+				setIsPlaying(false);
+			}
+		}
+	}, [pathname]);
 
 	const play = useCallback(() => {
 		const audio = audioRef.current;
@@ -69,13 +87,16 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({
 		<MusicContext.Provider
 			value={{ isPlaying, isMuted, play, pause, toggleMute, togglePlay }}
 		>
-			<audio
-				ref={audioRef}
-				src="/v3/images/sound.mp3"
-				loop
-				preload="auto"
-				onEnded={() => setIsPlaying(false)}
-			/>
+			{mounted && (
+				<audio
+					ref={audioRef}
+					src="/v3/images/sound.mp3"
+					loop
+					preload="none"
+					onEnded={() => setIsPlaying(false)}
+					suppressHydrationWarning
+				/>
+			)}
 			{children}
 		</MusicContext.Provider>
 	);

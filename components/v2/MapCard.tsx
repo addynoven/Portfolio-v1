@@ -4,7 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
-const MapCard = () => {
+interface MapCardProps {
+  className?: string;
+}
+
+const MapCard: React.FC<MapCardProps> = ({ className = "" }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const [time, setTime] = useState<string>("00:00:00 IST");
@@ -12,7 +16,7 @@ const MapCard = () => {
 
   useEffect(() => {
     setMounted(true);
-    
+
     const updateClock = () => {
       const now = new Date();
       const options: Intl.DateTimeFormatOptions = {
@@ -36,7 +40,7 @@ const MapCard = () => {
     const initMap = async () => {
       try {
         const L = (await import("leaflet")).default;
-        
+
         const lat = 23.2599;
         const lng = 77.4126;
 
@@ -53,18 +57,24 @@ const MapCard = () => {
 
           mapInstanceRef.current = map;
 
-          // Dark CartoDB tiles
-          L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-            subdomains: "abcd",
-            maxZoom: 19,
+          // Dark Inverted OpenStreetMap tiles (no API key required, zero watermarks)
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            subdomains: ["a", "b", "c"],
+            maxZoom: 18,
+            className: "dark-map-tiles",
           }).addTo(map);
 
-          // Simple marker
+          // Custom pulsing radar marker
           const customIcon = L.divIcon({
-            className: "",
-            iconSize: [14, 14],
-            iconAnchor: [7, 7],
-            html: `<div style="width:14px;height:14px;background:#00ff99;border-radius:50%;border:2px solid white;box-shadow:0 0 10px #00ff99;"></div>`,
+            className: "custom-radar-pin",
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],
+            html: `
+              <div class="relative flex items-center justify-center w-6 h-6">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF87] opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-[#00FF87] border-2 border-white shadow-[0_0_12px_#00FF87]"></span>
+              </div>
+            `,
           });
 
           L.marker([lat, lng], { icon: customIcon }).addTo(map);
@@ -72,7 +82,7 @@ const MapCard = () => {
           // Force resize after a short delay
           setTimeout(() => {
             map.invalidateSize();
-          }, 100);
+          }, 150);
         }
       } catch (error) {
         console.error("Map init error:", error);
@@ -90,39 +100,52 @@ const MapCard = () => {
   }, []);
 
   return (
-    <motion.div 
-      whileHover={{ scale: 1.02 }}
-      className="relative overflow-hidden rounded-2xl bg-[#1a1a1a] border border-slate-200 dark:border-white/5 group cursor-pointer h-full"
+    <motion.section
+      whileHover={{ scale: 1.01 }}
+      className={`relative overflow-hidden rounded-2xl bg-[#080d0d]/90 border border-[#152421] group h-full min-h-[300px] shadow-lg hover:border-[#1e3f34] transition-all duration-300 backdrop-blur-md ${className}`}
+      data-purpose="location-card"
     >
       {/* Map Container */}
-      <div 
-        ref={mapRef} 
+      <div
+        ref={mapRef}
         className="absolute inset-0 z-0"
-        style={{ background: "#1a1a1a", minHeight: "100%" }}
+        style={{ background: "#080d0d", minHeight: "100%" }}
       />
 
-      {/* Live Time Widget */}
-      <div className="absolute z-20 top-3 right-3 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-lg">
-        <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-UserAccent animate-pulse" />
+      {/* Top Header Row with // LOCATION tag & Live Time */}
+      <div className="absolute z-20 top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+        <span className="text-[9px] font-mono tracking-wider text-[#697f7c] uppercase bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+          // LOCATION
+        </span>
+        <div className="bg-black/60 backdrop-blur-md border border-white/10 px-2.5 py-1 rounded-full flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-[#00FF87] animate-pulse" />
           <span className="text-[10px] font-mono font-bold text-white whitespace-nowrap">
             {mounted ? time : "00:00:00 IST"}
           </span>
         </div>
       </div>
 
-      {/* Gradient */}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/70 via-transparent to-transparent z-10" />
+      {/* Gradient Vignette Overlay */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/80 via-black/15 to-transparent z-10" />
 
-      {/* Location */}
-      <div className="absolute bottom-3 left-3 z-20">
-        <p className="text-[9px] text-gray-400 font-mono uppercase tracking-widest mb-0.5">Current Location</p>
-        <div className="flex items-center gap-1.5 text-base font-bold text-white">
-          <FaMapMarkerAlt className="w-4 h-4 text-UserAccent" />
-          Bhopal, MP, India
+      {/* Location & Coordinates at Bottom */}
+      <div className="absolute bottom-3 left-3 right-3 z-20 flex items-end justify-between pointer-events-none">
+        <div>
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className="text-[8px] text-gray-400 font-mono uppercase tracking-widest">
+              Location
+            </span>
+            <span className="text-[8px] text-[#00FF87] font-mono bg-[#0c221b] px-1.5 py-0.5 rounded border border-[#184435]">
+              23.26° N, 77.41° E
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 text-sm md:text-base font-bold text-white">
+            <FaMapMarkerAlt className="w-3.5 h-3.5 text-[#00FF87]" />
+            Bhopal, MP, India
+          </div>
         </div>
       </div>
-    </motion.div>
+    </motion.section>
   );
 };
 

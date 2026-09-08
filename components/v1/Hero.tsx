@@ -44,7 +44,7 @@ const Hero = memo(function Hero() {
   }, [isLowEnd]);
   
   return (
-    <section id="home" className="min-h-[calc(100vh-80px)] flex flex-col justify-center pt-4 pb-2 xl:pt-6 xl:pb-4 relative">
+    <section id="home" className="w-full relative pt-6 pb-4 xl:pt-10 xl:pb-8 flex flex-col justify-center scroll-mt-24">
       {/* Three.js Particle Background - delayed for LCP optimization */}
       {showEffects && (
         <LazyRender className="absolute inset-0 -z-10" keepMounted={false}>
@@ -58,7 +58,7 @@ const Hero = memo(function Hero() {
         </LazyRender>
       )}
       <motion.div 
-        className="flex flex-col xl:flex-row items-center justify-between xl:justify-evenly pb-0 relative z-10"
+        className="flex flex-col lg:flex-row items-center justify-between gap-8 xl:gap-14 relative z-10 w-full"
         initial={{ opacity: 1 }}
         animate={{ opacity: 1 }}
       >

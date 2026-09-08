@@ -15,10 +15,10 @@ const ProjectCard = ({ title, image, href, gradient = "from-purple-900 to-blue-9
     <BentoCard 
       colSpan={1} 
       rowSpan={1} 
-      className="p-0 overflow-hidden group"
+      className="p-0 overflow-hidden group h-full min-h-0"
       href={href}
     >
-      <div className="relative w-full h-full min-h-[200px]">
+      <div className="relative w-full h-full min-h-[140px] md:min-h-full">
         {image ? (
           <Image
             src={image}
@@ -29,9 +29,11 @@ const ProjectCard = ({ title, image, href, gradient = "from-purple-900 to-blue-9
         ) : (
           <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <div className="absolute bottom-4 left-4 right-4">
-          <span className="text-white text-sm font-medium">{title}</span>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-300" />
+        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between z-10">
+          <span className="px-2 py-0.5 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 text-white text-xs font-medium shadow-sm">
+            {title}
+          </span>
         </div>
       </div>
     </BentoCard>

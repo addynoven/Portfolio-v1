@@ -9,7 +9,10 @@ import WaterFillEffect from "./WaterFillEffect";
 
 const links = [
     { name: "Home", path: "/v1/#home", targetId: "home" },
-    { name: "Work", path: "/v1/#work", targetId: "work" },
+    { name: "Experience", path: "/v1/#experience", targetId: "experience" },
+    { name: "Projects", path: "/v1/#work", targetId: "work" },
+    { name: "Skills", path: "/v1/#skills", targetId: "skills" },
+    { name: "About", path: "/v1/#about", targetId: "about" },
     { name: "Contact", path: "/v1/#contact", targetId: "contact" },
 ];
 
@@ -99,7 +102,7 @@ const NavLink = ({ link, isActive, onClick }: NavLinkProps) => {
         >
             <div
                 className={cn(
-                    "relative px-5 py-2.5 rounded-full overflow-hidden transition-all duration-300",
+                    "relative px-3.5 py-1.5 rounded-full overflow-hidden transition-all duration-300",
                     (isActive || isHovered)
                         ? "border-2 border-UserAccent" 
                         : "border-2 border-transparent"
@@ -141,7 +144,7 @@ const NavLink = ({ link, isActive, onClick }: NavLinkProps) => {
                 {/* Text */}
                 <span
                     className={cn(
-                        "relative z-10 capitalize font-medium text-lg transition-colors duration-300",
+                        "relative z-10 capitalize font-medium text-sm transition-colors duration-300",
                         (isHovered || isActive || fillLevel > 50)
                             ? "text-primary"
                             : "text-slate-700 dark:text-white"
@@ -152,13 +155,15 @@ const NavLink = ({ link, isActive, onClick }: NavLinkProps) => {
             </div>
 
             {/* Canvas-based water physics drip */}
-            <WaterDripCanvas
-                isActive={showDrops}
-                width={120}
-                height={200}
-                originX={60}
-                fillLevel={fillLevel}
-            />
+            <div className="pointer-events-none absolute inset-x-0 top-full flex justify-center">
+                <WaterDripCanvas
+                    isActive={showDrops}
+                    width={100}
+                    height={120}
+                    originX={50}
+                    fillLevel={fillLevel}
+                />
+            </div>
         </Link>
     );
 };
@@ -176,7 +181,7 @@ const Nav = () => {
     };
 
     return (
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center gap-1 p-1 rounded-full bg-slate-100/90 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/10 backdrop-blur-md shadow-sm">
             {links.map((link) => (
                 <NavLink
                     key={link.name}

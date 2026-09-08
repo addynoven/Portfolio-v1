@@ -240,8 +240,8 @@ const Skills = memo(function Skills() {
   });
 
   return (
-    <section id="skills" className="relative py-20 xl:py-32 min-h-screen overflow-hidden">
-      <div className="container mx-auto">
+    <section id="skills" className="relative scroll-mt-24 w-full">
+      <div className="w-full">
         <div className="mb-16 text-center">
           <h2 className="text-4xl xl:text-6xl font-bold mb-4">
             <AnimatedTitle text="Skills & Tech Stack" />

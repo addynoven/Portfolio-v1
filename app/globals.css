@@ -1,12 +1,33 @@
 @import "leaflet/dist/leaflet.css";
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.font-script {
+  font-family: 'Caveat', cursive, sans-serif;
+}
+
+.glow-green-btn {
+  box-shadow: 0 0 16px rgba(0, 255, 135, 0.4), 0 0 3px rgba(0, 255, 135, 0.8);
+}
+.glow-green-sm {
+  box-shadow: 0 0 10px rgba(0, 255, 135, 0.5);
+}
+.glow-green-tag {
+  box-shadow: inset 0 0 10px rgba(0, 255, 135, 0.15), 0 0 10px rgba(0, 255, 135, 0.15);
+}
+.text-glow {
+  text-shadow: 0 0 14px rgba(0, 255, 135, 0.55);
+}
+
 /* Leaflet Map Customizations */
 .leaflet-control-attribution { display: none !important; }
 .leaflet-container { background: #0a0a0a; }
+.dark-map-tiles {
+  filter: invert(100%) hue-rotate(180deg) brightness(75%) contrast(140%) saturate(0.2) !important;
+}
 
 /* Custom Map Marker Pulse Effect */
 .map-marker-pulse {

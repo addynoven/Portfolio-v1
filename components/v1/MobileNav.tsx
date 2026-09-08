@@ -9,7 +9,10 @@ import { useSiteName } from "@/hooks/useSiteName";
 
 const links = [
   { name: "Home", path: "/v1/#home", targetId: "home" },
-  { name: "Work", path: "/v1/#work", targetId: "work" },
+  { name: "Experience", path: "/v1/#experience", targetId: "experience" },
+  { name: "Projects", path: "/v1/#work", targetId: "work" },
+  { name: "Skills", path: "/v1/#skills", targetId: "skills" },
+  { name: "About", path: "/v1/#about", targetId: "about" },
   { name: "Contact", path: "/v1/#contact", targetId: "contact" },
 ];
 

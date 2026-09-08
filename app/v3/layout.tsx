@@ -8,6 +8,7 @@ import ThunderRootBg from "@/components/v3/layout/thunder-root-bg";
 import { METADATA } from "@/app/v3/constants";
 import { LenisProvider } from "@/components/v3/lenis-provider";
 import ThemeTransitionOverlay from "@/components/v3/ui/theme-transition-overlay";
+import AudioPlayer from "@/components/v3/ui/audio-player";
 
 /* ── Fonts ── */
 const jetbrainsMono = JetBrains_Mono({
@@ -63,6 +64,7 @@ export default function V3Layout({ children }: { children: React.ReactNode }) {
 									{children}
 								</main>
 								<Footer />
+								<AudioPlayer />
 							</div>
 						</LenisProvider>
 			</ThemeProvider>

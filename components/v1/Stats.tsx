@@ -26,9 +26,9 @@ const statVariants = {
 
 const Stats = () => {
   return (
-    <section className="mt-10 pt-4 pb-12 xl:pt-0 xl:pb-0">
-      <div className="container mx-auto">
-        <div className="flex flex-wrap gap-6 max-w-[80vw] mx-auto xl:max-w-none">
+    <section className="mt-12 xl:mt-16 w-full">
+      <div className="w-full">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full">
           {stats.map((stat, index) => {
             return (
               <motion.div
