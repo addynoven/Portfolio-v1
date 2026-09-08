@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+/* ── Nocturne Precision Design Tokens for Portfolio V4 ─────────────── */
+
+.v4-root {
+  --canvas-base: #0A0A0A;
+  --surface: #131313;
+  --surface-elevated: #121212;
+  --surface-container: #201f1f;
+  --surface-container-low: #1c1b1b;
+  --surface-container-lowest: #0e0e0e;
+  --surface-container-high: #2a2a2a;
+  --surface-border: #262626;
+  --surface-border-subtle: #1C1C1C;
+  --on-surface: #e5e2e1;
+  --on-surface-variant: #c4c7c8;
+  --text-muted: #A3A3A3;
+  --primary: #ffffff;
+  --on-primary: #121212;
+  --status-active: #22C55E;
+  --glow-accent: rgba(255, 255, 255, 0.12);
+  --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+
+  background-color: var(--canvas-base);
+  color: var(--on-surface);
+  min-height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html.light,
+html.light body,
+.v4-root.v4-light {
+  --canvas-base: #f9fafb;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --surface-container: #f3f4f6;
+  --surface-container-low: #f9fafb;
+  --surface-container-lowest: #ffffff;
+  --surface-container-high: #e5e7eb;
+  --surface-border: #e5e7eb;
+  --surface-border-subtle: #f3f4f6;
+  --on-surface: #111827;
+  --on-surface-variant: #4b5563;
+  --text-muted: #6b7280;
+  --primary: #111827;
+  --on-primary: #ffffff;
+  --status-active: #16a34a;
+  --glow-accent: rgba(0, 0, 0, 0.05);
+  --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+
+  background-color: #f9fafb !important;
+  color: #111827 !important;
+}
+
+html.dark,
+html.dark body,
+.v4-root.dark {
+  background-color: #0a0a0a !important;
+  color: #ededed !important;
+}
+
+/* ── Custom Utilities for Nocturne Precision ──────────────────────── */
+
+.v4-radial-spotlight {
+  background: radial-gradient(
+    400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--glow-accent),
+    transparent 40%
+  );
+}
+
+.v4-container-max {
+  max-width: 48rem; /* 768px */
+}
+
+.v4-container-wide {
+  max-width: 64rem; /* 1024px */
+}
+
+/* Smooth custom scrollbars inside v4 */
+.v4-root ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.v4-root ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.v4-root ::-webkit-scrollbar-thumb {
+  background: var(--surface-border);
+  border-radius: 9999px;
+}
+.v4-root ::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── V4 Typography mappings ────────────────────────────────────────── */
+.v4-root .font-serif,
+.v4-root.font-serif {
+  font-family: "Instrument Serif", var(--font-newsreader), Georgia, serif;
+}
+
+.v4-root .font-sans,
+.v4-root.font-sans {
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.v4-root .font-mono,
+.v4-root.font-mono {
+  font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
